@@ -1,0 +1,9 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_menu_complains" type="drawable">@drawable/complains</item>
+    <item name="ic_menu_profile" type="drawable">@drawable/profile</item>
+    <item name="ic_menu_report" type="drawable">@drawable/report</item>
+    <item name="ic_menu_notification" type="drawable">@drawable/notification</item>
+    <item name="ic_menu_parking" type="drawable">@drawable/parking</item>
+    <item name="ic_menu_worker" type="drawable">@drawable/ic_work_black_24dp</item>
+    <item name="ic_menu_home" type="drawable">@drawable/home</item>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:paddingTop="20dp"
+            android:background="#FF6932CA"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_main" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:fab_labelStyle="@style/customFab"
+        app:fab_addButtonColorNormal="@color/colorPrimaryDark"
+        app:fab_addButtonColorPressed="@color/colorPrimary"
+        app:fab_addButtonPlusIconColor="@color/md_white_1000">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/md_white_1000"
+            app:fab_colorPressed="@color/md_white_1000"
+            app:fab_icon="@drawable/ic_assignment_ind_black_24dp"
+            android:id="@+id/add_worker_fab"
+            app:fab_title="Add New Worker"
+            app:fab_size="mini"
+            android:layout_height="wrap_content" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/md_white_1000"
+            app:fab_colorPressed="@color/md_white_1000"
+            app:fab_icon="@drawable/ic_menu_camera"
+            android:id="@+id/update_payment_details_fab"
+            app:fab_title="Update Payment Details"
+            app:fab_size="mini"
+            android:layout_height="wrap_content" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/md_white_1000"
+            app:fab_colorPressed="@color/md_white_1000"
+            app:fab_icon="@drawable/ic_menu_camera"
+            android:id="@+id/update_notification_fab"
+            app:fab_title="Update Notification"
+            app:fab_size="mini"
+            android:layout_height="wrap_content" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

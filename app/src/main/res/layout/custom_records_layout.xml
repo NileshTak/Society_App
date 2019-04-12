@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_logo_status"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/face"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+
+            <TextView
+                android:id="@+id/name_custom_record"
+                android:layout_toRightOf="@+id/img_logo_status"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Society SuperVisor"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/date_custom_record"
+                android:layout_toRightOf="@+id/img_logo_status"
+                android:layout_marginStart="10dp"
+                android:text="Today - 12:00"
+                android:textStyle="bold"
+                android:layout_below="@id/name_custom_record"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/wing_spinner_value_status"
+                android:layout_toRightOf="@+id/name_custom_record"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+
+        </RelativeLayout>
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/record_img_xml"
+            android:padding="5dp"
+            android:layout_width="370dp"
+            android:layout_height="280dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReportFrag">
+
+
+        <LinearLayout
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="100dp">
+
+            <EditText
+                android:id="@+id/date_editText"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:inputType="date"
+                android:hint="Enter Date of Report"
+                android:textSize="22dp"
+                android:lines="10" />
+
+            <Spinner
+                android:id="@+id/spinner_wing"
+                android:layout_margin="2dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/img_select_camera"
+                android:background="@drawable/camera"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_below="@+id/date_editText"
+            android:layout_width="340dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:text="Update"
+            android:layout_marginTop="-8dp"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:layout_height="wrap_content" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="5dp"
+        android:id="@+id/recyclerview_xml_reportfrag"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>

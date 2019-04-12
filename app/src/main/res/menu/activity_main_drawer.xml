@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_userreq"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="User Requests" />
+        <item
+            android:id="@+id/nav_reports"
+            android:icon="@drawable/ic_menu_report"
+            android:title="Records" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_menu_notification"
+            android:title="Notification" />
+    </group>
+
+    <item android:title="Services">
+        <menu>
+            <group android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/nav_parking"
+                android:icon="@drawable/ic_menu_parking"
+                android:title="Parking" />
+            <item
+                android:id="@+id/nav_workers"
+                android:icon="@drawable/ic_menu_worker"
+                android:title="Workers" />
+            <item
+                android:id="@+id/nav_complaints"
+                android:icon="@drawable/ic_menu_complains"
+                android:title="Complaints" />
+
+            </group>
+        </menu>
+    </item>
+
+</menu>

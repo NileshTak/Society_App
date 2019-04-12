@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp">
+
+    <LinearLayout
+        android:background="@drawable/usereqstyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_wingname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wing Name"
+                android:textAllCaps="false"
+                android:padding="10dp"
+                android:background="@color/md_blue_900"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_flatno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Flat No"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
+                android:background="@color/md_blue_custom"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_relation"
+                android:layout_width="match_parent"
+                android:layout_below="@id/cutom_userreq_flatno"
+                android:layout_height="wrap_content"
+                android:text="Relation"
+                android:paddingBottom="15dp"
+                android:paddingTop="5dp"
+                android:background="@color/md_blue_custom"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_name"
+                android:layout_width="340dp"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/md_white_1000"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_number"
+                android:layout_below="@+id/cutom_userreq_name"
+                android:layout_width="340dp"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="8446613467"
+                android:layout_margin="10dp"
+                android:background="@color/md_white_1000"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_email"
+                android:layout_below="@+id/cutom_userreq_number"
+                android:layout_width="340dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/md_white_1000"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/custom_userreq_acceptbtn"
+                android:text="Accept"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textAllCaps="false"
+                android:layout_marginStart="2dp"
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="2dp"
+                android:background="@color/md_white_1000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/custom_userreq_rejectbtn"
+                android:text="Reject"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20dp"
+                android:textAllCaps="false"
+                android:layout_weight="2"
+                android:padding="12dp"
+                android:background="@color/md_blue_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
