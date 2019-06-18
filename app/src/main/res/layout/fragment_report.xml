@@ -9,52 +9,6 @@
     tools:context=".ReportFrag">
 
 
-        <LinearLayout
-            android:padding="15dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="100dp">
-
-            <EditText
-                android:id="@+id/date_editText"
-                android:layout_width="205dp"
-                android:layout_height="50dp"
-                android:inputType="date"
-                android:hint="Enter Date of Report"
-                android:textSize="22dp"
-                android:lines="10" />
-
-            <Spinner
-                android:id="@+id/spinner_wing"
-                android:layout_margin="2dp"
-                android:layout_width="60dp"
-                android:layout_height="50dp">
-
-            </Spinner>
-
-            <Button
-                android:id="@+id/img_select_camera"
-                android:background="@drawable/camera"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btn_update"
-            android:layout_below="@+id/date_editText"
-            android:layout_width="340dp"
-            android:background="@color/colorPrimaryDark"
-            android:layout_gravity="center_horizontal"
-            android:text="Update"
-            android:layout_marginTop="-8dp"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"
-            android:layout_height="wrap_content" />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="5dp"
         android:id="@+id/recyclerview_xml_reportfrag"
@@ -65,4 +19,4 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    </LinearLayout>
+</LinearLayout>

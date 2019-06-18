@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    android:background="@color/md_white_1000"
+    tools:context=".UpdateReport">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/imgGifCamera"
+        android:layout_width="230dp"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/fab"
+        android:layout_height="230dp" />
+
+    <LinearLayout
+        android:id="@+id/linearL"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/date_editText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="date"
+            android:hint="Enter Date of Report"
+            android:textSize="22dp"
+            android:lines="10" />
+
+        <Spinner
+            android:id="@+id/spinner_wing"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </Spinner>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/img_select_camera"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:background="@drawable/button_main_background"
+        android:layout_alignParentBottom="true"
+        android:text="Update"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -117,31 +117,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/custom_userreq_acceptbtn"
-                android:text="Accept"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textAllCaps="false"
-                android:layout_marginStart="2dp"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="2dp"
-                android:background="@color/md_white_1000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/custom_userreq_rejectbtn"
-                android:text="Reject"
-                android:textColor="@color/md_white_1000"
-                android:textSize="20dp"
-                android:textAllCaps="false"
-                android:layout_weight="2"
-                android:padding="12dp"
-                android:background="@color/md_blue_custom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="110dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick"
+                />
 
         </LinearLayout>
 

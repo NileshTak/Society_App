@@ -4,91 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".Add_Worker">
 
-    <Button
-        android:id="@+id/prof_pic_worker"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:textSize="20dp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded_select_photo_button"
-        android:text="Click Picture"
-        android:textAllCaps="false"
-        android:foregroundGravity="center"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circular_worker_profile_pic"
-        android:layout_width="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        app:civ_border_color="@android:color/white"
-        app:civ_border_width="4dp"
-        android:layout_height="120dp" />
-
-    <EditText
-        android:id="@+id/text_name_worker"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_below="@+id/prof_pic_worker"
-        android:textSize="22dp"
-        android:hint="Enter Name"
-        android:textColor="@color/md_black_1000"
-        android:layout_margin="8dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/text_address_worker"
-        android:hint="Enter Address"
-        android:textColor="@color/md_black_1000"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/text_name_worker"
-        android:textSize="22dp"
-        android:layout_margin="8dp"
-        android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/spinner_type_worker"
-        android:layout_below="@+id/text_address_worker"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_height="50dp">
+            <Button
+                android:id="@+id/prof_pic_worker"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/cameraicon"
+                android:textAllCaps="false"
+                android:foregroundGravity="center"/>
 
-    </Spinner>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circular_worker_profile_pic"
+                android:layout_width="140dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_width="4dp"
+                android:layout_height="140dp" />
 
-    <EditText
-        android:id="@+id/text_mobile_worker"
-        android:hint="Enter Mobile Number"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/spinner_type_worker"
-        android:textSize="22dp"
-        android:textColor="@color/md_black_1000"
-        android:inputType="number"
-        android:layout_margin="8dp"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/text_name_worker"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/prof_pic_worker"
+                android:textSize="22dp"
+                android:hint="Enter Name"
+                android:fontFamily="@font/muli_regular"
+                android:textColor="@color/md_black_1000"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/date_worker_joining"
-        android:layout_margin="8dp"
-        android:inputType="date"
-        android:textSize="22dp"
-        android:layout_below="@+id/text_mobile_worker"
-        android:layout_width="match_parent"
-        android:hint="Enter Date Of Joining"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/text_address_worker"
+                android:hint="Enter Address"
+                android:textColor="@color/md_black_1000"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/muli_regular"
+                android:layout_below="@+id/text_name_worker"
+                android:textSize="22dp"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btn_add_worker"
-        android:layout_below="@+id/date_worker_joining"
-        android:text="Add Worker"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded"
-        android:textSize="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinner_type_worker"
+                android:layout_below="@+id/text_address_worker"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="50dp">
+
+            </Spinner>
+
+            <EditText
+                android:id="@+id/text_mobile_worker"
+                android:hint="Enter Mobile Number"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/spinner_type_worker"
+                android:textSize="22dp"
+                android:textColor="@color/md_black_1000"
+                android:inputType="number"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/muli_regular"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/date_worker_joining"
+                android:layout_margin="8dp"
+                android:inputType="date"
+                android:textSize="22dp"
+                android:fontFamily="@font/muli_regular"
+                android:layout_below="@+id/text_mobile_worker"
+                android:layout_width="match_parent"
+                android:hint="Enter Date Of Joining"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edSpeciality"
+                android:textSize="22dp"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/muli_regular"
+                android:hint="Seperate Using Commas"
+                android:layout_below="@id/date_worker_joining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_add_worker"
+                android:text="Add Worker"
+                android:layout_below="@id/edSpeciality"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_main_background"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

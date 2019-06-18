@@ -15,11 +15,11 @@
         <item
             android:id="@+id/nav_reports"
             android:icon="@drawable/ic_menu_report"
-            android:title="Records" />
+            android:title="Building Notice" />
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_menu_notification"
-            android:title="Notification" />
+            android:title="Society Notice" />
     </group>
 
     <item android:title="Services">
@@ -27,9 +27,9 @@
             <group android:checkableBehavior="single">
 
             <item
-                android:id="@+id/nav_parking"
+                android:id="@+id/nav_maintainance"
                 android:icon="@drawable/ic_menu_parking"
-                android:title="Parking" />
+                android:title="Maintainance Records" />
             <item
                 android:id="@+id/nav_workers"
                 android:icon="@drawable/ic_menu_worker"

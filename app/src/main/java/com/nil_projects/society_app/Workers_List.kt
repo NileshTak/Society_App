@@ -15,23 +15,28 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.ramotion.foldingcell.FoldingCell
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_workers__list.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
+import kotlinx.android.synthetic.main.custom_user_profile_list.view.*
 import kotlinx.android.synthetic.main.custom_workser_list.view.*
+import org.w3c.dom.Text
 
 
 class Workers_List : AppCompatActivity() {
@@ -40,13 +45,16 @@ class Workers_List : AppCompatActivity() {
     lateinit var typeWorker : String
     lateinit var toggleBtn : FoldingCell
     lateinit var fc : FoldingCell
+    lateinit var workerNum : String
     private val REQUEST_CALL = 1
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workers__list)
+        supportActionBar!!.title = "Workers"
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
 
         val bundle : Bundle? = intent.extras
         typeWorker = bundle!!.getString("workerType")
@@ -57,6 +65,10 @@ class Workers_List : AppCompatActivity() {
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     private fun fetchWorkers()
     {
@@ -78,21 +90,12 @@ class Workers_List : AppCompatActivity() {
                         adapter.add(WorkerItem(worker))
                     }
                 }
-
-                adapter.setOnItemClickListener { item, view ->
-                    view.folding_cell.toggle(false)
-                    view.custom_callingbtn_worker.setOnClickListener {
-                        Toast.makeText(applicationContext,"Calling",Toast.LENGTH_LONG).show()
-                        makeCall()
-                    }
-                }
                 workerslist_recyclerview.adapter = adapter
             }
         })
     }
 
-    private fun makeCall() {
-        var number = "8446613467"
+    private fun makeCall(number : String) {
         if (number.trim({ it <= ' ' }).length > 0) {
 
             if (ContextCompat.checkSelfPermission(
@@ -114,36 +117,74 @@ class Workers_List : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_CALL) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                makeCall()
-            } else {
-                Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show()
+    inner class WorkerItem(var finalworker : FetchWorkerClass) : Item<ViewHolder>() {
+
+        override fun getLayout(): Int {
+            return R.layout.custom_workser_list
+        }
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+            viewHolder.itemView.custom_name_worker.text = finalworker.name
+            viewHolder.itemView.custom_type_worker.text = finalworker.type
+            viewHolder.itemView.tvWorkerType.text = "("+finalworker.type+")"
+            viewHolder.itemView.tvWorkerName.text = finalworker.name
+            viewHolder.itemView.tvWorkerAddress.text = finalworker.address
+            viewHolder.itemView.tvWorkerDOJ.text = finalworker.dateofjoining
+            viewHolder.itemView.tvWorkerNumber.text = finalworker.mobile
+            viewHolder.itemView.tvWorkerSpeciality.text = finalworker.speciality
+            Glide.with(this@Workers_List).load(finalworker.imageUrl).into(viewHolder.itemView.custom_prof_worker)
+            Glide.with(this@Workers_List).load(finalworker.imageUrl).into(viewHolder.itemView.photo)
+
+            workerNum = finalworker.mobile
+
+            viewHolder.itemView.setOnClickListener {
+                viewHolder.itemView.folding_cell.toggle(false)
+            }
+            viewHolder.itemView.custom_callingbtn_worker.setOnClickListener {
+                askCallingPermission()
             }
         }
+
+        private fun askCallingPermission() {
+                askPermission(Manifest.permission.CALL_PHONE,Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.GET_ACCOUNTS){
+                    Toast.makeText(applicationContext,"Calling"+finalworker.mobile,Toast.LENGTH_LONG).show()
+                    makeCall(finalworker.mobile)
+                }.onDeclined { e ->
+                    if (e.hasDenied()) {
+                        //the list of denied permissions
+                        e.denied.forEach {
+                        }
+
+                        AlertDialog.Builder(this@Workers_List)
+                                .setMessage("Please accept our permissions.. Otherwise you will not be able to use some of our Important Features.")
+                                .setPositiveButton("yes") { dialog, which ->
+                                    e.askAgain()
+                                } //ask again
+                                .setNegativeButton("no") { dialog, which ->
+                                    dialog.dismiss()
+                                }
+                                .show()
+                    }
+
+                    if (e.hasForeverDenied()) {
+                        //the list of forever denied permissions, user has check 'never ask again'
+                        e.foreverDenied.forEach {
+                        }
+                        // you need to open setting manually if you really need it
+                        e.goToSettings();
+                    }
+                }
+            }
     }
 }
 
 class FetchWorkerClass(val id : String,val name : String,val imageUrl : String,val address : String,
-                     val type : String,val mobile : String,val dateofjoining : String)
+                     val type : String,val mobile : String,val dateofjoining : String,val speciality : String)
 {
-    constructor() : this("","","","","",",","")
+    constructor() : this("","","","","",",","","")
 }
 
 
 
-class WorkerItem(var finalworker : FetchWorkerClass) : Item<ViewHolder>() {
-
-    override fun getLayout(): Int {
-        return R.layout.custom_workser_list
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.custom_name_worker.text = finalworker.name
-        viewHolder.itemView.custom_type_worker.text = finalworker.type
-        Picasso.get().load(finalworker.imageUrl).into(viewHolder.itemView.custom_prof_worker)
-        Picasso.get().load(finalworker.imageUrl).into(viewHolder.itemView.photo)
-    }
-}
 

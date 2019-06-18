@@ -8,26 +8,30 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
+import com.github.florent37.runtimepermission.kotlin.askPermission
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_add__worker.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,6 +47,9 @@ class Add_Worker : AppCompatActivity() {
     var formate = SimpleDateFormat("dd MMM, yyyy", Locale.US)
     lateinit var btn_add_Worker : Button
     lateinit var progressDialog: ProgressDialog
+    lateinit var edSpeciality : EditText
+    var LoggedIn_User_Email: String? = null
+    lateinit var listMobileNo : ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +57,23 @@ class Add_Worker : AppCompatActivity() {
         supportActionBar!!.title = "Add Worker"
 
         spinner_type_worker = findViewById<Spinner>(R.id.spinner_type_worker)
+        edSpeciality = findViewById<EditText>(R.id.edSpeciality)
         btn_add_Worker = findViewById<Button>(R.id.btn_add_worker)
         date_editText_worker = findViewById<EditText>(R.id.date_worker_joining)
 
+        LoggedIn_User_Email = FirebaseAuth.getInstance().currentUser!!.getEmail()
+        listMobileNo = ArrayList<String>()
+
+
+        fetchuserMobilefromFirebase()
 
         date_editText_worker.setOnClickListener {
             dateJoiningWorker()
         }
 
-        val optionsWorkers = arrayOf("Cook", "Driver","Security Guard","Car Cleaner")
+        val optionsWorkers = arrayOf("Cook","Driver","Security Guard","Car Cleaner")
 
-        spinner_type_worker.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,optionsWorkers)
+        spinner_type_worker.adapter = ArrayAdapter<String>(this,R.layout.spinner_textview,optionsWorkers)
         spinner_type_worker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Toast.makeText(applicationContext,"Please Select Worker Type", Toast.LENGTH_LONG).show()
@@ -74,22 +87,7 @@ class Add_Worker : AppCompatActivity() {
         }
 
         prof_pic_worker.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (PermissionChecker.checkSelfPermission(applicationContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
-                }
-
-            }
-            if (ActivityCompat.checkSelfPermission(applicationContext,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_PERM_WRITE_STORAGE)
-
-            } else {
-                takePhotoByCamera()
-            }
-
+            askCameraPermission()
         }
 
         btn_add_Worker.setOnClickListener {
@@ -99,6 +97,37 @@ class Add_Worker : AppCompatActivity() {
             progressDialog.show()
             UploadWorkerImgtoFirebase()
         }
+    }
+
+    private fun askCameraPermission() {
+        askPermission(Manifest.permission.CAMERA){
+            takePhotoByCamera()
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+                //the list of denied permissions
+                e.denied.forEach {
+                }
+
+                AlertDialog.Builder(this@Add_Worker)
+                        .setMessage("Please accept our permissions.. Otherwise you will not be able to use our some of Features.")
+                        .setPositiveButton("yes") { dialog, which ->
+                            e.askAgain()
+                        } //ask again
+                        .setNegativeButton("no") { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .show()
+            }
+
+            if(e.hasForeverDenied()) {
+                //the list of forever denied permissions, user has check 'never ask again'
+                e.foreverDenied.forEach {
+                }
+                // you need to open setting manually if you really need it
+                e.goToSettings();
+            }
+        }
+
     }
 
     private fun dateJoiningWorker() {
@@ -147,7 +176,7 @@ class Add_Worker : AppCompatActivity() {
     private fun saveImage(finalBitmap: Bitmap)
     {
         val root = Environment.getExternalStorageDirectory().toString()
-        val myDir = File(root + "/Society_App_Records/Workers")
+        val myDir = File(root + "/SocietyApp/Workers")
         myDir.mkdirs()
         val generator = Random()
         var n = 10000
@@ -220,7 +249,7 @@ class Add_Worker : AppCompatActivity() {
 
         val status = AddWorkerClass(recordid,text_name_worker.text.toString(),ImageUrlWorker,
                 text_address_worker.text.toString(),spin_value_worker,
-                text_mobile_worker.text.toString(),date_editText_worker.text.toString())
+                text_mobile_worker.text.toString(),date_editText_worker.text.toString(),edSpeciality.text.toString())
         ref.setValue(status)
                 .addOnSuccessListener {
 
@@ -228,6 +257,7 @@ class Add_Worker : AppCompatActivity() {
                     Toast.makeText(applicationContext,"Worker Added Successfully",Toast.LENGTH_LONG).show()
                     val intent = Intent(this,MainActivity :: class.java)
                     startActivity(intent)
+                    sendFCMtoUsers()
 
                 }
                 .addOnFailureListener {
@@ -235,11 +265,109 @@ class Add_Worker : AppCompatActivity() {
                 }
     }
 
+    private fun fetchuserMobilefromFirebase()
+    {
+        var db = FirebaseFirestore.getInstance()
+        db.collection("FlatUsers")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+
+                    val city = documentSnapshot.toObjects(UserClass::class.java)
+                    for (document in city) {
+                        if (document != null) {
+                            listMobileNo.add(document.MobileNumber)
+                        }
+                    }
+                }
+
+                .addOnFailureListener { exception ->
+                    Log.w("SocietyFirestore", "Error getting documents.", exception)
+                }
+    }
+
+
+    private fun sendFCMtoUsers() {
+
+        AsyncTask.execute {
+            val SDK_INT = android.os.Build.VERSION.SDK_INT
+            if (SDK_INT > 8) {
+                val policy = StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build()
+                StrictMode.setThreadPolicy(policy)
+                var sendNotificationID: String
+
+                //This is a Simple Logic to Send Notification different Device Programmatically....
+                if (LoggedIn_User_Email.equals("admin@gmail.com") && listMobileNo.isNotEmpty()) {
+                    //send_email = "client@gmail.com"
+
+                    for (i in 0..listMobileNo.size-1)
+                    {
+                        sendNotificationID = listMobileNo.get(i)
+                        Log.d("OneSignal App",sendNotificationID)
+
+                        try {
+                            val jsonResponse: String
+
+                            val url = URL("https://onesignal.com/api/v1/notifications")
+                            val con = url.openConnection() as HttpURLConnection
+                            con.setUseCaches(false)
+                            con.setDoOutput(true)
+                            con.setDoInput(true)
+
+                            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
+                            con.setRequestProperty("Authorization", "Basic Y2Q3ODRhYTUtMjA4ZC00NTZjLTg3MDktMzEwNjJkOWMwMTRi")
+                            con.setRequestMethod("POST")
+
+                            val strJsonBody = ("{"
+                                    + "\"app_id\": \"69734071-08a8-4d63-a7ab-adda8e2197f0\","
+
+                                    + "\"filters\": [{\"field\": \"tag\", \"key\": \"NotificationID\", \"relation\": \"=\", \"value\": \"" + sendNotificationID + "\"}],"
+
+                                    + "\"data\": {\"foo\": \"bar\"},"
+                                    + "\"contents\": {\"en\": \"New Worker Added\"}"
+                                    + "}")
+
+
+                            println("strJsonBody:\n$strJsonBody")
+
+                            val sendBytes = strJsonBody.toByteArray(charset("UTF-8"))
+                            con.setFixedLengthStreamingMode(sendBytes.size)
+
+                            val outputStream = con.getOutputStream()
+                            outputStream.write(sendBytes)
+
+                            val httpResponse = con.getResponseCode()
+                            println("httpResponse: $httpResponse")
+
+                            if (httpResponse >= HttpURLConnection.HTTP_OK && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                                val scanner = Scanner(con.getInputStream(), "UTF-8")
+                                jsonResponse = if (scanner.useDelimiter("\\A").hasNext()) scanner.next() else ""
+                                scanner.close()
+                            } else {
+                                val scanner = Scanner(con.getErrorStream(), "UTF-8")
+                                jsonResponse = if (scanner.useDelimiter("\\A").hasNext()) scanner.next() else ""
+                                scanner.close()
+                            }
+                            println("jsonResponse:\n$jsonResponse")
+
+                        } catch (t: Throwable) {
+                            t.printStackTrace()
+                        }
+
+                    }
+
+                } else {
+                    sendNotificationID = "admin@gmail.com"
+                }
+            }
+        }
+    }
+
 
 }
 
 class AddWorkerClass(val id : String,val name : String,val imageUrl : String,val address : String,
-                     val type : String,val mobile : String,val dateofjoining : String)
+                     val type : String,val mobile : String,val dateofjoining : String,val speciality : String)
 {
-    constructor() : this("","","","","",",","")
+    constructor() : this("","","","","",",","","")
 }

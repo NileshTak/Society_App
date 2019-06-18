@@ -55,7 +55,7 @@
 
                 <Button
                     android:id="@+id/btn_open_worker"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/button_main_background"
                     android:text="View"
                     android:layout_margin="10dp"
                     android:textAllCaps="false"

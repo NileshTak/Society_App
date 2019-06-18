@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/md_white_1000"
+    android:layout_height="match_parent"
+    tools:context=".User_Profile">
+
+    <LinearLayout
+        android:id="@+id/liner"
+        android:layout_marginStart="-5dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/sidelabelbg"
+        android:layout_width="150dp"
+        android:layout_height="60dp">
+
+    <TextView
+        android:id="@+id/sidelabel_role"
+        android:text="Owner"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/muli_regular"
+        android:textStyle="bold"
+        android:textColor="@color/md_white_1000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_below="@id/liner"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/md_blue_800"
+        android:id="@+id/prof_pic_user_profile"
+        android:layout_centerHorizontal="true"
+        android:transitionName="transitionPicture"
+        android:layout_marginTop="8dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/Username_user_profile"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textColor="@color/md_black_1000"
+        android:textStyle="bold"
+        android:fontFamily="@font/muli_regular"
+        android:transitionName="transitionUserName"
+        android:layout_below="@+id/prof_pic_user_profile"
+        android:textSize="30dp"
+        android:text="jksdubn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_below="@id/Username_user_profile"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:weightSum="2"
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:background="@drawable/linearbg"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/flatno_profile"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textSize="28dp"
+            android:textColor="@color/md_black_1000"
+            android:transitionName="transitionflatno"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/wingname_profile"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textSize="28dp"
+            android:textColor="@color/md_black_1000"
+            android:transitionName="transitionwingname"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <com.ebanx.swipebtn.SwipeButton
+        android:layout_below="@id/linear2"
+        android:layout_marginTop="5dp"
+        android:id="@+id/swipe_btn_call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:inner_text="SWIPE TO CALL"
+        app:inner_text_color="@android:color/white"
+        app:inner_text_size="16sp"
+        app:inner_text_top_padding="18dp"
+        app:inner_text_bottom_padding="18dp"
+        app:inner_text_background="@drawable/shape_rounded"
+        app:button_image_height="60dp"
+        app:button_image_width="100dp"
+        app:button_image_disabled="@drawable/ic_call_black_24dp"
+        app:button_image_enabled="@drawable/ic_call_end_black_24dp"
+        app:button_left_padding="20dp"
+        app:button_right_padding="20dp"
+        app:button_top_padding="20dp"
+        app:button_bottom_padding="20dp"
+        app:button_background="@drawable/shape_button"
+        app:initial_state="disabled"
+        app:has_activate_state="true"
+        />
+
+</RelativeLayout>

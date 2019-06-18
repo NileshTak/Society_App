@@ -1,6 +1,7 @@
 package com.nil_projects.society_app
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,19 +10,22 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.custom_notification.view.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
+import kotlinx.android.synthetic.main.custom_workser_list.view.*
 import kotlinx.android.synthetic.main.fragment_notification.*
+import java.io.File
 
 class NotificationFrag : Fragment() {
 
@@ -38,7 +42,6 @@ class NotificationFrag : Fragment() {
 
         return view
     }
-
 
 
     private fun fetchNotifications() {
@@ -63,18 +66,30 @@ class NotificationFrag : Fragment() {
             }
         })
     }
+
+    inner class FetchNotificationItem(var Finalnotifi : AddNotifiClass) : Item<ViewHolder>()
+    {
+
+        override fun getLayout(): Int {
+            return R.layout.custom_notification
+        }
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+
+            viewHolder.itemView.noti_text_view.text = Finalnotifi.noti
+            viewHolder.itemView.currentTimeRecord.text = Finalnotifi.currentTime
+         //   Picasso.get().load(Finalnotifi.imageUrl).into(viewHolder.itemView.noti_img_xml)
+            Glide.with(activity).load(Finalnotifi.imageUrl).into(viewHolder.itemView.noti_img_xml)
+
+
+            viewHolder.itemView.setOnClickListener {
+                var int = Intent(activity,FUllScreenImage :: class.java)
+                int.data = Finalnotifi.imageUrl.toUri()
+                int.putExtra("msg",Finalnotifi.noti)
+                startActivity(int)
+            }
+        }
+    }
 }
 
 
-class FetchNotificationItem(var Finalnotifi : AddNotifiClass) : Item<ViewHolder>()
-{
-
-    override fun getLayout(): Int {
-        return R.layout.custom_notification
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.noti_text_view.text = Finalnotifi.noti
-        Picasso.get().load(Finalnotifi.imageUrl).into(viewHolder.itemView.noti_img_xml)
-    }
-}

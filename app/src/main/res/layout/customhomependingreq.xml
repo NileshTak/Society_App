@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="190dp"
+    android:layout_height="220dp">
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
+
+        <LinearLayout
+            android:background="@drawable/usereqstyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/rel_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cutom_userreq_flatno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Flat No"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@color/md_blue_custom"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cutom_userreq_relation"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/cutom_userreq_flatno"
+                    android:layout_height="wrap_content"
+                    android:text="Relation"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="5dp"
+                    android:background="@color/md_blue_custom"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cutom_userreq_name"
+                    android:layout_width="340dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/md_white_1000"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/black"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/cutom_userreq_number"
+                    android:layout_below="@+id/cutom_userreq_name"
+                    android:layout_width="340dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="+918446613467"
+                    android:layout_margin="10dp"
+                    android:background="@color/md_white_1000"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/black"
+                    android:textSize="22dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

@@ -27,25 +27,36 @@
                     android:layout_toRightOf="@+id/img_logo_status"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Society SuperVisor"
+                android:text="Society SuperVisor"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/currentTimeRecord"
+                android:layout_below="@id/name_custom_record"
+                android:layout_toRightOf="@+id/img_logo_status"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/muli_regular"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </RelativeLayout>
 
-        <com.github.chrisbanes.photoview.PhotoView
+        <ImageView
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/noti_img_xml"
-                android:padding="5dp"
                 android:layout_width="370dp"
-                android:layout_height="280dp" />
+                android:layout_height="300dp" />
 
         <TextView
             android:id="@+id/noti_text_view"
-            android:textSize="30dp"
-            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:fontFamily="@font/muli_regular"
+            android:textColor="@color/md_black_1000"
             android:text="hjdsbkjbds"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"

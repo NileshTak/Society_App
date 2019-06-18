@@ -1,14 +1,21 @@
 package com.nil_projects.society_app
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.app.IntentService
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.MediaStore
+import android.util.Log
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -28,19 +35,60 @@ import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isGone
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.firebase.auth.FirebaseAuth
+import com.onesignal.OneSignal
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    lateinit var mAuth : FirebaseAuth
+    lateinit var btn_logout : Button
+    var LoggedIn_User_Email: String? = null
+    lateinit var tvNavTitle : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tvNavTitle = findViewById<TextView>(R.id.tvnavTitle)
+        btn_logout = findViewById<Button>(R.id.btn_logout)
+
+        mAuth = FirebaseAuth.getInstance()
+        var user = mAuth.currentUser
+
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init()
+
+
+        if (user != null) {
+            LoggedIn_User_Email =user!!.getEmail()
+        }else{
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+        OneSignal.sendTag("NotificationID", LoggedIn_User_Email);
+
+
+        btn_logout.setOnClickListener {
+            mAuth.signOut()
+            Toast.makeText(this,"LogOut Successfully",Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+        askImpPermissions()
         supportFragmentManager.beginTransaction().replace(R.id.frame_container, HomeFrag()).commit()
-        supportActionBar!!.title = "Home"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Home"
 
         val fab_add_Worker = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.add_worker_fab)
         fab_add_Worker.setOnClickListener {
@@ -59,6 +107,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fab_notification_update = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.update_notification_fab)
         fab_notification_update.setOnClickListener {
             var int = Intent(this , UpdateNotification :: class.java)
+            startActivity(int)
+        }
+
+        val fab_report_update = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.update_report_fab)
+        fab_report_update.setOnClickListener {
+            var int = Intent(this , UpdateReport :: class.java)
             startActivity(int)
         }
 
@@ -83,6 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onDrawerSlide(drawerView, slideOffset)
             }
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val w = window
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -96,6 +151,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun askImpPermissions() {
+        askPermission(Manifest.permission.INTERNET,Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+                ,Manifest.permission.ACCESS_NETWORK_STATE){
+
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+                //the list of denied permissions
+                e.denied.forEach {
+                }
+
+                AlertDialog.Builder(this@MainActivity)
+                        .setMessage("Please accept our permissions.. Otherwise you will not be able to use some of our Important Features.")
+                        .setPositiveButton("yes") { dialog, which ->
+                            e.askAgain()
+                        } //ask again
+                        .setNegativeButton("no") { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .show()
+            }
+
+            if (e.hasForeverDenied()) {
+                //the list of forever denied permissions, user has check 'never ask again'
+                e.foreverDenied.forEach {
+                }
+                // you need to open setting manually if you really need it
+                e.goToSettings();
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -114,16 +200,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
-
+        when(item?.itemId)
+        {
+            R.id.view_users ->
+            {
+                var int = Intent(this,User_profiles_list :: class.java)
+                startActivity(int)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -141,13 +226,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 loadUserReqFrag(fragUserReq = UserReqFrag())
             }
             R.id.nav_complaints -> {
-
+                loadComplaintFrag(fragmentComplaint = ComplaintsFragment())
             }
             R.id.nav_notification -> {
                 loadNotifiFrag(fragNotifi = NotificationFrag())
             }
-            R.id.nav_parking -> {
-
+            R.id.nav_maintainance -> {
+                loadMaintainanceFrag(fragMaintainance = Maintainance_Records())
             }
             R.id.nav_workers -> {
                 loadWorkersFrag(fragWorkers = WorkersFrag())
@@ -162,7 +247,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadHomeFrag(fragHome : HomeFrag)
     {
         val fm = supportFragmentManager.beginTransaction()
-        supportActionBar!!.title = "Home"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Home"
         fm.replace(R.id.frame_container,fragHome)
         fm.commit()
     }
@@ -170,7 +256,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadUserReqFrag(fragUserReq : UserReqFrag)
     {
         val fm = supportFragmentManager.beginTransaction()
-        supportActionBar!!.title = "User Requests"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "User Requests"
         fm.replace(R.id.frame_container,fragUserReq)
         fm.commit()
     }
@@ -178,7 +265,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadReportFrag(fragReport : ReportFrag)
     {
         val fm = supportFragmentManager.beginTransaction()
-        supportActionBar!!.title = "Reports"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Building Notice"
         fm.replace(R.id.frame_container,fragReport)
         fm.commit()
     }
@@ -186,7 +274,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadWorkersFrag(fragWorkers : WorkersFrag)
     {
         val fm = supportFragmentManager.beginTransaction()
-        supportActionBar!!.title = "Workers"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Workers"
         fm.replace(R.id.frame_container,fragWorkers)
         fm.commit()
     }
@@ -194,13 +283,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadNotifiFrag(fragNotifi : NotificationFrag)
     {
         val fm = supportFragmentManager.beginTransaction()
-        supportActionBar!!.title = "Notifications"
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Society Notice"
         fm.replace(R.id.frame_container,fragNotifi)
         fm.commit()
     }
-}
 
-class NotificationClass(val id : String,val notification: String)
-{
-    constructor() : this("","")
+    fun loadComplaintFrag(fragmentComplaint : ComplaintsFragment)
+    {
+        val fm = supportFragmentManager.beginTransaction()
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Complaint Box"
+        fm.replace(R.id.frame_container,fragmentComplaint)
+        fm.commit()
+    }
+
+    fun loadMaintainanceFrag(fragMaintainance : Maintainance_Records)
+    {
+        val fm = supportFragmentManager.beginTransaction()
+        supportActionBar!!.title = ""
+        tvNavTitle.text = "Maintainance Records"
+        fm.replace(R.id.frame_container,fragMaintainance)
+        fm.commit()
+    }
+
 }
