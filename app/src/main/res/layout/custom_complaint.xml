@@ -142,7 +142,7 @@
 
                     <Button
                         android:id="@+id/btn_solved"
-                        android:text="Solved"
+                        android:text="Solve"
                         android:layout_below="@+id/img_display_success"
                         android:textColor="@color/md_white_1000"
                         android:textSize="30dp"

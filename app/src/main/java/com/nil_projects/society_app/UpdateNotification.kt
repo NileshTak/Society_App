@@ -31,6 +31,7 @@ import androidx.appcompat.app.AlertDialog
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.tapadoo.alerter.Alerter
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
@@ -70,7 +71,6 @@ class UpdateNotification : AppCompatActivity() {
         fetchuserMobilefromFirebase()
 
         updatenoti.setOnClickListener {
-
             progressDialog = ProgressDialog(this)
             progressDialog.setMessage("Wait a Sec....Updating Notification")
             progressDialog.setCancelable(false)
@@ -336,18 +336,35 @@ class UpdateNotification : AppCompatActivity() {
                 .addOnSuccessListener {
                     progressDialog.dismiss()
                     onBackPressed()
-                    Toast.makeText(applicationContext,"Notification Added Successfully",Toast.LENGTH_LONG).show()
+                    showAlert()
                     sendFCMtoUsers()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(applicationContext,"Failed to Update",Toast.LENGTH_LONG).show()
+                    Alerter.create(this@UpdateNotification)
+                            .setTitle("Society Notice")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Update!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
                 }
+    }
+
+    private fun showAlert() {
+        Alerter.create(this@UpdateNotification)
+                .setTitle("Society Notice")
+                .setIcon(R.drawable.society)
+                .setText("Society Notice Successfully Posted!! #KeepPosting :)")
+                .setBackgroundColorRes(R.color.colorAccent)
+                .setDuration(4000)
+                .show()
     }
 
     private fun fetchuserMobilefromFirebase()
     {
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
+                .whereEqualTo("userAuth","Accepted")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
 

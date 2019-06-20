@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.activity_add__worker.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.io.File
@@ -254,15 +255,31 @@ class Add_Worker : AppCompatActivity() {
                 .addOnSuccessListener {
 
                     progressDialog.dismiss()
-                    Toast.makeText(applicationContext,"Worker Added Successfully",Toast.LENGTH_LONG).show()
+                    showAlert()
                     val intent = Intent(this,MainActivity :: class.java)
                     startActivity(intent)
                     sendFCMtoUsers()
 
                 }
                 .addOnFailureListener {
-                    Toast.makeText(applicationContext,"Failed to Add Worker",Toast.LENGTH_LONG).show()
+                    Alerter.create(this@Add_Worker)
+                            .setTitle("Payment Update")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Update!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
                 }
+    }
+
+    private fun showAlert() {
+        Alerter.create(this@Add_Worker)
+                .setTitle("Worker")
+                .setIcon(R.drawable.worker)
+                .setDuration(4000)
+                .setText("Worker Added Successfully!! :)")
+                .setBackgroundColorRes(R.color.colorAccent)
+                .show()
     }
 
     private fun fetchuserMobilefromFirebase()

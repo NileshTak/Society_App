@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.activity_add__payment__update.*
 import kotlinx.android.synthetic.main.activity_add__worker.*
 import kotlinx.android.synthetic.main.custom_records_layout.*
@@ -273,7 +274,7 @@ class Add_Payment_Update : AppCompatActivity() {
                         db.collection("FlatUsers").document(document.UserID)
                                 .collection("PaidMonths").document(receiptNo.text.toString())
                                 .set(items).addOnSuccessListener {
-                            Toast.makeText(this, "Successfully uploaded to the database :)", Toast.LENGTH_LONG).show()
+                                    showAlert()
                                     chip_grp.removeAllViews()
                                     sendFCMtoUsers()
 
@@ -283,8 +284,24 @@ class Add_Payment_Update : AppCompatActivity() {
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.w("SocietyFirestore", "Error getting documents.", exception)
+                    Alerter.create(this@Add_Payment_Update)
+                            .setTitle("Payment Update")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Update!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
                 }
+    }
+
+    private fun showAlert() {
+        Alerter.create(this@Add_Payment_Update)
+                .setTitle("Payment Update")
+                .setDuration(4000)
+                .setIcon(R.drawable.money)
+                .setText("Payment Details Updated Successfully!! :)")
+                .setBackgroundColorRes(R.color.colorAccent)
+                .show()
     }
 
     private fun sendFCMtoUsers() {

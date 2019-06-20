@@ -10,6 +10,8 @@ import android.content.IntentFilter
 import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -41,21 +43,27 @@ import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
+import com.tapadoo.alerter.Alerter
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var mAuth : FirebaseAuth
+    var netInfo : NetworkInfo? = null
     lateinit var btn_logout : Button
     var LoggedIn_User_Email: String? = null
     lateinit var tvNavTitle : TextView
+    lateinit var navProfList : CircleImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvNavTitle = findViewById<TextView>(R.id.tvnavTitle)
         btn_logout = findViewById<Button>(R.id.btn_logout)
+        navProfList = findViewById<CircleImageView>(R.id.navProfList)
 
         mAuth = FirebaseAuth.getInstance()
         var user = mAuth.currentUser
@@ -69,8 +77,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init()
 
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                noInt()
+                               }
+        },0,5000)
+
 
         if (user != null) {
+            OneSignal.setSubscription(true)
             LoggedIn_User_Email =user!!.getEmail()
         }else{
             startActivity(Intent(this, LoginActivity::class.java))
@@ -78,10 +93,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         OneSignal.sendTag("NotificationID", LoggedIn_User_Email);
 
-
         btn_logout.setOnClickListener {
             mAuth.signOut()
-            Toast.makeText(this,"LogOut Successfully",Toast.LENGTH_LONG).show()
+            Alerter.create(this@MainActivity)
+                    .setTitle("Admin")
+                    .setIcon(R.drawable.noti)
+                    .setDuration(4000)
+                    .setText("Successfully Loged Out!! :)")
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .show()
+            OneSignal.setSubscription(false)
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
@@ -151,6 +172,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun noInt() {
+        val cm = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        netInfo = cm.activeNetworkInfo
+
+        if(netInfo == null)
+        {
+            Alerter.create(this@MainActivity)
+                    .setTitle("No Internet Connnection")
+                    .setIcon(R.drawable.noint)
+                    .setText("Please make sure your device is connected to Internet!!")
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .show()
+        }
     }
 
     private fun askImpPermissions() {

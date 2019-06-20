@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.activity_update_report.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
 import pl.droidsonroids.gif.GifImageView
@@ -219,21 +220,38 @@ class UpdateReport : AppCompatActivity() {
         val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
         ref.setValue(status)
                 .addOnSuccessListener {
-                    Toast.makeText(applicationContext,"Record Uploaded",Toast.LENGTH_LONG).show()
+                    showAlert()
                     sendFCMtoUsers()
                     progressDialog.dismiss()
                     var int = Intent(this,MainActivity::class.java)
                     startActivity(int)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(applicationContext,"Failed to Save Record",Toast.LENGTH_LONG).show()
+                    Alerter.create(this@UpdateReport)
+                            .setTitle("Building Notice")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Update!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
                 }
+    }
+
+    private fun showAlert() {
+        Alerter.create(this@UpdateReport)
+                .setTitle("Building Notice")
+                .setIcon(R.drawable.build)
+                .setText("Building Notice Successfully Posted!! #KeepPosting :)")
+                .setBackgroundColorRes(R.color.colorAccent)
+                .setDuration(4000)
+                .show()
     }
 
     private fun fetchuserMobilefromFirebase()
     {
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
+                .whereEqualTo("userAuth","Accepted")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
 

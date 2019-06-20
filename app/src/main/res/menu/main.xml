@@ -4,8 +4,7 @@
 
     <item
         android:id="@+id/view_users"
-        android:icon="@drawable/home"
         app:showAsAction="ifRoom"
-        android:title="User_profiles" />
+        android:title="" />
 
 </menu>
