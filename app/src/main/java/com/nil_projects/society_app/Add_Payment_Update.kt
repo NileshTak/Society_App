@@ -1,6 +1,7 @@
 package com.nil_projects.society_app
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
+@Suppress("DEPRECATION")
 class Add_Payment_Update : AppCompatActivity() {
 
     lateinit var spinner_add_payment_wing: Spinner
@@ -55,6 +57,7 @@ class Add_Payment_Update : AppCompatActivity() {
     var LoggedIn_User_Email: String? = null
     lateinit var listMobileNo : ArrayList<String>
     lateinit var listUserIds : ArrayList<String>
+    lateinit var progressDialog: ProgressDialog
     var currentUserId : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -243,6 +246,10 @@ class Add_Payment_Update : AppCompatActivity() {
                     fetchUserbyFlat(spin_value_flat.toString(),spin_value_wing.toString())
 
                     btn_update.setOnClickListener {
+                        progressDialog = ProgressDialog(this@Add_Payment_Update)
+                        progressDialog.setMessage("Wait a Sec....Updating Notification")
+                        progressDialog.setCancelable(false)
+                        progressDialog.show()
                         updateOnFirebase(arrOfChips,spin_value_flat.toString(),spin_value_wing.toString())
                     }
                 }
@@ -275,6 +282,7 @@ class Add_Payment_Update : AppCompatActivity() {
                                 .collection("PaidMonths").document(receiptNo.text.toString())
                                 .set(items).addOnSuccessListener {
                                     showAlert()
+                                    progressDialog.dismiss()
                                     chip_grp.removeAllViews()
                                     sendFCMtoUsers()
 

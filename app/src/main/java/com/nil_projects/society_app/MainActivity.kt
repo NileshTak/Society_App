@@ -36,9 +36,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isGone
+import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.firebase.auth.FirebaseAuth
@@ -139,6 +141,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val fab = findViewById<FloatingActionsMenu>(R.id.fab)
         val holder = findViewById<LinearLayout>(R.id.holder)
         val toggle = object : ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {

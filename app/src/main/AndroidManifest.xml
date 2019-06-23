@@ -21,9 +21,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/symbol"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/symbol"
+        android:roundIcon="@mipmap/symbol_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".UpdateReport"

@@ -38,8 +38,8 @@
                 android:id="@+id/nav_complaints"
                 android:icon="@drawable/ic_menu_complains"
                 android:title="Complaints" />
-
             </group>
+
         </menu>
     </item>
 
