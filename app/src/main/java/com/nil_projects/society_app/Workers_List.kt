@@ -179,11 +179,7 @@ class Workers_List : AppCompatActivity() {
     }
 }
 
-class FetchWorkerClass(val id : String,val name : String,val imageUrl : String,val address : String,
-                     val type : String,val mobile : String,val dateofjoining : String,val speciality : String)
-{
-    constructor() : this("","","","","",",","","")
-}
+
 
 
 

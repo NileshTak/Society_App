@@ -247,9 +247,10 @@ class Add_Payment_Update : AppCompatActivity() {
 
                     btn_update.setOnClickListener {
                         progressDialog = ProgressDialog(this@Add_Payment_Update)
-                        progressDialog.setMessage("Wait a Sec....Updating Notification")
+                        progressDialog.setMessage("Wait a Sec....Updating Payment Details")
                         progressDialog.setCancelable(false)
                         progressDialog.show()
+                        for(i in 0..arrOfChips.size-1)
                         updateOnFirebase(arrOfChips,spin_value_flat.toString(),spin_value_wing.toString())
                     }
                 }
@@ -260,10 +261,6 @@ class Add_Payment_Update : AppCompatActivity() {
 
     private fun updateOnFirebase(arr : ArrayList<String>,flat : String,wing : String)
     {
-//        for(i in 0..arr.size-1)
-//
-//            Toast.makeText(this,arr[i],Toast.LENGTH_LONG).show()
-
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
                 .whereEqualTo("FlatNo", flat).whereEqualTo("Wing", wing)
@@ -286,9 +283,9 @@ class Add_Payment_Update : AppCompatActivity() {
                                     chip_grp.removeAllViews()
                                     sendFCMtoUsers()
 
-                        }.addOnFailureListener {
-                            exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-                        }
+                                }.addOnFailureListener {
+                                    exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                                }
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -381,9 +378,7 @@ class Add_Payment_Update : AppCompatActivity() {
                             } catch (t: Throwable) {
                                 t.printStackTrace()
                             }
-
                         }
-
                     }
 
                 } else {
@@ -446,13 +441,4 @@ class Add_Payment_Update : AppCompatActivity() {
                     Log.w("SocietyFirestore", "Error getting documents.", exception)
                 }
         }
-}
-
-class UserClass(val UserID : String,val Profile_Pic_url : String,val UserName : String,val email : String,
-                val city: String,val societyname : String,val Wing : String,
-                val FlatNo : String,val UserRelation : String,val userAuth : String,val MobileNumber : String,
-                val registrationTokens : MutableList<String>)
-{
-    constructor() : this("","","","","","","","",
-            "","","", mutableListOf())
 }

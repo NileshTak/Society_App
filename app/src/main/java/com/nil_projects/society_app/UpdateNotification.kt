@@ -460,7 +460,3 @@ class UpdateNotification : AppCompatActivity() {
     }
 }
 
-class AddNotifiClass(val id : String,val noti : String,val imageUrl : String,val currentTime : String)
-{
-    constructor() : this("","","","")
-}

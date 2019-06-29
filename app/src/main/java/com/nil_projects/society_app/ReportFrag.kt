@@ -158,8 +158,3 @@ class ReportFrag : Fragment() {
 
 
 
-class RecordClass(val id : String,val date: String,val imageUrl : String,val counter : String,val wing : String)
-{
-    constructor() : this("","","","","")
-}
-

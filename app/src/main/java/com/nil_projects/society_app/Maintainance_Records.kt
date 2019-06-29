@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.diegodobelo.expandingview.ExpandingItem
 import com.diegodobelo.expandingview.ExpandingList
@@ -18,6 +19,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.custon_maintainancerecords.view.*
+import kotlinx.android.synthetic.main.expanding_item.view.*
 import kotlinx.android.synthetic.main.expanding_sub_item.*
 import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_maintainance__records.*
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_maintainance__records.view.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Maintainance_Records : Fragment() {
 
@@ -36,20 +39,19 @@ class Maintainance_Records : Fragment() {
     lateinit var select_month : EditText
     lateinit var db : FirebaseFirestore
     lateinit var selectedMonth : String
+    var userList : ArrayList<String> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_maintainance__records, container, false)
 
-
         db = FirebaseFirestore.getInstance()
-
 
         //     recycler_maintainance = view.findViewById<RecyclerView>(R.id.recyclerview_xml_maintainancerecords)
         mExpandingList = view.findViewById<ExpandingList>(R.id.expanding_list_main)
-        spin_paidornotpaid = view.findViewById<Spinner>(R.id.spinner_paidornotpaid)
-        select_month = view.findViewById<EditText>(R.id.date_maintain_records)
+        spin_paidornotpaid = view.findViewById<View>(R.id.spinner_paidornotpaid) as Spinner
+        select_month = view.findViewById<View>(R.id.date_maintain_records) as EditText
 
         select_month.setOnClickListener {
             datePicker()
@@ -64,7 +66,7 @@ class Maintainance_Records : Fragment() {
         spin_paidornotpaid.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Toast.makeText(activity,"Please Select",Toast.LENGTH_LONG).show()
-                fetchMaintainancepaidMonths()
+                //fetchMaintainancepaidMonths()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -176,8 +178,11 @@ class Maintainance_Records : Fragment() {
                 .get()
                 .addOnSuccessListener {
                     it.documents.forEach {
-                        val monthsdata = it.toObject(months :: class.java)
+                        val monthsdata = it.toObject(months::class.java)
 
+                        Log.d("SocietyApp",monthsdata!!.ReceiptNumber)
+
+                     //   if (monthsdata!!.MonthsPaid1 != selectedMonth && monthsdata.MonthsPaid2 != selectedMonth) {
                         if (monthsdata!!.MonthsPaid0 != selectedMonth && monthsdata.MonthsPaid1 != selectedMonth
                                 && monthsdata.MonthsPaid2 != selectedMonth && monthsdata.MonthsPaid3 != selectedMonth
                                 && monthsdata.MonthsPaid4 != selectedMonth && monthsdata.MonthsPaid5 != selectedMonth
@@ -185,19 +190,89 @@ class Maintainance_Records : Fragment() {
                                 && monthsdata.MonthsPaid8 != selectedMonth && monthsdata.MonthsPaid9 != selectedMonth
                                 && monthsdata.MonthsPaid10 != selectedMonth && monthsdata.MonthsPaid11 != selectedMonth) {
 
-                            Log.d("Count",flatNo)
+                            Log.d("Count", flatNo)
 
                             addItem("Pending", arrayOf(""),flatNo,wingname,
                                     R.color.md_pink_400, R.drawable.ic_ghost)
 
+                            return@addOnSuccessListener
+
+                        //    userList = arrayListOf<String>()
+//                            userList.add(wingname)
+                        }
+                        else
+                        {
+                            return@addOnSuccessListener
                         }
                     }
+//                    if(userList.size >= 2)
+//                    {
+//                        for(i in 0 until userList.size)
+//                        {
+//                            for(j in 1 until userList.size)
+//                            {
+//                                if(userList[i] != userList[j])
+//                                {
+//                                    addItem("Pending", arrayOf(""),flatNo,wingname,
+//                                            R.color.md_pink_400, R.drawable.ic_ghost)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    else{
+//                        addItem("Pending", arrayOf(""),flatNo,wingname,
+//                                R.color.md_pink_400, R.drawable.ic_ghost)
+//                    }
                 }
     }
+
+//
+//    private fun fetchMaintainanceNotpaidMonths() {
+//
+//        var flatNo : String
+//        var wingname : String
+//
+//        var db = FirebaseFirestore.getInstance()
+//        db.collection("FlatUsers")
+//                .whereEqualTo("SocietyName", "SIDDHIVINAYAK MANAS CO-OP. HOUSING SOCIETY")
+//                .get()
+//                .addOnSuccessListener { documentSnapshot ->
+//                    documentSnapshot.documents.forEach {
+//                        val city = it.toObject(UserClass :: class.java)
+//                        for(i in 0..11)
+//                            db.collection("FlatUsers").document(city!!.UserID).collection("PaidMonths")
+//                               //     .whereEqualTo("MonthsPaid$i", select_month.text.toString())
+//                                    .get()
+//                                    .addOnSuccessListener {
+//                                        it.documents.forEach {
+//                                            val monthsdata = it.toObject(months :: class.java)
+//
+//                                            if (monthsdata!!.MonthsPaid0 != selectedMonth || monthsdata.MonthsPaid1 != selectedMonth
+//                                                    || monthsdata.MonthsPaid2 != selectedMonth || monthsdata.MonthsPaid3 != selectedMonth
+//                                                    || monthsdata.MonthsPaid4 != selectedMonth || monthsdata.MonthsPaid5 != selectedMonth
+//                                                    || monthsdata.MonthsPaid6 != selectedMonth || monthsdata.MonthsPaid7 != selectedMonth
+//                                                    || monthsdata.MonthsPaid8 != selectedMonth || monthsdata.MonthsPaid9 != selectedMonth
+//                                                    || monthsdata.MonthsPaid10 != selectedMonth || monthsdata.MonthsPaid11 != selectedMonth) {
+//
+//                            Log.d("Count",flatNo)
+//
+//                            addItem("Pending", arrayOf(""),flatNo,wingname,
+//                                    R.color.md_pink_400, R.drawable.ic_ghost)
+//
+//                                        }
+//                                        }
+//                                    }
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("SocietyFirestore", "Error getting documents.", exception)
+//                }
+//    }
 
 
     private fun addItem(title: String, subItems: Array<String>,flatNo : String,wingname : String, colorRes: Int, iconRes: Int) {
         //Let's create an item with R.layout.expanding_layout
+
         val item = mExpandingList!!.createNewItem(R.layout.expanding_layout)
 
         //If item creation is successful, let's configure it
@@ -218,18 +293,6 @@ class Maintainance_Records : Fragment() {
                 //Let's set some values in
                 configureSubItem(item, view, subItems[i])
             }
-
-//            item.findViewById<ImageView>(R.id.add_more_sub_items).setOnClickListener(View.OnClickListener {
-//                showInsertDialog(object : OnItemCreated {
-//                    override fun itemCreated(title: String) {
-//                        val newSubItem = item.createSubItem()
-//                        configureSubItem(item, newSubItem!!, title)
-//                    }
-//                })
-//            })
-
-//            item.findViewById<ImageView>(R.id.remove_item)
-//                    .setOnClickListener(View.OnClickListener { mExpandingList!!.removeItem(item) })
         }
     }
 
@@ -239,41 +302,6 @@ class Maintainance_Records : Fragment() {
         {
             item!!.removeSubItem(view)
         }
-//        view.findViewById<ImageView>(R.id.remove_sub_item)
-//                .setOnClickListener(View.OnClickListener { item!!.removeSubItem(view) })
     }
 
-//    private fun showInsertDialog(positive: OnItemCreated) {
-//        val text = EditText(activity)
-//        val builder = AlertDialog.Builder(activity)
-//        builder.setView(text)
-//        builder.setTitle("Enter Title")
-//        builder.setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, which -> positive.itemCreated(text.text.toString()) })
-//        builder.setNegativeButton(android.R.string.cancel, null)
-//        builder.show()
-//    }
-
-//    internal interface OnItemCreated {
-//        fun itemCreated(title: String)
-//    }
-
-//    inner class FetchNotificationItem(var Finalnotifi: months) : Item<ViewHolder>() {
-//
-//        override fun getLayout(): Int {
-//            return R.layout.custon_maintainancerecords
-//        }
-//
-//        override fun bind(viewHolder: ViewHolder, position: Int) {
-//            viewHolder.itemView.receipt_no_custom.text = Finalnotifi.ReceiptNumber
-//        }
-//    }
-}
-
-class months(val MonthsPaid0: String,val MonthsPaid1 : String,val MonthsPaid2 : String,val MonthsPaid3: String,val MonthsPaid4: String,
-             val MonthsPaid5: String,val MonthsPaid6: String,val MonthsPaid7: String,val MonthsPaid8: String,
-             val MonthsPaid9: String,val MonthsPaid10: String,val MonthsPaid11: String,
-             val ReceiptNumber : String)
-{
-    constructor() : this("","","","","","",
-            "","","","","","","")
 }

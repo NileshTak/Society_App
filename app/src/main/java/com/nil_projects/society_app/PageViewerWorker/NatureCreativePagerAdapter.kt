@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.nil_projects.society_app.NatureItem
 import com.nil_projects.society_app.R
 import com.nil_projects.society_app.Workers_List
 import com.tbuonomo.creativeviewpager.adapter.CreativePagerAdapter
