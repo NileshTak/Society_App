@@ -8,12 +8,11 @@
     android:background="@color/md_white_1000"
     tools:context=".UpdateReport">
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/imgGifCamera"
         android:layout_width="230dp"
         android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/fab"
         android:layout_height="230dp" />
 
     <LinearLayout

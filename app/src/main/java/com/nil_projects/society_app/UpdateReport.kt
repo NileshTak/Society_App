@@ -33,7 +33,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.activity_update_report.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
-import pl.droidsonroids.gif.GifImageView
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -45,7 +44,7 @@ import java.util.*
 class UpdateReport : AppCompatActivity() {
 
     lateinit var img_select_camera: ImageView
-    lateinit var imgGifCamera : GifImageView
+    lateinit var imgGifCamera : ImageView
     lateinit var spinner_wing : Spinner
     val REQUEST_PERM_WRITE_STORAGE = 102
     lateinit var datePickerdialog : DatePickerDialog
@@ -69,10 +68,12 @@ class UpdateReport : AppCompatActivity() {
         var btn_update = findViewById<Button>(R.id.btn_update)
         spinner_wing = findViewById<Spinner>(R.id.spinner_wing)
         var date_editText = findViewById<EditText>(R.id.date_editText)
-        imgGifCamera = findViewById<GifImageView>(R.id.imgGifCamera)
+        imgGifCamera = findViewById<ImageView>(R.id.imgGifCamera)
         LoggedIn_User_Email = FirebaseAuth.getInstance().currentUser!!.getEmail()
         listMobileNo = ArrayList<String>()
         listWingName = ArrayList<String>()
+
+        Glide.with(this@UpdateReport).asGif().load(R.drawable.fab).into(imgGifCamera)
 
         val bundle: Bundle? = intent.extras
         if(bundle != null)
@@ -120,7 +121,7 @@ class UpdateReport : AppCompatActivity() {
     }
 
     private fun askCameraPermission() {
-        askPermission(Manifest.permission.CAMERA,Manifest.permission.READ_CALENDAR){
+        askPermission(Manifest.permission.CAMERA){
             var int = Intent(UpdateReport@this,Camera2APIScreen::class.java)
             startActivity(int)
         }.onDeclined { e ->

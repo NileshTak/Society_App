@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.xwray.groupie.GroupAdapter
@@ -112,10 +113,13 @@ class ComplaintsFragment : Fragment() {
 
             if(FinalComplaintList.CompProcess == "Under Process")
             {
-                viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.processing)
+                Glide.with(context).asGif().load(R.drawable.processing).into(viewHolder.itemView.problem_logo)
+        //        viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.processing)
             }
             else{
-                viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.checkmark)
+               // viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.checkmark)
+                Glide.with(context).asGif().load(R.drawable.checkmark).into(viewHolder.itemView.problem_logo)
+
                 viewHolder.itemView.btn_solved.visibility = View.INVISIBLE
                 viewHolder.itemView.img_display_success.visibility = View.VISIBLE
             }

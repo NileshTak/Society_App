@@ -131,7 +131,7 @@
 
                     </LinearLayout>
 
-                    <pl.droidsonroids.gif.GifImageView
+                    <ImageView
                         android:visibility="gone"
                         android:id="@+id/img_display_success"
                         android:src="@drawable/checkmark"
@@ -189,7 +189,7 @@
                         android:fontFamily="@font/muli_regular"
                         android:textColor="#000000" />
 
-                    <pl.droidsonroids.gif.GifImageView
+                    <ImageView
                         android:id="@+id/problem_logo"
                         android:layout_width="50dp"
                         android:layout_marginTop="18dp"
