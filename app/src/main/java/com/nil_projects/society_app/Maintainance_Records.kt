@@ -115,6 +115,8 @@ class Maintainance_Records : Fragment() {
 
         var flatNo : String
         var wingname : String
+        var Amount : String
+        var Fine : String
 
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
@@ -133,6 +135,8 @@ class Maintainance_Records : Fragment() {
 
                                                 flatNo = city!!.FlatNo
                                                 wingname = city!!.Wing
+                                                Amount = monthsdata!!.Amount
+                                                Fine = monthsdata!!.Fine
 
                                                 if (monthsdata != null) {
                                                     //           adapter.add(FetchNotificationItem(monthsdata))
@@ -140,7 +144,7 @@ class Maintainance_Records : Fragment() {
                                                     addItem(monthsdata.ReceiptNumber, arrayOf(monthsdata.MonthsPaid0,monthsdata.MonthsPaid1,monthsdata.MonthsPaid2,monthsdata.MonthsPaid3
                                                             ,monthsdata.MonthsPaid4,monthsdata.MonthsPaid5,monthsdata.MonthsPaid6
                                                             ,monthsdata.MonthsPaid7,monthsdata.MonthsPaid8,monthsdata.MonthsPaid9
-                                                            ,monthsdata.MonthsPaid10,monthsdata.MonthsPaid11),flatNo,wingname,
+                                                            ,monthsdata.MonthsPaid10,monthsdata.MonthsPaid11),flatNo,wingname,Amount,Fine,
                                                             R.color.md_pink_400, R.drawable.ic_ghost)
                                                 }
                                             }
@@ -192,7 +196,7 @@ class Maintainance_Records : Fragment() {
 
                             Log.d("Count", flatNo)
 
-                            addItem("Pending", arrayOf(""),flatNo,wingname,
+                            addItem("Pending", arrayOf(""),flatNo,wingname,"","",
                                     R.color.md_pink_400, R.drawable.ic_ghost)
 
                             return@addOnSuccessListener
@@ -270,7 +274,9 @@ class Maintainance_Records : Fragment() {
 //    }
 
 
-    private fun addItem(title: String, subItems: Array<String>,flatNo : String,wingname : String, colorRes: Int, iconRes: Int) {
+    private fun addItem(title: String, subItems: Array<String>,flatNo : String,wingname : String,
+                        Amount : String,Fine : String,
+                        colorRes: Int, iconRes: Int) {
         //Let's create an item with R.layout.expanding_layout
 
         val item = mExpandingList!!.createNewItem(R.layout.expanding_layout)
@@ -283,6 +289,14 @@ class Maintainance_Records : Fragment() {
             (item.findViewById(R.id.title) as TextView).text = title
             (item.findViewById(R.id.custom_flatno) as TextView).text = flatNo
             (item.findViewById(R.id.custom_societyname) as TextView).text = wingname
+            if(Amount.isNotEmpty() && Fine.isNotEmpty())
+            {
+                (item.findViewById(R.id.tvAmountFine) as TextView).text = "$Amount+$Fine"
+            }
+            else
+            {
+                (item.findViewById(R.id.tvAmountFine) as TextView).text = "$Amount"
+            }
 
             //We can create items in batch.
             item.createSubItems(subItems.size)

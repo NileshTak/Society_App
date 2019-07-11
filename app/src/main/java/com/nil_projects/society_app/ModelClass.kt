@@ -40,7 +40,7 @@ class AddWorkerClass(val id : String,val name : String,val imageUrl : String,val
     constructor() : this("","","","","",",","","")
 }
 
-class ComplaintClass(val CompUserID : String,val CompFlatNum: String,val CompheadLine : String,val CompDetails : String,
+class ComplaintClass(val CompUserID : String,val CompFlatNum: String,val CompheadLine : String,val ComplaintImg : String,
                      val CompUpdatedDate : String,val CompProcess : String,val CompUserMobileNo : String,
                      val CompWingName : String)
 {
@@ -55,10 +55,11 @@ class SliderImgClass(val Img1 : String,val Img2: String,val Img3 : String,val Im
 class months(val MonthsPaid0: String,val MonthsPaid1 : String,val MonthsPaid2 : String,val MonthsPaid3: String,val MonthsPaid4: String,
              val MonthsPaid5: String,val MonthsPaid6: String,val MonthsPaid7: String,val MonthsPaid8: String,
              val MonthsPaid9: String,val MonthsPaid10: String,val MonthsPaid11: String,
-             val ReceiptNumber : String)
+             val ReceiptNumber : String,val Amount : String,val Fine : String)
 {
     constructor() : this("","","","","","",
-            "","","","","","","")
+            "","","","","","","",
+            "","")
 }
 
 class RecordClass(val id : String,val date: String,val imageUrl : String,val counter : String,val wing : String)

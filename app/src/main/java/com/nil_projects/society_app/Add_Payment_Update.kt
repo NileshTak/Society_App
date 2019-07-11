@@ -52,6 +52,8 @@ class Add_Payment_Update : AppCompatActivity() {
     lateinit var btn_addtag : Button
     lateinit var nameRef: CollectionReference
     lateinit var btn_update : Button
+    lateinit var etAmount : TextInputEditText
+    lateinit var etFine : TextInputEditText
     lateinit var receiptNo : TextInputEditText
     lateinit var arrOfChips : ArrayList<String>
     var LoggedIn_User_Email: String? = null
@@ -67,7 +69,8 @@ class Add_Payment_Update : AppCompatActivity() {
 
         arrOfChips = ArrayList<String>()
 
-
+        etFine = findViewById(R.id.edittext_amountFine) as TextInputEditText
+        etAmount = findViewById<TextInputEditText>(R.id.edittext_amount)
         spinner_add_payment_wing = findViewById<Spinner>(R.id.spinner_add_payment_wing)
         btn_addtag = findViewById<View>(R.id.btn_addtag) as Button
         spinner_add_payment_flat = findViewById<Spinner>(R.id.spinner_add_payment_flat)
@@ -88,11 +91,7 @@ class Add_Payment_Update : AppCompatActivity() {
 
         btn_addtag.setOnClickListener {
             var tags = select_month.text.toString().split(" ")
-            if(select_month.text!!.isEmpty())
-            {
-                select_month.error = "Please Select Month"
-            }
-            else{
+
                 var inflator = LayoutInflater.from(this)
                 var text : String
                 for (text in tags)
@@ -113,7 +112,6 @@ class Add_Payment_Update : AppCompatActivity() {
                     }
                     select_month.setText("")
                 }
-        }
     }
 
         val optionsWIng = arrayOf("Select Wing","Madhumalti Building", "Row House","Aboli Building","Nishigandha Building","Sayali Building","Sonchafa Building")
@@ -230,6 +228,33 @@ class Add_Payment_Update : AppCompatActivity() {
 
     }
 
+    private fun checkData() {
+        if(etAmount.text!!.isEmpty() || etAmount.text!!.length <= 2)
+        {
+            etAmount.error = "Please Enter Valid Amount"
+        }else if(name_user.text!!.isEmpty())
+        {
+            name_user.error = "Please Select Valid Building & Flat Number"
+        }
+        else if(receiptNo.text!!.isEmpty())
+        {
+            receiptNo.error = "Enter Valid Receipt Number"
+        }
+        else if(arrOfChips.size == 0)
+        {
+            Toast.makeText(this@Add_Payment_Update,"Please Select Months",Toast.LENGTH_LONG).show()
+        }
+        else{
+            progressDialog = ProgressDialog(this@Add_Payment_Update)
+            progressDialog.setMessage("Wait a Sec....Updating Payment Details")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+            for(i in 0..arrOfChips.size-1)
+                updateOnFirebase(arrOfChips,spin_value_flat.toString(),spin_value_wing.toString())
+        }
+
+    }
+
     fun flatPassData(optionsFlat : List<String>)
     {
         spinner_add_payment_flat.adapter = ArrayAdapter<String>(this, R.layout.spinner_textview, optionsFlat)
@@ -246,12 +271,7 @@ class Add_Payment_Update : AppCompatActivity() {
                     fetchUserbyFlat(spin_value_flat.toString(),spin_value_wing.toString())
 
                     btn_update.setOnClickListener {
-                        progressDialog = ProgressDialog(this@Add_Payment_Update)
-                        progressDialog.setMessage("Wait a Sec....Updating Payment Details")
-                        progressDialog.setCancelable(false)
-                        progressDialog.show()
-                        for(i in 0..arrOfChips.size-1)
-                        updateOnFirebase(arrOfChips,spin_value_flat.toString(),spin_value_wing.toString())
+                        checkData()
                     }
                 }
             }
@@ -271,6 +291,13 @@ class Add_Payment_Update : AppCompatActivity() {
 
                         val items = HashMap<String, Any>()
                         items.put("ReceiptNumber", receiptNo.text.toString())
+                        items.put("Amount", etAmount.text.toString())
+                        if(etFine.text.toString().isNotEmpty())
+                        {
+                            items.put("Fine",etFine.text.toString())
+                        }else{
+                            items.put("Fine","0")
+                        }
                         for(i in 0..arr.size-1)
                         {
                             items.put("MonthsPaid${i}", arr[i])

@@ -62,18 +62,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/Details_complaint"
+                        <ImageView
+                            android:id="@+id/Img_complaint"
                             android:layout_width="match_parent"
                             android:textAlignment="center"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:textSize="20dp"
-                            android:textColor="@color/md_black_1000"
-                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." />
+                            android:layout_height="300dp"
+                            android:padding="5dp"/>
 
                         <TextView
-                            android:layout_below="@id/Details_complaint"
+                            android:layout_below="@id/Img_complaint"
                             android:textSize="30dp"
                             android:gravity="center_horizontal"
                             android:textColor="@color/md_red_700"
@@ -135,9 +132,10 @@
                         android:visibility="gone"
                         android:id="@+id/img_display_success"
                         android:src="@drawable/checkmark"
+                        android:layout_marginBottom="-10dp"
                         android:layout_below="@id/linear1"
                         android:layout_width="80dp"
-                        android:layout_marginStart="110dp"
+                        android:layout_marginStart="130dp"
                         android:layout_height="80dp" />
 
                     <Button

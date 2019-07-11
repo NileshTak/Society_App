@@ -45,11 +45,41 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/linear"
-        android:layout_margin = "10dp"
+        android:id="@+id/ll"
+        android:weightSum="2"
         android:orientation="horizontal"
         android:layout_below="@id/edittext_receiptNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_amount"
+            android:hint="Total Amount"
+            android:fontFamily="@font/muli_regular"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_amountFine"
+            android:hint="Fine"
+            android:fontFamily="@font/muli_regular"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linear"
+        android:layout_below="@+id/ll"
+        android:layout_margin = "10dp"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
