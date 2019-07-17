@@ -67,10 +67,11 @@ class RecordClass(val id : String,val date: String,val imageUrl : String,val cou
     constructor() : this("","","","","")
 }
 
-class AddNotifiClass(val id : String,val noti : String,val imageUrl : String,val currentTime : String)
+class AddNotifiClass(val id : String,val noti : String,val imageUrl : String,val currentTime : String,val counter : String)
 {
-    constructor() : this("","","","")
+    constructor() : this("","","","","")
 }
+
 
 class FetchWorkerClass(val id : String,val name : String,val imageUrl : String,val address : String,
                        val type : String,val mobile : String,val dateofjoining : String,val speciality : String)

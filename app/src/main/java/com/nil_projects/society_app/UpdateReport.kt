@@ -1,26 +1,18 @@
 package com.nil_projects.society_app
 
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.media.Image
 import android.net.Uri
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.PermissionChecker
+import androidx.core.net.toFile
 import androidx.core.net.toUri
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.firebase.auth.FirebaseAuth
@@ -31,13 +23,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_update_report.*
-import kotlinx.android.synthetic.main.custom_records_layout.view.*
 import java.io.File
-import java.io.FileOutputStream
-import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.file.Path
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,6 +47,7 @@ class UpdateReport : AppCompatActivity() {
     var spin_value : String = "Wing"
     var LoggedIn_User_Email: String? = null
     var imageUri  : Uri? = null
+    var FinalUri : Uri? = null
     lateinit var listMobileNo : ArrayList<String>
     lateinit var listWingName : ArrayList<String>
 
@@ -63,6 +55,10 @@ class UpdateReport : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_report)
         supportActionBar!!.title = "Update New Building Notice"
+
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
 
         img_select_camera = findViewById<ImageView>(R.id.img_select_camera)
         var btn_update = findViewById<Button>(R.id.btn_update)
@@ -83,6 +79,8 @@ class UpdateReport : AppCompatActivity() {
             imageUri = uri.toUri()
             Log.d("CameraUri",imageUri.toString())
             Glide.with(UpdateReport@this).load(imageUri).into(img_select_camera)
+
+            compress(imageUri!!)
         }
 
         date_editText.setOnClickListener {
@@ -118,6 +116,20 @@ class UpdateReport : AppCompatActivity() {
             progressDialog.show()
             UploadImgtoFirebase()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun compress(imageUri: Uri) {
+        var auxFile = File(imageUri.path)
+        var compressedImageFile = Compressor(this).compressToFile(auxFile)
+        Log.d("CameraUri",compressedImageFile.toString())
+
+        FinalUri = Uri.fromFile(compressedImageFile)
+        Log.d("CameraUri",FinalUri.toString())
     }
 
     private fun askCameraPermission() {
@@ -168,7 +180,7 @@ class UpdateReport : AppCompatActivity() {
 
     private fun UploadImgtoFirebase() {
         Log.d("SocietyLogs","Uri is Uplod"+imageUri.toString())
-        if(imageUri == null || date_editText.text.isEmpty())
+        if(FinalUri == null || date_editText.text.isEmpty())
         {
             progressDialog.dismiss()
             Toast.makeText(applicationContext,"Please Select Valid Image & Valid Data",Toast.LENGTH_LONG).show()
@@ -179,7 +191,7 @@ class UpdateReport : AppCompatActivity() {
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/RecordImages/$filename")
 
-        ref.putFile(imageUri!!)
+        ref.putFile(FinalUri!!)
                 .addOnSuccessListener {
                     Toast.makeText(applicationContext,"Image Uploaded",Toast.LENGTH_LONG).show()
                     Log.d("SocietyLogs","Image uploaded")
@@ -198,7 +210,7 @@ class UpdateReport : AppCompatActivity() {
         val recordid = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates/$recordid")
 
-        val refrec = FirebaseDatabase.getInstance().getReference("/RecordsDates")
+        val refrec = FirebaseDatabase.getInstance().reference.child("RecordsDates")
 
         refrec.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -208,34 +220,55 @@ class UpdateReport : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.exists())
                 {
+                    Log.d("ChildrenCount",p0.childrenCount.toString())
                     counter = p0.childrenCount
+
+                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
+                    ref.setValue(status)
+                            .addOnSuccessListener {
+                                showAlert()
+                                sendFCMtoUsers()
+                                progressDialog.dismiss()
+                                var int = Intent(this@UpdateReport,MainActivity::class.java)
+                                startActivity(int)
+                            }
+                            .addOnFailureListener {
+                                Alerter.create(this@UpdateReport)
+                                        .setTitle("Building Notice")
+                                        .setIcon(R.drawable.alert)
+                                        .setDuration(4000)
+                                        .setText("Failed to Update!! Please Try after some time!!")
+                                        .setBackgroundColorRes(R.color.colorAccent)
+                                        .show()
+                            }
+
                 }
                 else
                 {
                     counter = 0
+
+                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
+                    ref.setValue(status)
+                            .addOnSuccessListener {
+                                showAlert()
+                                sendFCMtoUsers()
+                                progressDialog.dismiss()
+                                var int = Intent(this@UpdateReport,MainActivity::class.java)
+                                startActivity(int)
+                            }
+                            .addOnFailureListener {
+                                Alerter.create(this@UpdateReport)
+                                        .setTitle("Building Notice")
+                                        .setIcon(R.drawable.alert)
+                                        .setDuration(4000)
+                                        .setText("Failed to Update!! Please Try after some time!!")
+                                        .setBackgroundColorRes(R.color.colorAccent)
+                                        .show()
+                            }
                 }
             }
 
         })
-
-        val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
-        ref.setValue(status)
-                .addOnSuccessListener {
-                    showAlert()
-                    sendFCMtoUsers()
-                    progressDialog.dismiss()
-                    var int = Intent(this,MainActivity::class.java)
-                    startActivity(int)
-                }
-                .addOnFailureListener {
-                    Alerter.create(this@UpdateReport)
-                            .setTitle("Building Notice")
-                            .setIcon(R.drawable.alert)
-                            .setDuration(4000)
-                            .setText("Failed to Update!! Please Try after some time!!")
-                            .setBackgroundColorRes(R.color.colorAccent)
-                            .show()
-                }
     }
 
     private fun showAlert() {

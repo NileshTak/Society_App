@@ -57,6 +57,11 @@ class Add_Worker : AppCompatActivity() {
         setContentView(R.layout.activity_add__worker)
         supportActionBar!!.title = "Add Worker"
 
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+
+
         spinner_type_worker = findViewById<Spinner>(R.id.spinner_type_worker)
         edSpeciality = findViewById<EditText>(R.id.edSpeciality)
         btn_add_Worker = findViewById<Button>(R.id.btn_add_worker)
@@ -98,6 +103,11 @@ class Add_Worker : AppCompatActivity() {
             progressDialog.show()
             UploadWorkerImgtoFirebase()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun askCameraPermission() {

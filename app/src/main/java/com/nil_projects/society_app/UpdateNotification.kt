@@ -30,8 +30,13 @@ import android.os.StrictMode
 import androidx.appcompat.app.AlertDialog
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tapadoo.alerter.Alerter
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
@@ -47,6 +52,7 @@ class UpdateNotification : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
     lateinit var currentTime : String
     var LoggedIn_User_Email: String? = null
+    var counter : Long = 0
     lateinit var listMobileNo : ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +60,15 @@ class UpdateNotification : AppCompatActivity() {
         setContentView(R.layout.activity_update_notification)
         supportActionBar!!.title = "Update New Society Notice"
 
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+
+
         updatenoti = findViewById<Button>(R.id.btn_update_notifi)
         noti_edittext = findViewById<EditText>(R.id.text_notification)
         display_img = findViewById<ImageView>(R.id.circular_notification_pic)
+
 
         LoggedIn_User_Email =FirebaseAuth.getInstance().currentUser!!.getEmail()
         listMobileNo = ArrayList<String>()
@@ -77,6 +89,11 @@ class UpdateNotification : AppCompatActivity() {
             progressDialog.show()
             UpdateNotifcationtoFirebase()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun askGalleryPermission() {
@@ -330,24 +347,60 @@ class UpdateNotification : AppCompatActivity() {
 
         val notifiid = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/Notifications/$notifiid")
+        val refCounter = FirebaseDatabase.getInstance().reference.child("Notifications")
 
-        val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime)
-        ref.setValue(status)
-                .addOnSuccessListener {
-                    progressDialog.dismiss()
-                    onBackPressed()
-                    showAlert()
-                    sendFCMtoUsers()
+        refCounter.addValueEventListener(object : ValueEventListener
+        {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists())
+                {
+                    counter = p0.childrenCount
+                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
+                    ref.setValue(status)
+                            .addOnSuccessListener {
+                                progressDialog.dismiss()
+                                showAlert()
+                                sendFCMtoUsers()
+                                onBackPressed()
+                            }
+                            .addOnFailureListener {
+                                Alerter.create(this@UpdateNotification)
+                                        .setTitle("Society Notice")
+                                        .setIcon(R.drawable.alert)
+                                        .setDuration(4000)
+                                        .setText("Failed to Update!! Please Try after some time!!")
+                                        .setBackgroundColorRes(R.color.colorAccent)
+                                        .show()
+                            }
                 }
-                .addOnFailureListener {
-                    Alerter.create(this@UpdateNotification)
-                            .setTitle("Society Notice")
-                            .setIcon(R.drawable.alert)
-                            .setDuration(4000)
-                            .setText("Failed to Update!! Please Try after some time!!")
-                            .setBackgroundColorRes(R.color.colorAccent)
-                            .show()
+                else
+                {
+                    counter = 0
+                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
+                    ref.setValue(status)
+                            .addOnSuccessListener {
+                                progressDialog.dismiss()
+                                showAlert()
+                                onBackPressed()
+                                sendFCMtoUsers()
+                            }
+                            .addOnFailureListener {
+                                Alerter.create(this@UpdateNotification)
+                                        .setTitle("Society Notice")
+                                        .setIcon(R.drawable.alert)
+                                        .setDuration(4000)
+                                        .setText("Failed to Update!! Please Try after some time!!")
+                                        .setBackgroundColorRes(R.color.colorAccent)
+                                        .show()
+                            }
                 }
+            }
+
+        })
     }
 
     private fun showAlert() {

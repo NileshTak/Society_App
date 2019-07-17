@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -45,7 +46,10 @@ class NotificationFrag : Fragment() {
 
 
     private fun fetchNotifications() {
-        val ref = FirebaseDatabase.getInstance().getReference("/Notifications")
+        var ref = FirebaseDatabase.getInstance().reference.child("Notifications")
+
+        var Notiorder = ref.orderByChild("counter")
+
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
             val adapter = GroupAdapter<ViewHolder>()
@@ -56,6 +60,7 @@ class NotificationFrag : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 p0.children.forEach {
+                    Notiorder
                     val notifi = it.getValue(AddNotifiClass::class.java)
 
                     if (notifi != null) {

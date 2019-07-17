@@ -67,6 +67,10 @@ class Add_Payment_Update : AppCompatActivity() {
         setContentView(R.layout.activity_add__payment__update)
         supportActionBar!!.title = "Add Payment Update"
 
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+
         arrOfChips = ArrayList<String>()
 
         etFine = findViewById(R.id.edittext_amountFine) as TextInputEditText
@@ -226,6 +230,11 @@ class Add_Payment_Update : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun checkData() {

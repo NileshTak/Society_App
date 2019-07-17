@@ -2,6 +2,7 @@ package com.nil_projects.society_app
 
 import android.Manifest
 import android.app.Activity
+import android.app.ActivityOptions
 import android.app.Dialog
 import android.app.IntentService
 import android.content.Context
@@ -109,14 +110,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         askImpPermissions()
-        supportFragmentManager.beginTransaction().replace(R.id.frame_container, HomeFrag()).commit()
+        supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,
+        android.R.anim.slide_out_right).replace(R.id.frame_container, HomeFrag()).commit()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Home"
 
         val fab_add_Worker = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.add_worker_fab)
         fab_add_Worker.setOnClickListener {
             var intent = Intent(this, Add_Worker::class.java)
-            startActivity(intent)
+            var options =
+   ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(intent,options.toBundle())
             Snackbar.make(fab_add_Worker, "Add Workers", BaseTransientBottomBar.LENGTH_SHORT)
                     .setAction("Action", null).show()
         }
@@ -124,19 +128,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fab_add_payment_update = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.update_payment_details_fab)
         fab_add_payment_update.setOnClickListener {
             var intent = Intent(this, Add_Payment_Update::class.java)
-            startActivity(intent)
+            var options =
+                    ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(intent,options.toBundle())
         }
 
         val fab_notification_update = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.update_notification_fab)
         fab_notification_update.setOnClickListener {
             var int = Intent(this , UpdateNotification :: class.java)
-            startActivity(int)
+            var options =
+                    ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(int,options.toBundle())
         }
 
         val fab_report_update = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.update_report_fab)
         fab_report_update.setOnClickListener {
             var int = Intent(this , UpdateReport :: class.java)
-            startActivity(int)
+            var options =
+                    ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(int,options.toBundle())
         }
 
 
@@ -288,6 +298,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Home"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragHome)
         fm.commit()
     }
@@ -297,6 +309,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "User Requests"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragUserReq)
         fm.commit()
     }
@@ -306,6 +320,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Building Notice"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragReport)
         fm.commit()
     }
@@ -315,6 +331,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Workers"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragWorkers)
         fm.commit()
     }
@@ -324,6 +342,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Society Notice"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragNotifi)
         fm.commit()
     }
@@ -333,6 +353,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Complaint Box"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragmentComplaint)
         fm.commit()
     }
@@ -342,6 +364,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fm = supportFragmentManager.beginTransaction()
         supportActionBar!!.title = ""
         tvNavTitle.text = "Maintainance Records"
+        fm.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right)
         fm.replace(R.id.frame_container,fragMaintainance)
         fm.commit()
     }
