@@ -35,28 +35,25 @@
             android:background="@android:color/transparent"
             app:menu="@menu/activity_main_drawer" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_height="wrap_content">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_height="wrap_content">-->
 
-            <Button
-                android:id="@+id/btn_logout"
-                android:textColor="@color/md_white_1000"
-                android:background="@color/md_blue_700"
-                android:textSize="20dp"
-                android:layout_centerHorizontal="true"
-                android:textAllCaps="false"
-                android:layout_marginBottom="50dp"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="LogOut" />
+            <!--<Button-->
+                <!--android:id="@+id/btn_logout"-->
+                <!--android:textColor="@color/md_white_1000"-->
+                <!--android:background="@color/md_blue_700"-->
+                <!--android:textSize="20dp"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:layout_marginBottom="50dp"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="LogOut" />-->
 
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
     </com.google.android.material.navigation.NavigationView>
-
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

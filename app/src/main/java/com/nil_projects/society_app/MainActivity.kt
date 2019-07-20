@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var mAuth : FirebaseAuth
     var netInfo : NetworkInfo? = null
-    lateinit var btn_logout : Button
+   // lateinit var btn_logout : Button
     var LoggedIn_User_Email: String? = null
     lateinit var tvNavTitle : TextView
     lateinit var navProfList : CircleImageView
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvNavTitle = findViewById<TextView>(R.id.tvnavTitle)
-        btn_logout = findViewById<Button>(R.id.btn_logout)
+   //     btn_logout = findViewById<Button>(R.id.btn_logout)
         navProfList = findViewById<CircleImageView>(R.id.navProfList)
 
         mAuth = FirebaseAuth.getInstance()
@@ -96,18 +96,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         OneSignal.sendTag("NotificationID", LoggedIn_User_Email);
 
-        btn_logout.setOnClickListener {
-            mAuth.signOut()
-            Alerter.create(this@MainActivity)
-                    .setTitle("Admin")
-                    .setIcon(R.drawable.noti)
-                    .setDuration(4000)
-                    .setText("Successfully Loged Out!! :)")
-                    .setBackgroundColorRes(R.color.colorAccent)
-                    .show()
-            OneSignal.setSubscription(false)
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+//        btn_logout.setOnClickListener {
+//            mAuth.signOut()
+//            Alerter.create(this@MainActivity)
+//                    .setTitle("Admin")
+//                    .setIcon(R.drawable.noti)
+//                    .setDuration(4000)
+//                    .setText("Successfully Loged Out!! :)")
+//                    .setBackgroundColorRes(R.color.colorAccent)
+//                    .show()
+//            OneSignal.setSubscription(false)
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
 
         askImpPermissions()
         supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fab_add_Worker.setOnClickListener {
             var intent = Intent(this, Add_Worker::class.java)
             var options =
-   ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left);
+   ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent,options.toBundle())
             Snackbar.make(fab_add_Worker, "Add Workers", BaseTransientBottomBar.LENGTH_SHORT)
                     .setAction("Action", null).show()
@@ -285,6 +285,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_workers -> {
                 loadWorkersFrag(fragWorkers = WorkersFrag())
+            }
+            R.id.nav_logout -> {
+                mAuth.signOut()
+                Alerter.create(this@MainActivity)
+                        .setTitle("Admin")
+                        .setIcon(R.drawable.noti)
+                        .setDuration(4000)
+                        .setText("Successfully Loged Out!! :)")
+                        .setBackgroundColorRes(R.color.colorAccent)
+                        .show()
+                OneSignal.setSubscription(false)
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
 

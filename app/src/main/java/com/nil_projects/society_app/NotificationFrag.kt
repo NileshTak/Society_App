@@ -22,6 +22,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.custom_notification.view.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
 import kotlinx.android.synthetic.main.custom_workser_list.view.*

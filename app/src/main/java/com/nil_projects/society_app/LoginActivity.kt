@@ -32,13 +32,6 @@ class LoginActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.setStatusBarColor(ContextCompat.getColor(FUllScreenImage@this, R.color.md_blue_custom))
 
-
-        val currentUser = mAuth!!.currentUser
-        if (currentUser != null) {
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-            finish()
-        }
-
         btn_login.setOnClickListener {
             Login()
         }
@@ -48,9 +41,23 @@ class LoginActivity : AppCompatActivity() {
         emailtxt = email.text.toString()
         passtxt = pass.text.toString()
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(emailtxt,passtxt)
-                .addOnCompleteListener {
-                    var int = Intent(this,MainActivity :: class.java)
+        check(emailtxt,passtxt)
+    }
+
+    private fun check(value: String, lazyMessage: String) {
+        if(value.isEmpty())
+        {
+            email.error = "Enter Valid Email Address"
+        }
+        else if(lazyMessage.isEmpty())
+        {
+            pass.error = "Enter Valid Password"
+        }
+        else{
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailtxt,passtxt)
+                    .addOnSuccessListener {
+                        var int = Intent(this,MainActivity :: class.java)
                         Alerter.create(this@LoginActivity)
                                 .setTitle("Admin")
                                 .setIcon(R.drawable.noti)
@@ -58,11 +65,18 @@ class LoginActivity : AppCompatActivity() {
                                 .setText("Successfully Logged In!! :)")
                                 .setBackgroundColorRes(R.color.colorAccent)
                                 .show()
-                    startActivity(int)
-                    finish()
-
-                }.addOnFailureListener {
-                    Toast.makeText(this,"Inscorrect Password or email",Toast.LENGTH_LONG).show()
-                }
+                        startActivity(int)
+                        finish()
+                    }.addOnFailureListener {
+                        Alerter.create(this@LoginActivity)
+                                .setTitle("Admin")
+                                .setIcon(R.drawable.alert)
+                                .setDuration(4000)
+                                .setText("Log In Failed!! Incorrect UserName or Password")
+                                .setBackgroundColorRes(R.color.colorAccent)
+                                .show()
+                    }
+        }
     }
+
 }

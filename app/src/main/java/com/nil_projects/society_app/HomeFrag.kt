@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.core.net.toUri
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -57,6 +58,7 @@ class HomeFrag : Fragment() {
     lateinit var tvSocietyNotice : TextView
     lateinit var tvBuildingNotice : TextView
     lateinit var tvWorker : TextView
+    lateinit var scrollView : NestedScrollView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +67,7 @@ class HomeFrag : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         pendingReqRecycler = view.findViewById<RecyclerView>(R.id.pendingReqRecycler)
+        scrollView = view.findViewById<NestedScrollView>(R.id.scrollView)
         first_recycler = view.findViewById<RecyclerView>(R.id.first_recycler)
         second_recycler = view.findViewById<RecyclerView>(R.id.second_recycler)
         workers_recycler = view.findViewById<RecyclerView>(R.id.workers_recycler)

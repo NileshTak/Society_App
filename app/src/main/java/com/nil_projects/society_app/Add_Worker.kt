@@ -62,7 +62,7 @@ class Add_Worker : AppCompatActivity() {
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 
 
-        spinner_type_worker = findViewById<Spinner>(R.id.spinner_type_worker)
+        spinner_type_worker = findViewById<View>(R.id.spinner_type_worker) as Spinner
         edSpeciality = findViewById<EditText>(R.id.edSpeciality)
         btn_add_Worker = findViewById<Button>(R.id.btn_add_worker)
         date_editText_worker = findViewById<EditText>(R.id.date_worker_joining)
@@ -97,10 +97,6 @@ class Add_Worker : AppCompatActivity() {
         }
 
         btn_add_Worker.setOnClickListener {
-            progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Wait a Sec....Adding Worker Info")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
             UploadWorkerImgtoFirebase()
         }
     }
@@ -224,32 +220,38 @@ class Add_Worker : AppCompatActivity() {
         } else if (text_mobile_worker.text.isEmpty() || text_mobile_worker.text.toString().length < 10) {
             text_mobile_worker.error = " Please Enter Valid Contact Number"
             return
-        }
-
-        Log.d("SocietyLogs","Uri is Uplod"+imageUriworker.toString())
-        if(imageUriworker == null || date_editText_worker.text.isEmpty())
+        }else if(imageUriworker == null || date_editText_worker.text.isEmpty())
         {
-            progressDialog.dismiss()
-            Toast.makeText(applicationContext,"Please Select Valid Image & Valid Data",Toast.LENGTH_LONG).show()
+            Alerter.create(this@Add_Worker)
+                    .setTitle("Workers Profile")
+                    .setIcon(R.drawable.alert)
+                    .setDuration(4000)
+                    .setText("Please select valid Image File")
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .show()
             return
         }
+        else
+        {
+            progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Wait a Sec....Adding Worker Info")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+            val Workerfilename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/WorkersProfPic/$Workerfilename")
 
-
-        val Workerfilename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/WorkersProfPic/$Workerfilename")
-
-        ref.putFile(imageUriworker!!)
-                .addOnSuccessListener {
-                    Toast.makeText(applicationContext,"Image Uploaded",Toast.LENGTH_LONG).show()
-                    Log.d("SocietyLogs","Image uploaded")
-                    ref.downloadUrl.addOnSuccessListener {
-                        it.toString()
-                        addWorkertoFirebase(it.toString())
+            ref.putFile(imageUriworker!!)
+                    .addOnSuccessListener {
+                        Log.d("SocietyLogs","Image uploaded")
+                        ref.downloadUrl.addOnSuccessListener {
+                            it.toString()
+                            addWorkertoFirebase(it.toString())
+                        }
                     }
-                }
-                .addOnFailureListener {
+                    .addOnFailureListener {
 
-                }
+                    }
+        }
     }
 
 
@@ -263,13 +265,11 @@ class Add_Worker : AppCompatActivity() {
                 text_mobile_worker.text.toString(),date_editText_worker.text.toString(),edSpeciality.text.toString())
         ref.setValue(status)
                 .addOnSuccessListener {
-
-                    progressDialog.dismiss()
                     showAlert()
-                    val intent = Intent(this,MainActivity :: class.java)
-                    startActivity(intent)
                     sendFCMtoUsers()
-
+                    val intent = Intent(this,MainActivity :: class.java)
+                    progressDialog.dismiss()
+                    startActivity(intent)
                 }
                 .addOnFailureListener {
                     Alerter.create(this@Add_Worker)
