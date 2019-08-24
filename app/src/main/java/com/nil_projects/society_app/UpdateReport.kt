@@ -48,6 +48,7 @@ class UpdateReport : AppCompatActivity() {
     var LoggedIn_User_Email: String? = null
     var imageUri  : Uri? = null
     var FinalUri : Uri? = null
+    lateinit var btn_update : Button
     lateinit var listMobileNo : ArrayList<String>
     lateinit var listWingName : ArrayList<String>
 
@@ -61,7 +62,7 @@ class UpdateReport : AppCompatActivity() {
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 
         img_select_camera = findViewById<ImageView>(R.id.img_select_camera)
-        var btn_update = findViewById<Button>(R.id.btn_update)
+        btn_update = findViewById<Button>(R.id.btn_update)
         spinner_wing = findViewById<Spinner>(R.id.spinner_wing)
         var date_editText = findViewById<EditText>(R.id.date_editText)
         imgGifCamera = findViewById<ImageView>(R.id.imgGifCamera)
@@ -110,11 +111,22 @@ class UpdateReport : AppCompatActivity() {
         }
 
         btn_update.setOnClickListener {
-            progressDialog = ProgressDialog(UpdateReport@this)
-            progressDialog.setMessage("Wait a Sec....Posting Your Record")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-            UploadImgtoFirebase()
+
+            if (date_editText.text.toString() == "" || date_editText.text.toString().isEmpty())
+            {
+                date_editText.error = "Enter Valid Date"
+            }
+            else
+            {
+
+                progressDialog = ProgressDialog(UpdateReport@this)
+                progressDialog.setMessage("Wait a Sec....Posting Your Record")
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+                UploadImgtoFirebase()
+            }
+
+
         }
     }
 

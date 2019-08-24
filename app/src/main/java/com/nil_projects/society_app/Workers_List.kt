@@ -148,7 +148,7 @@ class Workers_List : AppCompatActivity() {
         private fun askCallingPermission() {
                 askPermission(Manifest.permission.CALL_PHONE,Manifest.permission.READ_CONTACTS,
                         Manifest.permission.GET_ACCOUNTS){
-                    Toast.makeText(applicationContext,"Calling"+finalworker.mobile,Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"Calling "+finalworker.mobile,Toast.LENGTH_LONG).show()
                     makeCall(finalworker.mobile)
                 }.onDeclined { e ->
                     if (e.hasDenied()) {

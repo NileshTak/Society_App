@@ -17,14 +17,14 @@
 
             <Button
                 android:id="@+id/prof_pic_worker"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
                 android:textSize="20dp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/cameraicon"
+                android:background="@drawable/vlog"
                 android:textAllCaps="false"
                 android:foregroundGravity="center"/>
 

@@ -86,7 +86,7 @@ class Maintainance_Records : Fragment() {
         }
         else if(spin_value.equals("Not Paid"))
         {
-            Log.d("Counts",mExpandingList.itemsCount.toString())
+            mExpandingList.removeAllViews()
             fetchMaintainanceNotpaidMonths()
         }
         else {
@@ -279,7 +279,14 @@ class Maintainance_Records : Fragment() {
                         colorRes: Int, iconRes: Int) {
         //Let's create an item with R.layout.expanding_layout
 
+
+
+
+        Log.d("ItemsCount",mExpandingList.itemsCount.toString())
+
         val item = mExpandingList!!.createNewItem(R.layout.expanding_layout)
+
+
 
         //If item creation is successful, let's configure it
         if (item != null) {

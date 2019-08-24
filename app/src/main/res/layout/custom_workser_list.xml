@@ -66,9 +66,10 @@
                         android:textSize="16dp"
                         android:layout_marginEnd="8dp"
                         android:layout_below="@id/tvWorkerName"
-                        android:layout_marginStart="-120dp"
+                        android:layout_marginStart="10dp"
                         android:text="Driver"
-                        android:layout_toEndOf="@id/tvWorkerName"
+                        android:layout_toRightOf="@id/photo"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

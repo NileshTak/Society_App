@@ -137,6 +137,7 @@ class HomeFrag : Fragment() {
                         arr.add(city.Img3)
                         arr.add(city.Img4)
                         arr.add(city.Img5)
+                        arr.add(city.Img5)
 
                         val adapter = SliderAdapterExample(activity!!.applicationContext,arr)
                         sliderView.startAutoCycle()

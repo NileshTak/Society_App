@@ -58,6 +58,7 @@ class Add_Payment_Update : AppCompatActivity() {
     lateinit var arrOfChips : ArrayList<String>
     var LoggedIn_User_Email: String? = null
     lateinit var listMobileNo : ArrayList<String>
+    lateinit var optionsFlat :  ArrayList<String>
     lateinit var listUserIds : ArrayList<String>
     lateinit var progressDialog: ProgressDialog
     var currentUserId : String? = null
@@ -72,6 +73,7 @@ class Add_Payment_Update : AppCompatActivity() {
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 
         arrOfChips = ArrayList<String>()
+        optionsFlat = ArrayList<String>()
 
         etFine = findViewById(R.id.edittext_amountFine) as TextInputEditText
         etAmount = findViewById<TextInputEditText>(R.id.edittext_amount)
@@ -132,96 +134,112 @@ class Add_Payment_Update : AppCompatActivity() {
                     spin_value_wing = optionsWIng.get(position)
 
                     when(optionsWIng.get(position)) {
+
                         "Select Building" -> {
 
                         }
                         "Madhumalti Building" -> {
 
-                            val optionsFlat = listOf<String>(
-                                    "Select Flat",
-                                    "101",
-                                    "102",
-                                    "103",
-                                    "104",
-                                    "107",
-                                    "108",
-                                    "203",
-                                    "204",
-                                    "205",
-                                    "206",
-                                    "207",
-                                    "208",
-                                    "303",
-                                    "304",
-                                    "306",
-                                    "307",
-                                    "308",
-                                    "401",
-                                    "402",
-                                    "403",
-                                    "404",
-                                    "406",
-                                    "407",
-                                    "408",
-                                    "501",
-                                    "502",
-                                    "503",
-                                    "504",
-                                    "505",
-                                    "506",
-                                    "601",
-                                    "602",
-                                    "603",
-                                    "606",
-                                    "607",
-                                    "608",
-                                    "105-06",
-                                    "201-02",
-                                    "301-02",
-                                    "305-405",
-                                    "507-08",
-                                    "604-05"
-                            )
+                            optionsFlat.clear()
+                            fetchFlats("Madhumalti Building")
+
+//                            val optionsFlat = listOf<String>(
+//                                    "Select Flat",
+//                                    "101",
+//                                    "102",
+//                                    "103",
+//                                    "104",
+//                                    "107",
+//                                    "108",
+//                                    "203",
+//                                    "204",
+//                                    "205",
+//                                    "206",
+//                                    "207",
+//                                    "208",
+//                                    "303",
+//                                    "304",
+//                                    "306",
+//                                    "307",
+//                                    "308",
+//                                    "401",
+//                                    "402",
+//                                    "403",
+//                                    "404",
+//                                    "406",
+//                                    "407",
+//                                    "408",
+//                                    "501",
+//                                    "502",
+//                                    "503",
+//                                    "504",
+//                                    "505",
+//                                    "506",
+//                                    "601",
+//                                    "602",
+//                                    "603",
+//                                    "606",
+//                                    "607",
+//                                    "608",
+//                                    "105-06",
+//                                    "201-02",
+//                                    "301-02",
+//                                    "305-405",
+//                                    "507-08",
+//                                    "604-05"
+                            //)
                             flatPassData(optionsFlat)
                         }
                         "Row House" -> {
-                            val optionsFlat = listOf<String>("Select Row House", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                                    "11", "12")
+
+                            optionsFlat.clear()
+                            fetchFlats("Row House")
+
+//                            val optionsFlat = listOf<String>("Select Row House", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+//                                    "11", "12")
 
                             flatPassData(optionsFlat)
                         }
                         "Aboli Building" -> {
+                            optionsFlat.clear()
+                            fetchFlats("Aboli Building")
 
-                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
-                                    "201", "202", "203", "204", "301", "302",
-                                    "303", "304", "401", "402", "403", "404", "501", "502", "503", "504", "601",
-                                    "602", "603", "604", "701", "702", "703", "704")
+//                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
+//                                    "201", "202", "203", "204", "301", "302",
+//                                    "303", "304", "401", "402", "403", "404", "501", "502", "503", "504", "601",
+//                                    "602", "603", "604", "701", "702", "703", "704")
 
                             flatPassData(optionsFlat)
                         }
                         "Nishigandha Building" -> {
+                            optionsFlat.clear()
+                            fetchFlats( "Nishigandha Building")
 
-                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
-                                    "201", "202", "203/04", "301", "302", "303", "304", "401", "402", "403", "404",
-                                    "501", "502", "503", "504", "601", "602", "603", "604")
+//                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
+//                                    "201", "202", "203/04", "301", "302", "303", "304", "401", "402", "403", "404",
+//                                    "501", "502", "503", "504", "601", "602", "603", "604")
 
                             flatPassData(optionsFlat)
                         }
                         "Sayali Building" -> {
+                            optionsFlat.clear()
+                            fetchFlats("Sayali Building")
 
-                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104", "105", "106", "107", "108",
-                                    "201", "202", "203", "204", "205", "206", "207", "208", "303", "304", "305", "306", "307", "308", "401", "402", "403", "404",
-                                    "405", "406", "407", "408",
-                                    "501", "502", "503", "504", "507", "508", "601", "602", "607", "608",
-                                    "301/302", "505/508", "603/604", "605/606")
+//                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104", "105", "106", "107", "108",
+//                                    "201", "202", "203", "204", "205", "206", "207", "208", "303", "304", "305", "306", "307", "308", "401", "402", "403", "404",
+//                                    "405", "406", "407", "408",
+//                                    "501", "502", "503", "504", "507", "508", "601", "602", "607", "608",
+//                                    "301/302", "505/508", "603/604", "605/606")
 
                             flatPassData(optionsFlat)
                         }
                         "Sonchafa Building" -> {
+                            optionsFlat.clear()
+                            fetchFlats("Sonchafa Building")
 
-                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
-                                    "201", "202", "203", "204", "303", "304", "301", "302", "401", "402", "403", "404",
-                                    "501", "502", "503", "504", "601", "602", "603", "604")
+//                            val optionsFlat = listOf<String>("Select Flat", "101", "102", "103", "104",
+//                                    "201", "202", "203", "204", "303", "304", "301", "302", "401", "402", "403", "404",
+//                                    "501", "502", "503", "504", "601", "602", "603", "604")
 
                             flatPassData(optionsFlat)
                         }
@@ -231,6 +249,24 @@ class Add_Payment_Update : AppCompatActivity() {
         }
 
     }
+
+    private fun fetchFlats(wingName : String) {
+        optionsFlat.add("Select Flat")
+        var db = FirebaseFirestore.getInstance()
+        db.collection("FlatUsers")
+                .whereEqualTo("Wing", wingName)
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val city = documentSnapshot.toObjects(UserClass :: class.java)
+                    for (document in city) {
+                        optionsFlat.add(document.FlatNo)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("SocietyFirestore", "Error getting documents.", exception)
+                }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
