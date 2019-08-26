@@ -86,6 +86,13 @@
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".MainActivity">
         </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="6039dfc03d2463bf00644057b83e86e8cb0b3f53" />
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

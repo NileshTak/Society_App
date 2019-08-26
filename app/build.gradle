@@ -1,9 +1,31 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+
+
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
+
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+
 apply plugin: 'kotlin-android-extensions'
 
+
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 buildscript {
     repositories {
@@ -48,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'com.google.android.material:material:1.0.0-alpha1'
@@ -67,6 +89,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.google.firebase:firebase-firestore:17.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.3.2'
+    compile('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true;
+    }
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.tbuonomo:creative-viewpager:1.0.1'
     implementation 'com.getbase:floatingactionbutton:1.10.1'

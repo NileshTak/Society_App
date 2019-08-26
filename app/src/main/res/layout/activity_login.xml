@@ -18,11 +18,11 @@ tools:context=".LoginActivity">
 
 <TextView
     android:id="@+id/tvDesc"
-    android:layout_width="wrap_content"
+    android:layout_width="210dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="30dp"
     android:layout_marginTop="45dp"
-    android:text="Welcome to SSA"
+    android:text="Welcome to Siddhivinayak Management App"
     android:textColor="#ffffff"
     android:textSize="17sp" />
 

@@ -1,6 +1,7 @@
 package com.nil_projects.society_app
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -59,7 +60,7 @@ class HomeFrag : Fragment() {
     lateinit var tvBuildingNotice : TextView
     lateinit var tvWorker : TextView
     lateinit var scrollView : NestedScrollView
-
+    lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -76,6 +77,11 @@ class HomeFrag : Fragment() {
         tvSocietyNotice = view.findViewById<TextView>(R.id.tvSocietyNotice)
         tvBuildingNotice = view.findViewById<TextView>(R.id.tvBuildingNotice)
         tvWorker = view.findViewById<TextView>(R.id.tvWorker)
+
+        progressDialog = ProgressDialog(activity)
+        progressDialog.setMessage("Wait a Sec....Loading Important Data")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
 
         fetchSliderImages()
         fetchpendingReqRecycler()
@@ -178,6 +184,7 @@ class HomeFrag : Fragment() {
                     if (record != null) {
                         tvBuildingNotice.visibility = View.VISIBLE
                         adapter.add(FetchRecordItemHome(record))
+                        progressDialog.dismiss()
                     }
 
 
@@ -305,6 +312,7 @@ class HomeFrag : Fragment() {
                     }
                 }
                 workers_recycler.adapter = adapter
+
             }
         })
     }

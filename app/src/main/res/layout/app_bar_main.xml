@@ -18,8 +18,9 @@
             <TextView
                 android:id="@+id/tvnavTitle"
                 android:gravity="center"
-                android:layout_marginTop="32dp"
-                android:textSize="23dp"
+                android:layout_marginTop="38dp"
+                android:textSize="18dp"
+
                 android:textStyle="bold"
                 android:fontFamily="@font/muli_regular"
                 android:textColor="@color/md_white_1000"

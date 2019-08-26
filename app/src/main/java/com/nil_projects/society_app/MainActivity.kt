@@ -41,6 +41,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isGone
+import com.crashlytics.android.Crashlytics
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -48,6 +49,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import com.tapadoo.alerter.Alerter
 import de.hdodenhof.circleimageview.CircleImageView
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.util.*
 
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fabric.with(this,  Crashlytics());
         setContentView(R.layout.activity_main)
         tvNavTitle = findViewById<TextView>(R.id.tvnavTitle)
    //     btn_logout = findViewById<Button>(R.id.btn_logout)
