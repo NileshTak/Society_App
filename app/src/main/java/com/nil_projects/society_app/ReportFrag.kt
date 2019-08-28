@@ -41,7 +41,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
+import com.tapadoo.alerter.Alerter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
@@ -78,62 +80,99 @@ class ReportFrag : Fragment() {
     }
 
     private fun fetchRecords() {
-        val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates")
-        var recordsorder = ref.orderByChild("counter")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener
-        {
-            val adapter = GroupAdapter<ViewHolder>()
 
-            override fun onCancelled(p0: DatabaseError) {
+        val adapter = GroupAdapter<ViewHolder>()
 
-            }
+        var db = FirebaseFirestore.getInstance()
 
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.children.forEach {
-                    recordsorder
-                    val record = it.getValue(RecordClass::class.java)
+        db.collection("Records")
+                .orderBy("counter", Query.Direction.DESCENDING)
 
-                    if (record != null) {
-                        adapter.add(FetchRecordItem(record))
-                    }
+                .get()
+                .addOnSuccessListener {
+
+                    it.documents.forEach {
+                        val record = it.toObject(reportModelClass::class.java)
 
 
-                    adapter.setOnItemLongClickListener(object : OnItemLongClickListener
-                    {
-                        override fun onItemLongClick(item: Item<*>, view: View): Boolean
-                        {
-                            val refChild = FirebaseDatabase.getInstance().getReference("/RecordsDates").child(record!!.id)
-
-                            var popup = PopupMenu(activity,view)
-                            popup.menuInflater.inflate(R.menu.status_option,popup.menu)
-                            popup.show()
-
-                            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-                                override fun onMenuItemClick(item: MenuItem?): Boolean {
-
-                                    when (item!!.title)
-                                    {
-                                        "Delete" ->
-                                        {
-                                            //Toast.makeText(activity,"Deleted",Toast.LENGTH_LONG).show()
-                                            refChild.removeValue()
-                                            fetchRecords()
-                                        }
-                                    }
-                                    return true
-                                }
-                            })
-                            return true
+                        if (record != null) {
+                            adapter.add(FetchRecordItem(record))
                         }
-                    })
-                }
 
 
-                recyclerview_xml_reportfrag.adapter = adapter
+
+                    }
+                    recyclerview_xml_reportfrag.adapter = adapter
                 }
-            })
+                .addOnFailureListener {
+                    Alerter.create(getActivity())
+                            .setTitle("Society Notice")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Fetch!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
+                }
+
+//
+//
+//
+//                    val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates")
+//        var recordsorder = ref.orderByChild("counter")
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener
+//        {
+//            val adapter = GroupAdapter<ViewHolder>()
+//
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                p0.children.forEach {
+//                    recordsorder
+//                    val record = it.getValue(RecordClass::class.java)
+//
+//                    if (record != null) {
+//                        adapter.add(FetchRecordItem(record))
+//                    }
+//
+//
+//                    adapter.setOnItemLongClickListener(object : OnItemLongClickListener
+//                    {
+//                        override fun onItemLongClick(item: Item<*>, view: View): Boolean
+//                        {
+//                            val refChild = FirebaseDatabase.getInstance().getReference("/RecordsDates").child(record!!.id)
+//
+//                            var popup = PopupMenu(activity,view)
+//                            popup.menuInflater.inflate(R.menu.status_option,popup.menu)
+//                            popup.show()
+//
+//                            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+//                                override fun onMenuItemClick(item: MenuItem?): Boolean {
+//
+//                                    when (item!!.title)
+//                                    {
+//                                        "Delete" ->
+//                                        {
+//                                            //Toast.makeText(activity,"Deleted",Toast.LENGTH_LONG).show()
+//                                            refChild.removeValue()
+//                                            fetchRecords()
+//                                        }
+//                                    }
+//                                    return true
+//                                }
+//                            })
+//                            return true
+//                        }
+//                    })
+//                }
+//
+//
+//                recyclerview_xml_reportfrag.adapter = adapter
+//                }
+//            })
         }
-    inner class FetchRecordItem(var Finalrecord : RecordClass) : Item<ViewHolder>()
+    inner class FetchRecordItem(var Finalrecord : reportModelClass) : Item<ViewHolder>()
     {
 
         override fun getLayout(): Int {
@@ -150,6 +189,8 @@ class ReportFrag : Fragment() {
                 var int = Intent(activity,FUllScreenImage :: class.java)
                 int.data = Finalrecord.imageUrl.toUri()
                 int.putExtra("msg",Finalrecord.date)
+                int.putExtra("id",Finalrecord.id)
+                int.putExtra("collectionName","Records")
                 startActivity(int)
             }
         }

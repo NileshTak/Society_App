@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
 import id.zelory.compressor.Compressor
@@ -195,7 +196,13 @@ class UpdateReport : AppCompatActivity() {
         if(FinalUri == null || date_editText.text.isEmpty())
         {
             progressDialog.dismiss()
-            Toast.makeText(applicationContext,"Please Select Valid Image & Valid Data",Toast.LENGTH_LONG).show()
+            Alerter.create(this@UpdateReport)
+                    .setTitle("Building Notice")
+                    .setIcon(R.drawable.alert)
+                    .setDuration(4000)
+                    .setText("Failed to Update!! Please Select Valid Notice & Valid Date to Update!!")
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .show()
             return
         }
 
@@ -217,70 +224,146 @@ class UpdateReport : AppCompatActivity() {
                 }
     }
 
-    private fun saveRecordDatetoFirebase(ImageUrl : String)
-    {
+    private fun saveRecordDatetoFirebase(ImageUrl : String) {
         val recordid = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates/$recordid")
 
-        val refrec = FirebaseDatabase.getInstance().reference.child("RecordsDates")
+        val items = HashMap<String, Any>()
 
-        refrec.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
+        items.put("date", date_editText.text.toString())
+        items.put("id", recordid)
+        items.put("imageUrl", ImageUrl)
+        items.put("wing", spin_value)
 
-            }
+        var db = FirebaseFirestore.getInstance()
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists())
-                {
-                    Log.d("ChildrenCount",p0.childrenCount.toString())
-                    counter = p0.childrenCount
+        db.collection("Records")
 
-                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
-                    ref.setValue(status)
-                            .addOnSuccessListener {
-                                showAlert()
-                                sendFCMtoUsers()
-                                progressDialog.dismiss()
-                                var int = Intent(this@UpdateReport,MainActivity::class.java)
-                                startActivity(int)
-                            }
-                            .addOnFailureListener {
-                                Alerter.create(this@UpdateReport)
-                                        .setTitle("Building Notice")
-                                        .setIcon(R.drawable.alert)
-                                        .setDuration(4000)
-                                        .setText("Failed to Update!! Please Try after some time!!")
-                                        .setBackgroundColorRes(R.color.colorAccent)
-                                        .show()
-                            }
+                .get()
+                .addOnSuccessListener {
 
+
+                    if (it.isEmpty) {
+                        items.put("counter", counter.toString())
+
+
+                        db.collection("Records").document(recordid)
+                                .set(items).addOnSuccessListener {
+
+                                    showAlert()
+
+                                    sendFCMtoUsers()
+                                    progressDialog.dismiss()
+                                    var int = Intent(this@UpdateReport, MainActivity::class.java)
+                                    startActivity(int)
+
+
+                                }.addOnFailureListener {
+                                    Alerter.create(this@UpdateReport)
+                                            .setTitle("Add Customer")
+                                            .setIcon(R.drawable.alert)
+                                            .setDuration(4000)
+                                            .setText("Failed to Add!! Please Try after some time!!")
+                                            .setBackgroundColorRes(R.color.colorAccent)
+                                            .show()
+
+                                }
+
+                    } else {
+
+                        counter = it.size().toLong()
+
+                        items.put("counter", counter.toString())
+
+
+                        db.collection("Records").document(recordid)
+                                .set(items).addOnSuccessListener {
+
+                                    showAlert()
+
+                                    sendFCMtoUsers()
+                                    progressDialog.dismiss()
+                                    var int = Intent(this@UpdateReport, MainActivity::class.java)
+                                    startActivity(int)
+
+
+                                }.addOnFailureListener {
+                                    Alerter.create(this@UpdateReport)
+                                            .setTitle("Add Customer")
+                                            .setIcon(R.drawable.alert)
+                                            .setDuration(4000)
+                                            .setText("Failed to Add!! Please Try after some time!!")
+                                            .setBackgroundColorRes(R.color.colorAccent)
+                                            .show()
+
+                                }
+
+
+                    }
+
+
+//
+//        val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates/$recordid")
+//
+//        val refrec = FirebaseDatabase.getInstance().reference.child("RecordsDates")
+//
+//        refrec.addValueEventListener(object : ValueEventListener {
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                if(p0.exists())
+//                {
+//                    Log.d("ChildrenCount",p0.childrenCount.toString())
+//                    counter = p0.childrenCount
+//
+//                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
+//                    ref.setValue(status)
+//                            .addOnSuccessListener {
+//                                showAlert()
+//                                sendFCMtoUsers()
+//                                progressDialog.dismiss()
+//                                var int = Intent(this@UpdateReport,MainActivity::class.java)
+//                                startActivity(int)
+//                            }
+//                            .addOnFailureListener {
+//                                Alerter.create(this@UpdateReport)
+//                                        .setTitle("Building Notice")
+//                                        .setIcon(R.drawable.alert)
+//                                        .setDuration(4000)
+//                                        .setText("Failed to Update!! Please Try after some time!!")
+//                                        .setBackgroundColorRes(R.color.colorAccent)
+//                                        .show()
+//                            }
+//
+//                }
+//                else
+//                {
+//                    counter = 0
+//
+//                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
+//                    ref.setValue(status)
+//                            .addOnSuccessListener {
+//                                showAlert()
+//                                sendFCMtoUsers()
+//                                progressDialog.dismiss()
+//                                var int = Intent(this@UpdateReport,MainActivity::class.java)
+//                                startActivity(int)
+//                            }
+//                            .addOnFailureListener {
+//                                Alerter.create(this@UpdateReport)
+//                                        .setTitle("Building Notice")
+//                                        .setIcon(R.drawable.alert)
+//                                        .setDuration(4000)
+//                                        .setText("Failed to Update!! Please Try after some time!!")
+//                                        .setBackgroundColorRes(R.color.colorAccent)
+//                                        .show()
+//                            }
+//                }
+//            }
+//
+//        })
                 }
-                else
-                {
-                    counter = 0
-
-                    val status = RecordClass(recordid,date_editText.text.toString(),ImageUrl,counter.toString(),spin_value)
-                    ref.setValue(status)
-                            .addOnSuccessListener {
-                                showAlert()
-                                sendFCMtoUsers()
-                                progressDialog.dismiss()
-                                var int = Intent(this@UpdateReport,MainActivity::class.java)
-                                startActivity(int)
-                            }
-                            .addOnFailureListener {
-                                Alerter.create(this@UpdateReport)
-                                        .setTitle("Building Notice")
-                                        .setIcon(R.drawable.alert)
-                                        .setDuration(4000)
-                                        .setText("Failed to Update!! Please Try after some time!!")
-                                        .setBackgroundColorRes(R.color.colorAccent)
-                                        .show()
-                            }
-                }
-            }
-
-        })
     }
 
     private fun showAlert() {
@@ -397,3 +480,5 @@ class UpdateReport : AppCompatActivity() {
         }
     }
 }
+
+

@@ -28,6 +28,16 @@
         android:layout_height="45dp" />
 
 
+    <Button
+        android:id="@+id/ivDltImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dustbin"
+
+        android:layout_width="40dp"
+        android:layout_height="45dp"/>
+
+
     <TextView
         android:id="@+id/tvFullPic"
         android:textSize="20dp"

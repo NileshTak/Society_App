@@ -37,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.tapadoo.alerter.Alerter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_update_report.*
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
@@ -326,6 +327,25 @@ class UpdateNotification : AppCompatActivity() {
 
     private fun UpdateNotifcationtoFirebase() {
 
+        if ( selectedPhotoUri  == null)
+        {
+            Alerter.create(this@UpdateNotification)
+                    .setTitle("Society Notice")
+                    .setIcon(R.drawable.alert)
+                    .setDuration(4000)
+                    .setText("Failed to Update!! Please Select Notice Picture to Update!!")
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .show()
+            progressDialog.dismiss()
+            return
+        }
+        else if (noti_edittext.text.toString().isEmpty())
+        {
+            noti_edittext.error = "Please Enter Valid Notification Status"
+            progressDialog.dismiss()
+            return
+        }
+
         val Notificationfilename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/Notifications/$Notificationfilename")
 
@@ -339,68 +359,158 @@ class UpdateNotification : AppCompatActivity() {
                     }
                 }
                 .addOnFailureListener {
-
+                    Alerter.create(this@UpdateNotification)
+                            .setTitle("Society Notice")
+                            .setIcon(R.drawable.alert)
+                            .setDuration(4000)
+                            .setText("Failed to Add!! Please Try after some time!!")
+                            .setBackgroundColorRes(R.color.colorAccent)
+                            .show()
                 }
     }
 
     private fun addNotificationtoFirebase(imgId: String) {
 
-        val notifiid = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Notifications/$notifiid")
-        val refCounter = FirebaseDatabase.getInstance().reference.child("Notifications")
+         val notifiid = UUID.randomUUID().toString()
 
-        refCounter.addValueEventListener(object : ValueEventListener
-        {
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
+        val items = HashMap<String, Any>()
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists())
-                {
-                    counter = p0.childrenCount
-                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
-                    ref.setValue(status)
-                            .addOnSuccessListener {
-                                progressDialog.dismiss()
-                                showAlert()
-                                sendFCMtoUsers()
-                                onBackPressed()
-                            }
-                            .addOnFailureListener {
-                                Alerter.create(this@UpdateNotification)
-                                        .setTitle("Society Notice")
-                                        .setIcon(R.drawable.alert)
-                                        .setDuration(4000)
-                                        .setText("Failed to Update!! Please Try after some time!!")
-                                        .setBackgroundColorRes(R.color.colorAccent)
-                                        .show()
-                            }
+        items.put("currentTime", currentTime)
+        items.put("id", notifiid)
+        items.put("imageUrl", imgId)
+        items.put("noti", noti_edittext.text.toString())
+
+        var db = FirebaseFirestore.getInstance()
+
+        db.collection("Notifications")
+
+                .get()
+                .addOnSuccessListener {
+
+
+                    if (it.isEmpty) {
+                        items.put("counter", counter.toString())
+
+
+                        db.collection("Notifications").document(notifiid)
+                                .set(items).addOnSuccessListener {
+
+                                    showAlert()
+
+                                    sendFCMtoUsers()
+                                    progressDialog.dismiss()
+                                    var int = Intent(this@UpdateNotification, MainActivity::class.java)
+                                    startActivity(int)
+
+
+                                }.addOnFailureListener {
+                                    Alerter.create(this@UpdateNotification)
+                                            .setTitle("Society Notice")
+                                            .setIcon(R.drawable.alert)
+                                            .setDuration(4000)
+                                            .setText("Failed to Add!! Please Try after some time!!")
+                                            .setBackgroundColorRes(R.color.colorAccent)
+                                            .show()
+
+                                }
+
+                    } else {
+
+                        counter = it.size().toLong()
+
+                        items.put("counter", counter.toString())
+
+
+                        db.collection("Notifications").document(notifiid)
+                                .set(items).addOnSuccessListener {
+
+                                    showAlert()
+
+                                    sendFCMtoUsers()
+                                    progressDialog.dismiss()
+                                    var int = Intent(this@UpdateNotification, MainActivity::class.java)
+                                    startActivity(int)
+
+
+                                }.addOnFailureListener {
+                                    Alerter.create(this@UpdateNotification)
+                                            .setTitle("Society Notice")
+                                            .setIcon(R.drawable.alert)
+                                            .setDuration(4000)
+                                            .setText("Failed to Add!! Please Try after some time!!")
+                                            .setBackgroundColorRes(R.color.colorAccent)
+                                            .show()
+
+                                }
+
+
+                    }
+
+
                 }
-                else
-                {
-                    counter = 0
-                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
-                    ref.setValue(status)
-                            .addOnSuccessListener {
-                                progressDialog.dismiss()
-                                showAlert()
-                                onBackPressed()
-                                sendFCMtoUsers()
-                            }
-                            .addOnFailureListener {
-                                Alerter.create(this@UpdateNotification)
-                                        .setTitle("Society Notice")
-                                        .setIcon(R.drawable.alert)
-                                        .setDuration(4000)
-                                        .setText("Failed to Update!! Please Try after some time!!")
-                                        .setBackgroundColorRes(R.color.colorAccent)
-                                        .show()
-                            }
-                }
-            }
 
-        })
+
+
+
+
+
+
+//        val ref = FirebaseDatabase.getInstance().getReference("/Notifications/$notifiid")
+//        val refCounter = FirebaseDatabase.getInstance().reference.child("Notifications")
+//
+//        refCounter.addValueEventListener(object : ValueEventListener
+//        {
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                if(p0.exists())
+//                {
+//                    counter = p0.childrenCount
+//                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
+//                    ref.setValue(status)
+//                            .addOnSuccessListener {
+//                                progressDialog.dismiss()
+//                                showAlert()
+//                                sendFCMtoUsers()
+//                                onBackPressed()
+//                            }
+//                            .addOnFailureListener {
+//                                Alerter.create(this@UpdateNotification)
+//                                        .setTitle("Society Notice")
+//                                        .setIcon(R.drawable.alert)
+//                                        .setDuration(4000)
+//                                        .setText("Failed to Update!! Please Try after some time!!")
+//                                        .setBackgroundColorRes(R.color.colorAccent)
+//                                        .show()
+//                            }
+//                }
+//                else
+//                {
+//                    counter = 0
+//                    val status = AddNotifiClass(notifiid,noti_edittext.text.toString(),imgId,currentTime,counter.toString())
+//                    ref.setValue(status)
+//                            .addOnSuccessListener {
+//                                progressDialog.dismiss()
+//                                showAlert()
+//                                onBackPressed()
+//                                sendFCMtoUsers()
+//                            }
+//                            .addOnFailureListener {
+//                                Alerter.create(this@UpdateNotification)
+//                                        .setTitle("Society Notice")
+//                                        .setIcon(R.drawable.alert)
+//                                        .setDuration(4000)
+//                                        .setText("Failed to Update!! Please Try after some time!!")
+//                                        .setBackgroundColorRes(R.color.colorAccent)
+//                                        .show()
+//                            }
+//                }
+//            }
+//
+//        })
     }
 
     private fun showAlert() {

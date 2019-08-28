@@ -18,6 +18,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
@@ -47,30 +49,61 @@ class NotificationFrag : Fragment() {
 
 
     private fun fetchNotifications() {
-        var ref = FirebaseDatabase.getInstance().reference.child("Notifications")
 
-        var Notiorder = ref.orderByChild("counter")
+        val adapter = GroupAdapter<ViewHolder>()
 
-        ref.addListenerForSingleValueEvent(object : ValueEventListener
-        {
-            val adapter = GroupAdapter<ViewHolder>()
+        var db = FirebaseFirestore.getInstance()
 
-            override fun onCancelled(p0: DatabaseError) {
+        db.collection("Notifications")
+                .orderBy("counter", Query.Direction.DESCENDING)
 
-            }
+                .get()
+                .addOnSuccessListener {
 
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.children.forEach {
-                    Notiorder
-                    val notifi = it.getValue(AddNotifiClass::class.java)
+                    it.documents.forEach {
+                        val record = it.toObject(AddNotifiClass::class.java)
 
-                    if (notifi != null) {
-                        adapter.add(FetchNotificationItem(notifi))
+
+                        if (record != null) {
+                            adapter.add(FetchNotificationItem(record))
+                        }
+
+
+
                     }
+                    recyclerview_xml_notifrag.adapter = adapter
                 }
-                recyclerview_xml_notifrag.adapter = adapter
-            }
-        })
+
+
+
+
+
+
+//
+//        var ref = FirebaseDatabase.getInstance().reference.child("Notifications")
+//
+//        var Notiorder = ref.orderByChild("counter")
+//
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener
+//        {
+//            val adapter = GroupAdapter<ViewHolder>()
+//
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                p0.children.forEach {
+//                    Notiorder
+//                    val notifi = it.getValue(AddNotifiClass::class.java)
+//
+//                    if (notifi != null) {
+//                        adapter.add(FetchNotificationItem(notifi))
+//                    }
+//                }
+//                recyclerview_xml_notifrag.adapter = adapter
+//            }
+//        })
     }
 
     inner class FetchNotificationItem(var Finalnotifi : AddNotifiClass) : Item<ViewHolder>()
@@ -93,6 +126,8 @@ class NotificationFrag : Fragment() {
                 int.data = Finalnotifi.imageUrl.toUri()
                 int.putExtra("msg",Finalnotifi.noti)
                 int.putExtra("msg",Finalnotifi.noti)
+                int.putExtra("id",Finalnotifi.id)
+                int.putExtra("collectionName","Notifications")
                 startActivity(int)
             }
         }

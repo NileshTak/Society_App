@@ -10,9 +10,11 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
+import com.google.firebase.firestore.FirebaseFirestore
 import org.w3c.dom.Text
 
 
@@ -22,7 +24,10 @@ class FUllScreenImage : AppCompatActivity() {
     lateinit var ivBackArrow : Button
     lateinit var ivDownload : Button
     lateinit var tvMsg : TextView
+    lateinit var collectionName : String
     lateinit var imgUri : Uri
+    lateinit var id : String
+    lateinit var ivDltImage : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class FUllScreenImage : AppCompatActivity() {
 
         ivBackArrow = findViewById<Button>(R.id.ivBackArrow)
         tvMsg = findViewById<TextView>(R.id.tvFullPic)
+        ivDltImage = findViewById<Button>(R.id.ivDltImage)
         ivDownload = findViewById<Button>(R.id.ivDownload)
         fullscreenimg = findViewById<View>(R.id.fullscreen_image) as PhotoView
 
@@ -42,13 +48,18 @@ class FUllScreenImage : AppCompatActivity() {
             onBackPressed()
         }
 
+
+
         val bundle: Bundle? = intent.extras
 
         bundle?.let {
             val msg = bundle.getString("msg")
-            if(msg.isNotEmpty())
+              id = bundle.getString("id")
+            collectionName = bundle.getString("collectionName")
+            if(msg.isNotEmpty() && id.isNotEmpty())
             {
                 tvMsg.text = msg
+
             }
         }
 
@@ -60,6 +71,19 @@ class FUllScreenImage : AppCompatActivity() {
             {
                 Glide.with(this).load(imgUri).into(fullscreenimg)
             }
+        }
+
+        ivDltImage.setOnClickListener {
+
+            var db = FirebaseFirestore.getInstance()
+            db.collection(collectionName).document( id )
+                    .delete()
+                    .addOnSuccessListener { Toast.makeText(this,"Successfully Deleted",Toast.LENGTH_LONG).show()
+                    onBackPressed()
+                    }
+                    .addOnFailureListener { e -> Toast.makeText(this,"Network Error",Toast.LENGTH_LONG).show() }
+
+
         }
 
         ivDownload.setOnClickListener {

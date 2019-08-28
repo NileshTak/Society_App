@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.nil_projects.society_app.fragment.Model
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
@@ -148,6 +149,7 @@ class HomeFrag : Fragment() {
                         val adapter = SliderAdapterExample(activity!!.applicationContext,arr)
                         sliderView.startAutoCycle()
                         sliderView.sliderAdapter = adapter
+                        progressDialog.dismiss()
 
                         sliderView.setIndicatorAnimation(IndicatorAnimations.THIN_WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
                         sliderView.sliderIndicatorSelectedColor = Color.WHITE
@@ -166,65 +168,92 @@ class HomeFrag : Fragment() {
     }
 
     private fun fetchRecords() {
+//        val adapter = GroupAdapter<ViewHolder>()
+//
+//        val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates")
+//        var recordsorder = ref.orderByChild("counter")
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener
+//        {
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                p0.children.forEach {
+//                    recordsorder
+//                    val record = it.getValue(reportModelClass::class.java)
+//
+//                    if (record != null) {
+//                        tvBuildingNotice.visibility = View.VISIBLE
+//                        adapter.add(FetchRecordItemHome(record))
+//
+//                    }
+//
+//
+//                    adapter.setOnItemLongClickListener(object : OnItemLongClickListener
+//                    {
+//                        override fun onItemLongClick(item: Item<*>, view: View): Boolean
+//                        {
+//                            val refChild = FirebaseDatabase.getInstance().getReference("/RecordsDates").child(record!!.id)
+//
+//                            var popup = PopupMenu(activity,view)
+//                            popup.menuInflater.inflate(R.menu.status_option,popup.menu)
+//                            popup.show()
+//
+//                            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+//                                override fun onMenuItemClick(item: MenuItem?): Boolean {
+//
+//                                    when (item!!.title)
+//                                    {
+//                                        "Delete" ->
+//                                        {
+//                                            //Toast.makeText(activity,"Deleted",Toast.LENGTH_LONG).show()
+//                                            refChild.removeValue()
+//                                            fetchRecords()
+//                                        }
+//                                    }
+//                                    return true
+//                                }
+//                            })
+//                            return true
+//                        }
+//                    })
+//                }
+//
+//
+//                first_recycler.adapter = adapter
+//            }
+//        })
+
+
         val adapter = GroupAdapter<ViewHolder>()
 
-        val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates")
-        var recordsorder = ref.orderByChild("counter")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener
-        {
-            override fun onCancelled(p0: DatabaseError) {
+        var db = FirebaseFirestore.getInstance()
 
-            }
+        db.collection("Records")
+                .orderBy("counter", Query.Direction.DESCENDING)
 
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.children.forEach {
-                    recordsorder
-                    val record = it.getValue(RecordClass::class.java)
+                .get()
+                .addOnSuccessListener {
 
-                    if (record != null) {
-                        tvBuildingNotice.visibility = View.VISIBLE
-                        adapter.add(FetchRecordItemHome(record))
-                        progressDialog.dismiss()
-                    }
+                    it.documents.forEach {
+                        val record = it.toObject(reportModelClass::class.java)
 
 
-                    adapter.setOnItemLongClickListener(object : OnItemLongClickListener
-                    {
-                        override fun onItemLongClick(item: Item<*>, view: View): Boolean
-                        {
-                            val refChild = FirebaseDatabase.getInstance().getReference("/RecordsDates").child(record!!.id)
-
-                            var popup = PopupMenu(activity,view)
-                            popup.menuInflater.inflate(R.menu.status_option,popup.menu)
-                            popup.show()
-
-                            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-                                override fun onMenuItemClick(item: MenuItem?): Boolean {
-
-                                    when (item!!.title)
-                                    {
-                                        "Delete" ->
-                                        {
-                                            //Toast.makeText(activity,"Deleted",Toast.LENGTH_LONG).show()
-                                            refChild.removeValue()
-                                            fetchRecords()
-                                        }
-                                    }
-                                    return true
-                                }
-                            })
-                            return true
+                        if (record != null) {
+                            tvBuildingNotice.visibility = View.VISIBLE
+                            adapter.add(FetchRecordItemHome(record))
                         }
-                    })
+
+
+
+                    }
+                    first_recycler.adapter = adapter
                 }
 
-
-                first_recycler.adapter = adapter
-            }
-        })
     }
 
-    inner class FetchRecordItemHome(var Finalrecord : RecordClass) : Item<ViewHolder>()
+    inner class FetchRecordItemHome(var Finalrecord : reportModelClass) : Item<ViewHolder>()
     {
 
         override fun getLayout(): Int {
@@ -244,27 +273,58 @@ class HomeFrag : Fragment() {
     }
 
     private fun fetchNotifications() {
-        val ref = FirebaseDatabase.getInstance().getReference("/Notifications")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener
-        {
-            val adapter = GroupAdapter<ViewHolder>()
+//        val ref = FirebaseDatabase.getInstance().getReference("/Notifications")
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener
+//        {
+//            val adapter = GroupAdapter<ViewHolder>()
+//
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//                p0.children.forEach {
+//                    val notifi = it.getValue(AddNotifiClass::class.java)
+//
+//                    if (notifi != null) {
+//                        tvSocietyNotice.visibility = View.VISIBLE
+//                        adapter.add(FetchNotificationItemHome(notifi))
+//                    }
+//                }
+//                second_recycler.adapter = adapter
+//            }
+//        })
 
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.children.forEach {
-                    val notifi = it.getValue(AddNotifiClass::class.java)
+        val adapter = GroupAdapter<ViewHolder>()
 
-                    if (notifi != null) {
-                        tvSocietyNotice.visibility = View.VISIBLE
-                        adapter.add(FetchNotificationItemHome(notifi))
+        var db = FirebaseFirestore.getInstance()
+
+        db.collection("Notifications")
+                .orderBy("counter", Query.Direction.DESCENDING)
+
+                .get()
+                .addOnSuccessListener {
+
+                    it.documents.forEach {
+                        val record = it.toObject(AddNotifiClass::class.java)
+
+
+                        if (record != null) {
+                            tvSocietyNotice.visibility = View.VISIBLE
+                            adapter.add(FetchNotificationItemHome(record))
+                        }
+
+
+
                     }
+                    second_recycler.adapter = adapter
                 }
-                second_recycler.adapter = adapter
-            }
-        })
+
+
+
+
     }
 
     inner class FetchNotificationItemHome(var Finalnotifi : AddNotifiClass) : Item<ViewHolder>()
