@@ -18,7 +18,7 @@
             android:id="@+id/profile_list_image"
             android:layout_margin="5dp"
             android:layout_width="60dp"
-            android:src="@drawable/photo"
+
             android:transitionName="transitionPicture"
             android:layout_height="60dp" />
 
@@ -39,8 +39,7 @@
 
             <TextView
                 android:id="@+id/profile_list_username"
-                android:text="Nilesh Tak"
-                android:transitionName="transitionUserName"
+                 android:transitionName="transitionUserName"
                 android:layout_margin="5dp"
                 android:textColor="@color/md_black_1000"
                 android:textSize="20dp"
@@ -61,8 +60,7 @@
 
                 <TextView
                     android:id="@+id/profile_list_flatNo"
-                    android:text="Nilesh Tak"
-                    android:transitionName="transitionflatno"
+                     android:transitionName="transitionflatno"
                     android:textColor="@color/md_blue_custom"
                     android:textSize="14dp"
                     android:layout_width="wrap_content"
