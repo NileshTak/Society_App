@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -137,6 +138,7 @@ public class TestRecyclerViewAdapter extends FirestoreRecyclerAdapter<Model, Tes
         public TextView userName;
         public TextView contactNo;
         public TextView email;
+
         public Button reqAcceptBtn;
         public Button reqRejected;
 

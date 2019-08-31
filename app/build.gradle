@@ -117,6 +117,7 @@ dependencies {
     }
     implementation "com.firebaseui:firebase-ui-firestore:4.1.0"
     implementation 'id.zelory:compressor:2.1.0'
+    implementation 'com.airbnb.android:lottie:3.0.7'
     //  implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
 
 }

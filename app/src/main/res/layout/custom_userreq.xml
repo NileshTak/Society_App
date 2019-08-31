@@ -112,21 +112,17 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgTick"
-                android:layout_width="110dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="110dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/tick"
+
+            <com.airbnb.lottie.LottieAnimationView
+                 android:id="@+id/imgTick"
+                android:layout_width="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="100dp"
+                android:layout_marginTop="-4dp"
+                 android:layout_marginBottom="5dp"
                 />
 
-        </LinearLayout>
 
     </LinearLayout>
 

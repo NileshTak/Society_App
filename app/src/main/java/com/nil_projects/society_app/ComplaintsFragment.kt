@@ -102,7 +102,7 @@ class ComplaintsFragment : Fragment() {
         }
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
-            viewHolder.itemView.headline_complaint.text = FinalComplaintList.CompheadLine
+          //  viewHolder.itemView.headline_complaint.text = FinalComplaintList.CompheadLine
             viewHolder.itemView.headline_complaint_1.text = FinalComplaintList.CompheadLine
            // viewHolder.itemView.Details_complaint.text = FinalComplaintList.CompDetails
             viewHolder.itemView.process_complaint.text = FinalComplaintList.CompProcess
@@ -113,22 +113,34 @@ class ComplaintsFragment : Fragment() {
 
 
 
-            if(FinalComplaintList.CompProcess == "Under Process")
+            if(FinalComplaintList.CompProcess == "Solved")
             {
-                Glide.with(context).asGif().load(R.drawable.processing).into(viewHolder.itemView.problem_logo)
+
+                viewHolder.itemView.img_display_success.setAnimation("tick.json")
+                viewHolder.itemView.img_display_success.playAnimation()
+                viewHolder.itemView.img_display_success.loop(true)
+
+
+                viewHolder.itemView.btn_solved.visibility = View.INVISIBLE
+                viewHolder.itemView.img_display_success.visibility = View.VISIBLE
+      //          Glide.with(context).asGif().load(R.drawable.processing).into(viewHolder.itemView.problem_logo)
         //        viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.processing)
             }
             else{
                // viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.checkmark)
-                Glide.with(context).asGif().load(R.drawable.checkmark).into(viewHolder.itemView.problem_logo)
+              //  Glide.with(context).asGif().load(R.drawable.checkmark).into(viewHolder.itemView.problem_logo)
 
-                viewHolder.itemView.btn_solved.visibility = View.INVISIBLE
-                viewHolder.itemView.img_display_success.visibility = View.VISIBLE
+
+
+
+                viewHolder.itemView.btn_solved.visibility = View.VISIBLE
+                viewHolder.itemView.img_display_success.visibility = View.INVISIBLE
+
             }
 
-            viewHolder.itemView.setOnClickListener {
-                viewHolder.itemView.folding_cell_complaint.toggle(false)
-            }
+//            viewHolder.itemView.setOnClickListener {
+//                viewHolder.itemView.folding_cell_complaint.toggle(false)
+//            }
 
             viewHolder.itemView.btn_solved.setOnClickListener {
 
@@ -140,7 +152,7 @@ class ComplaintsFragment : Fragment() {
 
                 viewHolder.itemView.btn_solved.visibility = View.INVISIBLE
                 viewHolder.itemView.img_display_success.visibility = View.VISIBLE
-                viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.checkmark)
+             //   viewHolder.itemView.problem_logo.setBackgroundResource(R.drawable.checkmark)
                 viewHolder.itemView.process_complaint.text = "Solved"
 
                 sendFCMtoUsers(FinalComplaintList.CompUserMobileNo)

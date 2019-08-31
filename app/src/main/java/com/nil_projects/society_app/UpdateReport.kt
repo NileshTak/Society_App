@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.net.toUri
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_update_report.*
+import kotlinx.android.synthetic.main.custom_complaint.view.*
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -36,7 +38,7 @@ import java.util.*
 class UpdateReport : AppCompatActivity() {
 
     lateinit var img_select_camera: ImageView
-    lateinit var imgGifCamera : ImageView
+    lateinit var imgGifCamera : LottieAnimationView
     lateinit var spinner_wing : Spinner
     val REQUEST_PERM_WRITE_STORAGE = 102
     lateinit var datePickerdialog : DatePickerDialog
@@ -66,12 +68,17 @@ class UpdateReport : AppCompatActivity() {
         btn_update = findViewById<Button>(R.id.btn_update)
         spinner_wing = findViewById<Spinner>(R.id.spinner_wing)
         var date_editText = findViewById<EditText>(R.id.date_editText)
-        imgGifCamera = findViewById<ImageView>(R.id.imgGifCamera)
+        imgGifCamera = findViewById<LottieAnimationView>(R.id.imgGifCamera)
         LoggedIn_User_Email = FirebaseAuth.getInstance().currentUser!!.getEmail()
         listMobileNo = ArrayList<String>()
         listWingName = ArrayList<String>()
 
-        Glide.with(this@UpdateReport).asGif().load(R.drawable.fab).into(imgGifCamera)
+   //     Glide.with(this@UpdateReport).asGif().load(R.drawable.fab).into(imgGifCamera)
+
+        imgGifCamera.setAnimation("cameraclick.json")
+        imgGifCamera.playAnimation()
+        imgGifCamera.loop(true)
+
 
         val bundle: Bundle? = intent.extras
         if(bundle != null)
@@ -100,7 +107,6 @@ class UpdateReport : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(applicationContext,"Selected Society Wing is : "+optionsWings.get(position), Toast.LENGTH_LONG).show()
 
                 spin_value = optionsWings.get(position)
             }
@@ -184,8 +190,7 @@ class UpdateReport : AppCompatActivity() {
             selectedDate.set(Calendar.MONTH,month)
             selectedDate.set(Calendar.DAY_OF_MONTH,dayOfMonth)
             val date = formate.format(selectedDate.time)
-            Toast.makeText(applicationContext,"date : " + date,Toast.LENGTH_SHORT).show()
-            date_editText.setText(date)
+             date_editText.setText(date)
         },
                 now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH))
         datePickerdialog.show()
@@ -212,8 +217,7 @@ class UpdateReport : AppCompatActivity() {
 
         ref.putFile(FinalUri!!)
                 .addOnSuccessListener {
-                    Toast.makeText(applicationContext,"Image Uploaded",Toast.LENGTH_LONG).show()
-                    Log.d("SocietyLogs","Image uploaded")
+                     Log.d("SocietyLogs","Image uploaded")
                     ref.downloadUrl.addOnSuccessListener {
                         it.toString()
                         saveRecordDatetoFirebase(it.toString())

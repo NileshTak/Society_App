@@ -35,6 +35,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemLongClickListener
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.custom_complaint.view.*
 import kotlinx.android.synthetic.main.custom_layout_last.view.*
 import kotlinx.android.synthetic.main.custom_layout_middle.view.*
 import kotlinx.android.synthetic.main.custom_layout_workerhome.view.*
@@ -127,6 +128,11 @@ class HomeFrag : Fragment() {
             viewHolder.itemView.cutom_userreq_name.text = Finaldata.userName
             viewHolder.itemView.cutom_userreq_number.text = Finaldata.mobileNumber
             viewHolder.itemView.cutom_userreq_relation.text = Finaldata.userRelation
+
+            viewHolder.itemView.imgTick.setAnimation("tick.json")
+            viewHolder.itemView.imgTick.playAnimation()
+            viewHolder.itemView.imgTick.loop(true)
+
         }
     }
 
