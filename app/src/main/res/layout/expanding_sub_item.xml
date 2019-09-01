@@ -25,8 +25,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:fontFamily="@font/muli"
-        android:gravity="center_vertical"
+         android:gravity="center_vertical"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="normal"/>

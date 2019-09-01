@@ -2,6 +2,7 @@ package com.nil_projects.society_app
 
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.media.Image
@@ -28,11 +29,17 @@ import kotlinx.android.synthetic.main.activity_user_profiles_list.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
 import kotlinx.android.synthetic.main.custom_user_profile_list.view.*
 import okhttp3.internal.waitNanos
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class User_profiles_list : AppCompatActivity() {
 
     lateinit var edSearch : EditText
 
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

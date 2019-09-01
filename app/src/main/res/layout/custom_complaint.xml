@@ -53,8 +53,7 @@
                             android:layout_centerVertical="true"
                             android:textSize="20dp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/muli_regular"
-                            android:textColor="#000000" />
+                             android:textColor="#000000" />
 
                         <TextView
                             android:id="@+id/date_complaint"
@@ -66,8 +65,7 @@
                             android:layout_marginTop="4dp"
                             android:text="06/7/2018 05:18:12"
                             android:layout_marginBottom="2dp"
-                            android:fontFamily="@font/muli_regular"
-                            android:textColor="@color/md_grey_800"
+                             android:textColor="@color/md_grey_800"
                             android:textAlignment="center"
                             android:layout_alignParentEnd="true"
                             android:textStyle="bold"/>
@@ -128,8 +126,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginBottom="2dp"
                             android:textColor="@color/md_black_1000"
-                            android:fontFamily="@font/muli_regular"
-                            android:textSize="15sp"
+                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:textAlignment="center"
                             android:text="following" />

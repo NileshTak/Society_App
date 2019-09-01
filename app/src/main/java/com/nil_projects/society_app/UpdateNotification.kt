@@ -5,6 +5,7 @@ package com.nil_projects.society_app
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.media.ExifInterface
@@ -38,6 +39,7 @@ import com.tapadoo.alerter.Alerter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_update_report.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
@@ -55,6 +57,11 @@ class UpdateNotification : AppCompatActivity() {
     var LoggedIn_User_Email: String? = null
     var counter : Long = 0
     lateinit var listMobileNo : ArrayList<String>
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,6 +1,7 @@
 package com.nil_projects.society_app
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_user__profile.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class User_Profile : AppCompatActivity() {
 
@@ -23,6 +25,11 @@ class User_Profile : AppCompatActivity() {
     lateinit var profPic : CircleImageView
     lateinit var number : String
     private val REQUEST_CALL = 1
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

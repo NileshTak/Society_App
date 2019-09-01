@@ -21,8 +21,8 @@ tools:context=".LoginActivity">
     android:layout_width="210dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="30dp"
-    android:layout_marginTop="45dp"
-    android:text="Welcome to Siddhivinayak Management App"
+    android:layout_marginTop="35dp"
+    android:text="Welcome to Siddhivinayak Manas Management App"
     android:textColor="#ffffff"
     android:textSize="17sp" />
 

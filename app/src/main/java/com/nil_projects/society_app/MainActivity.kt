@@ -51,6 +51,7 @@ import com.tapadoo.alerter.Alerter
 import de.hdodenhof.circleimageview.CircleImageView
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.app_bar_main.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 
 
@@ -62,6 +63,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var LoggedIn_User_Email: String? = null
     lateinit var tvNavTitle : TextView
     lateinit var navProfList : CircleImageView
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,6 +3,7 @@ package com.nil_projects.society_app
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,8 @@ import androidx.core.view.size
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -379,6 +382,8 @@ class Add_Payment_Update : AppCompatActivity() {
                 .setText("Payment Details Updated Successfully!! :)")
                 .setBackgroundColorRes(R.color.colorAccent)
                 .show()
+
+
     }
 
     private fun sendFCMtoUsers() {

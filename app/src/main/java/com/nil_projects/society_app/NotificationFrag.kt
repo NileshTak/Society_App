@@ -9,15 +9,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.net.toUri
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.xwray.groupie.GroupAdapter
@@ -34,6 +38,12 @@ import java.io.File
 class NotificationFrag : Fragment() {
 
     lateinit var recyclerview_xml_notifrag : RecyclerView
+    var lastResult : DocumentSnapshot? = null
+    val adapter = GroupAdapter<ViewHolder>()
+
+    var db = FirebaseFirestore.getInstance().collection("Notifications")
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,6 +51,8 @@ class NotificationFrag : Fragment() {
         var view = inflater.inflate(R.layout.fragment_notification, container, false)
 
         recyclerview_xml_notifrag = view.findViewById<RecyclerView>(R.id.recyclerview_xml_notifrag)
+
+
 
         fetchNotifications()
 
@@ -50,31 +62,53 @@ class NotificationFrag : Fragment() {
 
     private fun fetchNotifications() {
 
-        val adapter = GroupAdapter<ViewHolder>()
 
-        var db = FirebaseFirestore.getInstance()
+       var query : Query
 
-        db.collection("Notifications")
-                .orderBy("counter", Query.Direction.DESCENDING)
+        var lastSize = lastResult
 
-                .get()
+        if (lastSize == null)
+        {
+
+            query = db.orderBy("counter", Query.Direction.DESCENDING)
+                    .limit(3)
+
+        }
+        else
+        {
+
+            query = db.orderBy("counter", Query.Direction.DESCENDING)
+                    .startAfter(lastSize)
+                    .limit(3)
+
+        }
+                query.get()
                 .addOnSuccessListener {
 
-                    it.documents.forEach {
+
+                     it.documents.forEach {
                         val record = it.toObject(AddNotifiClass::class.java)
 
 
                         if (record != null) {
+
                             adapter.add(FetchNotificationItem(record))
+
+
                         }
 
+                    }
 
+                    if (it.size() > 0)
+                    {
+                        recyclerview_xml_notifrag.adapter = adapter
+                        // Get the last visible document
+                        lastSize = it.documents[it.size() - 1]
+                     //   fetchNotifications()
 
                     }
-                    recyclerview_xml_notifrag.adapter = adapter
+
                 }
-
-
 
 
 

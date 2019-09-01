@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:textSize="25dp"
-                        android:fontFamily="@font/muli_regular"
+
                         android:layout_toRightOf="@id/photo"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="105dp"
@@ -78,13 +78,12 @@
                         android:textSize="18dp"
                         android:layout_marginEnd="8dp"
                         android:layout_below="@id/tvWorkerType"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="5dp"
                         android:text="Date Of Joining :"
                         android:paddingStart="16dp"
                         android:textStyle="bold"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -100,8 +99,7 @@
                         android:layout_alignParentEnd="true"
                         android:textStyle="bold"
                         android:textColor="@color/md_black_1000"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -109,13 +107,12 @@
                         android:textSize="18dp"
                         android:layout_marginEnd="8dp"
                         android:layout_below="@id/DOJ"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="5dp"
                         android:text="Speciality :"
                         android:paddingStart="16dp"
                         android:textStyle="bold"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -131,8 +128,7 @@
                         android:layout_alignParentEnd="true"
                         android:textStyle="bold"
                         android:textColor="@color/md_black_1000"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -140,13 +136,12 @@
                         android:textSize="18dp"
                         android:layout_marginEnd="8dp"
                         android:layout_below="@id/tvWorkerSpeciality"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="5dp"
                         android:text="Number :"
                         android:paddingStart="16dp"
                         android:textStyle="bold"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -162,8 +157,7 @@
                         android:layout_alignParentEnd="true"
                         android:textStyle="bold"
                         android:textColor="@color/md_black_1000"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -171,14 +165,13 @@
                         android:textSize="18dp"
                         android:layout_marginEnd="8dp"
                         android:layout_below="@id/tvWorkerNumber"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="5dp"
                         android:text="Address :"
                         android:paddingStart="16dp"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -195,8 +188,7 @@
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp"
                         android:textColor="@color/md_black_1000"
-                        android:fontFamily="@font/muli_regular"
-                        android:layout_width="wrap_content"
+                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </RelativeLayout>
@@ -219,16 +211,15 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/custom_prof_worker"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_user_nav"
                         android:layout_marginStart="10dp" />
 
                     <TextView
-                        android:fontFamily="@font/muli_regular"
-                        android:id="@+id/custom_name_worker"
+                         android:id="@+id/custom_name_worker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
@@ -237,7 +228,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_toRightOf="@id/custom_prof_worker"
                         android:text="Item - 1"
-                        android:textSize="25dp"
+                        android:textSize="20dp"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#000000" />
 
@@ -247,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/custom_name_worker"
                         android:layout_marginLeft="5dp"
-                        android:textSize="18dp"
+                        android:textSize="15dp"
                         android:layout_marginStart="12dp"
                         android:layout_toRightOf="@id/custom_prof_worker"
                         android:text="Description"
@@ -264,6 +255,7 @@
                         android:layout_toRightOf="@id/custom_prof_worker"
                         android:background="@color/colorPrimary"
                         android:paddingLeft="15dp"
+                        android:textSize="12dp"
                         android:layout_marginStart="12dp"
                         android:paddingRight="15dp"
                         android:text="Rating Coming Soon"
@@ -272,8 +264,8 @@
 
                     <Button
                         android:id="@+id/custom_callingbtn_worker"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="20dp"

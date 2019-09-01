@@ -120,6 +120,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.0.7'
     //  implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
 
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
 }
 repositories {
     mavenCentral()

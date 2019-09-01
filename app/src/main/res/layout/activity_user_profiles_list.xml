@@ -19,7 +19,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:padding="5dp"
+            android:inputType="number"
+            android:padding="10dp"
+
             android:textColor="@color/md_blue_custom"
             android:hint="Enter Flat Number"
             android:textSize="22dp"

@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content" />
 
            <View
-               android:background="@color/md_grey_200"
+               android:background="@color/md_grey_300"
                android:layout_width="match_parent"
                android:layout_height="3dp"/>
 

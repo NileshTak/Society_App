@@ -27,7 +27,7 @@
         android:id="@+id/name_user_add_payment"
         android:layout_below="@id/spinner_add_payment_flat"
         android:textSize="30dp"
-        android:fontFamily="@font/muli_regular"
+
         android:gravity="center_horizontal"
         android:textColor="@android:color/black"
         android:layout_margin="10dp"
@@ -37,7 +37,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edittext_receiptNo"
         android:hint="Enter Receipt Number"
-        android:fontFamily="@font/muli_regular"
+
         android:layout_below="@id/name_user_add_payment"
         android:textSize="25dp"
         android:layout_margin="10dp"
@@ -55,7 +55,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edittext_amount"
             android:hint="Total Amount"
-            android:fontFamily="@font/muli_regular"
+
             android:textSize="20dp"
             android:inputType="number"
             android:layout_weight="1"
@@ -66,7 +66,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edittext_amountFine"
             android:hint="Fine"
-            android:fontFamily="@font/muli_regular"
+
             android:textSize="20dp"
             android:inputType="number"
             android:layout_weight="1"
@@ -89,7 +89,7 @@
             android:layout_weight="3"
             android:hint="Select Month"
             android:textSize="20dp"
-            android:fontFamily="@font/muli_regular"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

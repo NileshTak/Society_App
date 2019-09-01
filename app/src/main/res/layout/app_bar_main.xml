@@ -22,8 +22,7 @@
                 android:textSize="18dp"
 
                 android:textStyle="bold"
-                android:fontFamily="@font/muli_regular"
-                android:textColor="@color/md_white_1000"
+                 android:textColor="@color/md_white_1000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

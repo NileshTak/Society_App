@@ -6,6 +6,5 @@
     android:textColor="@color/md_blue_custom"
     android:textSize="22dp"
     android:textStyle="normal"
-    android:fontFamily="@font/muli"
-    android:padding="10dp"
+     android:padding="10dp"
     />

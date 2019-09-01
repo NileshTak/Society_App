@@ -3,6 +3,7 @@ package com.nil_projects.society_app
 import android.Manifest
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.*
@@ -28,6 +29,7 @@ import com.tapadoo.alerter.Alerter
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_update_report.*
 import kotlinx.android.synthetic.main.custom_complaint.view.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -54,6 +56,11 @@ class UpdateReport : AppCompatActivity() {
     lateinit var btn_update : Button
     lateinit var listMobileNo : ArrayList<String>
     lateinit var listWingName : ArrayList<String>
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

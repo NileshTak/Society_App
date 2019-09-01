@@ -21,6 +21,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".App"
         android:icon="@mipmap/symbol"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/symbol_round"

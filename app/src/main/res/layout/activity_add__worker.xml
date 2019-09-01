@@ -44,7 +44,7 @@
                 android:layout_below="@+id/prof_pic_worker"
                 android:textSize="22dp"
                 android:hint="Enter Name"
-                android:fontFamily="@font/muli_regular"
+
                 android:textColor="@color/md_black_1000"
                 android:layout_margin="8dp"
                 android:layout_height="wrap_content" />
@@ -54,7 +54,7 @@
                 android:hint="Enter Address"
                 android:textColor="@color/md_black_1000"
                 android:layout_width="match_parent"
-                android:fontFamily="@font/muli_regular"
+
                 android:layout_below="@+id/text_name_worker"
                 android:textSize="22dp"
                 android:layout_margin="8dp"
@@ -79,7 +79,7 @@
                 android:textColor="@color/md_black_1000"
                 android:inputType="number"
                 android:layout_margin="8dp"
-                android:fontFamily="@font/muli_regular"
+
                 android:layout_height="wrap_content" />
 
             <EditText
@@ -87,8 +87,7 @@
                 android:layout_margin="8dp"
                 android:inputType="date"
                 android:textSize="22dp"
-                android:fontFamily="@font/muli_regular"
-                android:layout_below="@+id/text_mobile_worker"
+                 android:layout_below="@+id/text_mobile_worker"
                 android:layout_width="match_parent"
                 android:hint="Enter Date Of Joining"
                 android:layout_height="wrap_content" />
@@ -97,7 +96,7 @@
                 android:id="@+id/edSpeciality"
                 android:textSize="22dp"
                 android:layout_margin="8dp"
-                android:fontFamily="@font/muli_regular"
+
                 android:hint="Seperate Using Commas"
                 android:layout_below="@id/date_worker_joining"
                 android:layout_width="match_parent"

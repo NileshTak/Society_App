@@ -23,7 +23,7 @@
         android:textAlignment="center"
         android:textSize="30dp"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/muli_regular"
+
         android:textStyle="bold"
         android:textColor="@color/md_white_1000"
         android:layout_width="wrap_content"
@@ -48,11 +48,11 @@
         android:textAlignment="center"
         android:textColor="@color/md_black_1000"
         android:textStyle="bold"
-        android:fontFamily="@font/muli_regular"
+
         android:transitionName="transitionUserName"
         android:layout_below="@+id/prof_pic_user_profile"
-        android:textSize="30dp"
-        android:text="jksdubn"
+        android:textSize="25dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/flatno_profile"
             android:textAlignment="center"
             android:layout_weight="1"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textColor="@color/md_black_1000"
             android:transitionName="transitionflatno"
             android:layout_gravity="center_vertical"
@@ -82,7 +82,7 @@
             android:id="@+id/wingname_profile"
             android:textAlignment="center"
             android:layout_weight="1"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textColor="@color/md_black_1000"
             android:transitionName="transitionwingname"
             android:layout_gravity="center_vertical"

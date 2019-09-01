@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.custom_records_layout.view.*
 import kotlinx.android.synthetic.main.custom_user_profile_list.view.*
 import kotlinx.android.synthetic.main.custom_workser_list.view.*
 import org.w3c.dom.Text
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 class Workers_List : AppCompatActivity() {
@@ -47,6 +48,11 @@ class Workers_List : AppCompatActivity() {
     lateinit var fc : FoldingCell
     lateinit var workerNum : String
     private val REQUEST_CALL = 1
+
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
