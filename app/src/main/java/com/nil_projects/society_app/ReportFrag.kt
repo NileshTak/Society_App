@@ -1,201 +1,210 @@
 package com.nil_projects.society_app
 
-import android.Manifest
-import android.annotation.TargetApi
-import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.PendingIntent.getActivity
-import android.app.ProgressDialog
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.*
 
-import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.FileProvider
-import androidx.core.content.PermissionChecker.checkSelfPermission
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import com.google.android.gms.flags.impl.DataUtils
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.firebase.ui.firestore.paging.LoadingState
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
-import com.xwray.groupie.OnItemLongClickListener
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.custom_records_layout.*
 import kotlinx.android.synthetic.main.custom_records_layout.view.*
-import kotlinx.android.synthetic.main.fragment_report.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.lang.Exception
-import java.net.HttpURLConnection
-import java.net.URI
-import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ReportFrag : Fragment() {
 
-    lateinit var recyclerview_xml_reportfrag : RecyclerView
+    lateinit var recyclerview_xml_reportfrag: RecyclerView
+    lateinit var swipeRefreshLayoutReportFrag: SwipeRefreshLayout
+    //  val adapter = GroupAdapter<ViewHolder>()
+
+    private lateinit var mAdapter: FirestorePagingAdapter<reportModelClass, FetchRecordItem>
+    private val mFirestore = FirebaseFirestore.getInstance()
+    private val mPostsCollection = mFirestore.collection("Records")
+    private val mQuery = mPostsCollection.orderBy("counter", Query.Direction.DESCENDING)
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        fetchRecords()
+
+        //   fetchRecords( )
 
         val view = inflater.inflate(R.layout.fragment_report, container, false)
 
         recyclerview_xml_reportfrag = view.findViewById<RecyclerView>(R.id.recyclerview_xml_reportfrag)
+        swipeRefreshLayoutReportFrag = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayoutReportFrag)
+
+        recyclerview_xml_reportfrag.setHasFixedSize(true)
+
+        fetchRecord()
 
         return view
     }
 
-    private fun fetchRecords() {
+    private fun fetchRecord() {
+        // Init Paging Configuration
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPrefetchDistance(2)
+                .setPageSize(3)
+                .build()
 
-        val adapter = GroupAdapter<ViewHolder>()
+        // Init Adapter Configuration
+        val options = FirestorePagingOptions.Builder<reportModelClass>()
+                .setLifecycleOwner(this)
+                .setQuery(mQuery, config, reportModelClass::class.java)
+                .build()
 
-        var db = FirebaseFirestore.getInstance()
+        // Instantiate Paging Adapter
+        mAdapter = object : FirestorePagingAdapter<reportModelClass, FetchRecordItem>(options) {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FetchRecordItem {
+                val view = layoutInflater.inflate(R.layout.custom_records_layout, parent, false)
+                return FetchRecordItem(view)
+            }
 
-        db.collection("Records")
-                .orderBy("counter", Query.Direction.DESCENDING)
-
-                .get()
-                .addOnSuccessListener {
-
-                    it.documents.forEach {
-                        val record = it.toObject(reportModelClass::class.java)
-
-
-                        if (record != null) {
-                            adapter.add(FetchRecordItem(record))
-                        }
+            override fun onBindViewHolder(viewHolder: FetchRecordItem, position: Int, post: reportModelClass) {
+                // Bind to ViewHolder
+                viewHolder.bind(post)
+            }
 
 
-
+            override fun onLoadingStateChanged(state: LoadingState) {
+                when (state) {
+                    LoadingState.LOADING_INITIAL -> {
+                        swipeRefreshLayoutReportFrag.isRefreshing = true
                     }
-                    recyclerview_xml_reportfrag.adapter = adapter
-                }
-                .addOnFailureListener {
-                    Alerter.create(getActivity())
-                            .setTitle("Society Notice")
-                            .setIcon(R.drawable.alert)
-                            .setDuration(4000)
-                            .setText("Failed to Fetch!! Please Try after some time!!")
-                            .setBackgroundColorRes(R.color.colorAccent)
-                            .show()
-                }
 
+                    LoadingState.LOADING_MORE -> {
+                        swipeRefreshLayoutReportFrag.isRefreshing = true
+                    }
+
+                    LoadingState.LOADED -> {
+                        swipeRefreshLayoutReportFrag.isRefreshing = false
+                    }
+
+                    LoadingState.ERROR -> {
+                        Toast.makeText(
+                                activity,
+                                "Low Network",
+                                Toast.LENGTH_SHORT
+                        ).show()
+                        swipeRefreshLayoutReportFrag.isRefreshing = false
+                    }
+
+                    LoadingState.FINISHED -> {
+                        swipeRefreshLayoutReportFrag.isRefreshing = false
+                    }
+                }
+            }
+
+        }
+
+        recyclerview_xml_reportfrag.adapter = mAdapter
+
+    }
+}
+
+//    private fun fetchRecords( ) {
 //
 //
 //
-//                    val ref = FirebaseDatabase.getInstance().getReference("/RecordsDates")
-//        var recordsorder = ref.orderByChild("counter")
-//        ref.addListenerForSingleValueEvent(object : ValueEventListener
-//        {
-//            val adapter = GroupAdapter<ViewHolder>()
+//        var db = FirebaseFirestore.getInstance()
 //
-//            override fun onCancelled(p0: DatabaseError) {
+//        db.collection("Records")
+//                .orderBy("counter", Query.Direction.DESCENDING)
 //
-//            }
+//                .get()
+//                .addOnSuccessListener {
 //
-//            override fun onDataChange(p0: DataSnapshot) {
-//                p0.children.forEach {
-//                    recordsorder
-//                    val record = it.getValue(RecordClass::class.java)
-//
-//                    if (record != null) {
-//                        adapter.add(FetchRecordItem(record))
-//                    }
+//                    it.documents.forEach {
+//                        val record = it.toObject(reportModelClass::class.java)
 //
 //
-//                    adapter.setOnItemLongClickListener(object : OnItemLongClickListener
-//                    {
-//                        override fun onItemLongClick(item: Item<*>, view: View): Boolean
-//                        {
-//                            val refChild = FirebaseDatabase.getInstance().getReference("/RecordsDates").child(record!!.id)
-//
-//                            var popup = PopupMenu(activity,view)
-//                            popup.menuInflater.inflate(R.menu.status_option,popup.menu)
-//                            popup.show()
-//
-//                            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-//                                override fun onMenuItemClick(item: MenuItem?): Boolean {
-//
-//                                    when (item!!.title)
-//                                    {
-//                                        "Delete" ->
-//                                        {
-//                                            //Toast.makeText(activity,"Deleted",Toast.LENGTH_LONG).show()
-//                                            refChild.removeValue()
-//                                            fetchRecords()
-//                                        }
-//                                    }
-//                                    return true
-//                                }
-//                            })
-//                            return true
+//                        if (record != null) {
+//                            adapter.add(FetchRecordItem(record))
 //                        }
-//                    })
-//                }
 //
 //
-//                recyclerview_xml_reportfrag.adapter = adapter
+//
+//                    }
+//                    recyclerview_xml_reportfrag.adapter = adapter
 //                }
-//            })
-        }
-    inner class FetchRecordItem(var Finalrecord : reportModelClass) : Item<ViewHolder>()
-    {
+//                .addOnFailureListener {
+//                    Alerter.create(getActivity())
+//                            .setTitle("Society Notice")
+//                            .setIcon(R.drawable.alert)
+//                            .setDuration(4000)
+//                            .setText("Failed to Fetch!! Please Try after some time!!")
+//                            .setBackgroundColorRes(R.color.colorAccent)
+//                            .show()
+//                }
+//
+//         }
+//    inner class FetchRecordItem(var Finalrecord : reportModelClass) : Item<ViewHolder>()
+//    {
+//
+//        override fun getLayout(): Int {
+//            return R.layout.custom_records_layout
+//        }
+//
+//        override fun bind(viewHolder: ViewHolder, position: Int) {
+//            viewHolder.itemView.date_custom_record.text = Finalrecord.date
+//            viewHolder.itemView.wing_spinner_value_status.text = Finalrecord.wing
+//           // Picasso.get().load(Finalrecord.imageUrl).into(viewHolder.itemView.record_img_xml)
+//            Glide.with(activity).load(Finalrecord.imageUrl).into(viewHolder.itemView.record_img_xml)
+//
+//            viewHolder.itemView.setOnClickListener {
+//                var int = Intent(activity,FUllScreenImage :: class.java)
+//                int.data = Finalrecord.imageUrl.toUri()
+//                int.putExtra("msg",Finalrecord.date)
+//                int.putExtra("id",Finalrecord.id)
+//                int.putExtra("collectionName","Records")
+//                startActivity(int)
+//            }
+//        }
+//    }
 
-        override fun getLayout(): Int {
-            return R.layout.custom_records_layout
-        }
 
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-            viewHolder.itemView.date_custom_record.text = Finalrecord.date
-            viewHolder.itemView.wing_spinner_value_status.text = Finalrecord.wing
+class FetchRecordItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private var date_custom_record: TextView = itemView.findViewById<TextView>(R.id.date_custom_record)
+    private var wing_spinner_value_status: TextView = itemView.findViewById<TextView>(R.id.wing_spinner_value_status)
+    private var record_img_xml: ImageView = itemView.findViewById<ImageView>(R.id.record_img_xml)
+
+
+    fun bind(Finalrecord: reportModelClass) {
+
+        date_custom_record.text = Finalrecord.date
+         wing_spinner_value_status.text = Finalrecord.wing
            // Picasso.get().load(Finalrecord.imageUrl).into(viewHolder.itemView.record_img_xml)
-            Glide.with(activity).load(Finalrecord.imageUrl).into(viewHolder.itemView.record_img_xml)
+            Glide.with(record_img_xml.context).load(Finalrecord.imageUrl).into( record_img_xml)
 
-            viewHolder.itemView.setOnClickListener {
-                var int = Intent(activity,FUllScreenImage :: class.java)
+        record_img_xml.setOnClickListener {
+                var int = Intent(record_img_xml.context,FUllScreenImage :: class.java)
                 int.data = Finalrecord.imageUrl.toUri()
                 int.putExtra("msg",Finalrecord.date)
                 int.putExtra("id",Finalrecord.id)
                 int.putExtra("collectionName","Records")
-                startActivity(int)
+            record_img_xml.context.startActivity(int)
             }
-        }
     }
+
 }
-
-
-

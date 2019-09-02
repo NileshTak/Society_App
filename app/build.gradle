@@ -122,6 +122,9 @@ dependencies {
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
+    // Paging Library
+    implementation 'android.arch.paging:runtime:1.0.1'
+
 }
 repositories {
     mavenCentral()
