@@ -32,32 +32,33 @@
 
         <RelativeLayout
             android:id="@+id/rel_2"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/cutom_userreq_flatno"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Flat No"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:background="@color/md_blue_custom"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/white"
                 android:textSize="24dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cutom_userreq_relation"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_below="@id/cutom_userreq_flatno"
                 android:layout_height="wrap_content"
                 android:text="Relation"
-                android:paddingBottom="15dp"
+                android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:background="@color/md_blue_custom"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/white"
                 android:textSize="22dp"
                 android:textStyle="bold" />
@@ -70,43 +71,44 @@
 
             <TextView
                 android:id="@+id/cutom_userreq_name"
-                android:layout_width="340dp"
+                android:layout_width="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/md_white_1000"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/black"
                 android:textSize="22dp" />
 
             <TextView
                 android:id="@+id/cutom_userreq_number"
                 android:layout_below="@+id/cutom_userreq_name"
-                android:layout_width="340dp"
+                android:layout_width="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:text="8446613467"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/md_white_1000"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/black"
                 android:textSize="22dp" />
 
             <TextView
                 android:id="@+id/cutom_userreq_email"
                 android:layout_below="@+id/cutom_userreq_number"
-                android:layout_width="340dp"
+                android:layout_width="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/md_white_1000"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/black"
                 android:textSize="22dp" />
 

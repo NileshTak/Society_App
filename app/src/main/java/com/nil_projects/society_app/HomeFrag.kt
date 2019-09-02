@@ -129,9 +129,9 @@ class HomeFrag : Fragment() {
             viewHolder.itemView.cutom_userreq_number.text = Finaldata.mobileNumber
             viewHolder.itemView.cutom_userreq_relation.text = Finaldata.userRelation
 
-            viewHolder.itemView.imgTick.setAnimation("tick.json")
-            viewHolder.itemView.imgTick.playAnimation()
-            viewHolder.itemView.imgTick.loop(true)
+//            viewHolder.itemView.imgTick.setAnimation("tick.json")
+//            viewHolder.itemView.imgTick.playAnimation()
+//            viewHolder.itemView.imgTick.loop(true)
 
         }
     }
