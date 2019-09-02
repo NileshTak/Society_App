@@ -6,26 +6,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserReqFrag">
 
-    <com.github.florent37.materialviewpager.MaterialViewPager
-        android:id="@+id/materialViewPager"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_newstand"
-        app:viewpager_logoMarginTop="100dp"
-        app:viewpager_color="@color/colorPrimary"
-        app:viewpager_headerHeight="200dp"
-        app:viewpager_headerAlpha="1.0"
-        app:viewpager_imageHeaderDarkLayerAlpha="0.2"
-        app:viewpager_hideLogoWithFade="false"
-        app:viewpager_hideToolbarAndTitle="true"
-        app:viewpager_enableToolbarElevation="true"
-        app:viewpager_parallaxHeaderFactor="1.5"
-        app:viewpager_headerAdditionalHeight="20dp"
-        app:viewpager_displayToolbarWhenSwipe="true"
-        app:viewpager_transparentToolbar="false"
-        app:viewpager_animatedHeaderImage="true"
-        app:viewpager_disableToolbar="true"  />
-<!--        app:viewpager_logo="@layout/header_logo"-->
+        android:layout_height="wrap_content"
+
+        android:minHeight="?actionBarSize"
+        app:tabGravity="fill"
+
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorHeight="4dp"
+        app:tabBackground="@color/colorWhite"
+        app:tabMode="scrollable">
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tabLayout"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+
+
+<!--    <com.github.florent37.materialviewpager.MaterialViewPager-->
+<!--        android:id="@+id/materialViewPager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_newstand"-->
+<!--        app:viewpager_logoMarginTop="100dp"-->
+<!--        app:viewpager_color="@color/colorPrimary"-->
+<!--        app:viewpager_headerHeight="200dp"-->
+<!--        app:viewpager_headerAlpha="1.0"-->
+<!--        app:viewpager_imageHeaderDarkLayerAlpha="0.2"-->
+<!--        app:viewpager_hideLogoWithFade="false"-->
+<!--        app:viewpager_hideToolbarAndTitle="true"-->
+<!--        app:viewpager_enableToolbarElevation="true"-->
+<!--        app:viewpager_parallaxHeaderFactor="1.5"-->
+<!--        app:viewpager_headerAdditionalHeight="20dp"-->
+<!--        app:viewpager_displayToolbarWhenSwipe="true"-->
+<!--        app:viewpager_transparentToolbar="false"-->
+<!--        app:viewpager_animatedHeaderImage="true"-->
+<!--        app:viewpager_disableToolbar="true"  />-->
+<!--&lt;!&ndash;        app:viewpager_logo="@layout/header_logo"&ndash;&gt;-->
 
 
 

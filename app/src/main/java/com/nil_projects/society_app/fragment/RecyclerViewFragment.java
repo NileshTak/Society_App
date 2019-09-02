@@ -15,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -66,7 +65,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+     //   mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
     }
 
     @Override
