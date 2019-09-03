@@ -273,6 +273,8 @@ class HomeFrag : Fragment() {
                 var int = Intent(activity,FUllScreenImage :: class.java)
                 int.data = Finalrecord.imageUrl.toUri()
                 int.putExtra("msg",Finalrecord.date)
+                int.putExtra("id",Finalrecord.id)
+                int.putExtra("collectionName","Records")
                 startActivity(int)
             }
         }
@@ -351,6 +353,8 @@ class HomeFrag : Fragment() {
                 var int = Intent(activity,FUllScreenImage :: class.java)
                 int.data = Finalnotifi.imageUrl.toUri()
                 int.putExtra("msg",Finalnotifi.noti)
+                int.putExtra("id",Finalnotifi.id)
+                int.putExtra("collectionName","Notifications")
                 startActivity(int)
             }
         }
