@@ -258,6 +258,7 @@ class Add_Payment_Update : AppCompatActivity() {
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
                 .whereEqualTo("Wing", wingName)
+                .whereEqualTo("userAuth","Accepted")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val city = documentSnapshot.toObjects(UserClass :: class.java)

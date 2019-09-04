@@ -34,7 +34,7 @@ class SplashScreen : AppCompatActivity() {
         val window = this.getWindow()
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(SplashScreen@this, R.color.md_blue_custom))
+        window.setStatusBarColor(ContextCompat.getColor(SplashScreen@this, R.color.md_white_1000))
 
         val aniRotate = AnimationUtils.loadAnimation(applicationContext, R.anim.spin)
         img.startAnimation(aniRotate)

@@ -121,6 +121,7 @@ class Maintainance_Records : Fragment() {
         var db = FirebaseFirestore.getInstance()
         db.collection("FlatUsers")
                 .whereEqualTo("SocietyName", "SIDDHIVINAYAK MANAS CO-OP. HOUSING SOCIETY")
+                .whereEqualTo("userAuth","Accepted")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                         documentSnapshot.documents.forEach {
@@ -164,6 +165,7 @@ class Maintainance_Records : Fragment() {
 
         db.collection("FlatUsers")
                 .whereEqualTo("SocietyName", "SIDDHIVINAYAK MANAS CO-OP. HOUSING SOCIETY")
+                .whereEqualTo("userAuth","Accepted")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     documentSnapshot.documents.forEach {
