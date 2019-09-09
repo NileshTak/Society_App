@@ -77,7 +77,7 @@ class Add_Worker : AppCompatActivity() {
             dateJoiningWorker()
         }
 
-        val optionsWorkers = arrayOf("Cook","Driver","Security Guard","Car Cleaner")
+        val optionsWorkers = arrayOf("Cook","Driver","Security Guard")
 
         spinner_type_worker.adapter = ArrayAdapter<String>(this,R.layout.spinner_textview,optionsWorkers)
         spinner_type_worker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -145,8 +145,7 @@ class Add_Worker : AppCompatActivity() {
             selectedDate.set(Calendar.MONTH,month)
             selectedDate.set(Calendar.DAY_OF_MONTH,dayOfMonth)
             val date = formate.format(selectedDate.time)
-            Toast.makeText(this,"date : " + date,Toast.LENGTH_SHORT).show()
-            date_editText_worker.setText(date)
+             date_editText_worker.setText(date)
         },
                 now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH))
         datePickerdialog_worker.show()
@@ -342,11 +341,11 @@ class Add_Worker : AppCompatActivity() {
                             con.setDoInput(true)
 
                             con.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
-                            con.setRequestProperty("Authorization", "Basic Y2Q3ODRhYTUtMjA4ZC00NTZjLTg3MDktMzEwNjJkOWMwMTRi")
+                            con.setRequestProperty("Authorization", "Basic NzY1N2E5MGEtM2JjZi00MWU3LTg5ZjYtNjg5Y2Y4Nzg2ZTk0")
                             con.setRequestMethod("POST")
 
                             val strJsonBody = ("{"
-                                    + "\"app_id\": \"69734071-08a8-4d63-a7ab-adda8e2197f0\","
+                                    + "\"app_id\": \"1a84ca5e-eedd-4f38-9475-8e8c0e78bdfd\","
 
                                     + "\"filters\": [{\"field\": \"tag\", \"key\": \"NotificationID\", \"relation\": \"=\", \"value\": \"" + sendNotificationID + "\"}],"
 

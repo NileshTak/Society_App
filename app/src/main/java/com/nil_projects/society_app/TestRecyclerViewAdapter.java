@@ -1,6 +1,8 @@
 package com.nil_projects.society_app;
 
+import android.app.AlertDialog;
 import android.app.LauncherActivity;
+import android.content.DialogInterface;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Display;
@@ -28,12 +30,11 @@ import com.nil_projects.society_app.fragment.RecyclerViewFragment;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created by florentchampigny on 24/04/15.
- */
+
 public class TestRecyclerViewAdapter extends FirestoreRecyclerAdapter<Model, TestRecyclerViewAdapter.ViewHolder> {
 
     static final int TYPE_HEADER = 0;
@@ -42,10 +43,9 @@ public class TestRecyclerViewAdapter extends FirestoreRecyclerAdapter<Model, Tes
     private CollectionReference notebookRef = db.collection("FlatUsers");
 
 
-    public TestRecyclerViewAdapter(FirestoreRecyclerOptions<Model> options) {
+    public TestRecyclerViewAdapter(FirestoreRecyclerOptions<Model> options, FragmentActivity activity) {
         super(options);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -77,14 +77,69 @@ public class TestRecyclerViewAdapter extends FirestoreRecyclerAdapter<Model, Tes
 
 
         viewHolder.reqAcceptBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                updateReq(model.getMobileNumber());
+            public void onClick(final View v) {
+                //Uncomment the below code to Set the message and title from the strings.xml file
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(v.getContext());
+
+                builder.setMessage("Are you sure want to Accept this Request ?? Once Accepted cannot be Cancelled")
+
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                updateReq(model.getMobileNumber());
+                                Toast.makeText(v.getContext(),"Request Accepted",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Request Accept Alert !!");
+                alert.show();
+
             }
         });
 
         viewHolder.reqRejected.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                updateREJReq(model.getMobileNumber());
+            public void onClick(final View v) {
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(v.getContext());
+
+                builder.setMessage("Are you sure want to Reject this Request ?? Once Rejected cannot be Cancelled")
+
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                updateREJReq(model.getMobileNumber());
+                                Toast.makeText(v.getContext(),"Request Rejected",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Request Accept Alert !!");
+                alert.show();
+
             }
         });
     }

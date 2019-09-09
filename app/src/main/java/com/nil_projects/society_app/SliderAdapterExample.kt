@@ -26,19 +26,19 @@ class SliderAdapterExample(private val context: Context, private val arr: ArrayL
 
         when (position) {
             0 -> Glide.with(viewHolder.itemView)
-                .load(arr[0]).into(viewHolder.imageViewBackground)
+                    .load(arr[0]).into(viewHolder.imageViewBackground)
+            1 -> Glide.with(viewHolder.itemView)
+                    .load(arr[1])
+                    .into(viewHolder.imageViewBackground)
             2 -> Glide.with(viewHolder.itemView)
-                .load(arr[1])
-                .into(viewHolder.imageViewBackground)
-            4 -> Glide.with(viewHolder.itemView)
-                .load(arr[2])
-                .into(viewHolder.imageViewBackground)
-            5 -> Glide.with(viewHolder.itemView)
-                .load(arr[4])
-                .into(viewHolder.imageViewBackground)
+                    .load(arr[2])
+                    .into(viewHolder.imageViewBackground)
+            3 -> Glide.with(viewHolder.itemView)
+                    .load(arr[3])
+                    .into(viewHolder.imageViewBackground)
             else -> Glide.with(viewHolder.itemView)
-                .load(arr[3])
-                .into(viewHolder.imageViewBackground)
+                    .load(arr[0])
+                    .into(viewHolder.imageViewBackground)
         }
     }
 

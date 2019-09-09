@@ -60,7 +60,7 @@ public class RecyclerViewFragment extends Fragment {
         FirestoreRecyclerOptions<Model> options = new FirestoreRecyclerOptions.Builder<Model>()
                 .setQuery(query, Model.class)
                 .build();
-        adapter = new TestRecyclerViewAdapter(options);
+        adapter = new TestRecyclerViewAdapter(options,getActivity());
 
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

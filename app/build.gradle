@@ -48,11 +48,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
-                onesignal_app_id               : '69734071-08a8-4d63-a7ab-adda8e2197f0',
+                onesignal_app_id               : '1a84ca5e-eedd-4f38-9475-8e8c0e78bdfd',
                 // Project number pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: 'REMOTE'
         ]
