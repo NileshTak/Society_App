@@ -54,15 +54,16 @@
                 android:id="@+id/noti_img_xml"
                 android:layout_width="370dp"
             android:layout_marginTop="10dp"
-                android:layout_height="300dp" />
+                android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/noti_text_view"
             android:textSize="22dp"
             android:textColor="@color/md_black_1000"
 
+            android:layout_marginBottom="5sp"
             android:layout_marginTop="2sp"
-            app:fontPath="Exo-Medium.ttf"
+            app:fontPath="Exo-Bold.ttf"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

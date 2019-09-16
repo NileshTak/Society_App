@@ -47,6 +47,20 @@ class NatureCreativePagerAdapter(val context: Context) : CreativePagerAdapter {
         intent.putExtra("workerType","Driver")
         context.startActivity(intent)
       }
+      else if (btn_worker.text == "View Plumber Section")
+      {
+        val intent = Intent(context,Workers_List :: class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra("workerType","Plumber")
+        context.startActivity(intent)
+      }
+      else if (btn_worker.text == "View Electrician Section")
+      {
+        val intent = Intent(context,Workers_List :: class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra("workerType","Electrician")
+        context.startActivity(intent)
+      }
       else if (btn_worker.text == "View Security Guards Section")
       {
         val intent = Intent(context,Workers_List :: class.java)

@@ -172,7 +172,10 @@ class ComplaintsFragment : Fragment() {
                 var sendNotificationID: String
 
                 //This is a Simple Logic to Send Notification different Device Programmatically....
-                if (LoggedIn_User_Email.equals("admin@gmail.com")) {
+                if (LoggedIn_User_Email == "manassociety2006@gmail.com" || LoggedIn_User_Email == "ramit.amitpune@gmail.com"
+                        || LoggedIn_User_Email == "satyawan31@gmail.com" || LoggedIn_User_Email == "jay.bhanvase@gmail.com"
+                        || LoggedIn_User_Email == "swativd1901@gmail.com" || LoggedIn_User_Email == "aboli@gmail.com"
+                        || LoggedIn_User_Email == "rowhouse@gmail.com") {
                     //send_email = "client@gmail.com"
                     Log.d("OneSignal",UserMobile)
                     sendNotificationID = UserMobile
@@ -228,7 +231,7 @@ class ComplaintsFragment : Fragment() {
                     }
 
                 } else {
-                    sendNotificationID = "admin@gmail.com"
+                    sendNotificationID = "manassociety2006@gmail.com"
                 }
             }
         }

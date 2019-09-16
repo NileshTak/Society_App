@@ -207,13 +207,14 @@ class FetchNotificationItem(itemView: View) : RecyclerView.ViewHolder(itemView) 
             Glide.with(notiImage.context ).load(Finalnotifi.imageUrl).into(notiImage )
 
 
-            notiImage.setOnClickListener {
+            itemView.setOnClickListener {
                 var int = Intent(notiImage.context,FUllScreenImage :: class.java)
                 int.data = Finalnotifi.imageUrl.toUri()
                 int.putExtra("msg",Finalnotifi.noti)
                 int.putExtra("msg",Finalnotifi.noti)
                 int.putExtra("id",Finalnotifi.id)
                 int.putExtra("collectionName","Notifications")
+                int.putExtra("userid",Finalnotifi.userid)
                 notiImage.context.startActivity(int)
             }
     }

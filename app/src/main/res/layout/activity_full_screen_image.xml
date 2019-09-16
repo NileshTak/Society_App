@@ -39,6 +39,21 @@
 
 
     <TextView
+        android:id="@+id/tvPostedBy"
+        android:textSize="20dp"
+        android:layout_below="@id/ivDltImage"
+        android:layout_margin="10sp"
+
+        android:textColor="@color/md_white_1000"
+        android:gravity="center_horizontal"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <TextView
         android:id="@+id/tvFullPic"
         android:textSize="20dp"
         android:textColor="@color/md_white_1000"

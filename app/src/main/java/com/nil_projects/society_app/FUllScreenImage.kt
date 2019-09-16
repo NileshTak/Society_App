@@ -27,6 +27,8 @@ class FUllScreenImage : AppCompatActivity() {
     lateinit var collectionName : String
     lateinit var imgUri : Uri
     lateinit var id : String
+    lateinit var tvPostedBy : TextView
+    lateinit var userid : String
     lateinit var ivDltImage : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class FUllScreenImage : AppCompatActivity() {
         ivBackArrow = findViewById<Button>(R.id.ivBackArrow)
         tvMsg = findViewById<TextView>(R.id.tvFullPic)
         ivDltImage = findViewById<Button>(R.id.ivDltImage)
+        tvPostedBy = findViewById<TextView>(R.id.tvPostedBy)
         ivDownload = findViewById<Button>(R.id.ivDownload)
         fullscreenimg = findViewById<View>(R.id.fullscreen_image) as PhotoView
 
@@ -56,9 +59,11 @@ class FUllScreenImage : AppCompatActivity() {
             val msg = bundle.getString("msg")
               id = bundle.getString("id")
             collectionName = bundle.getString("collectionName")
-            if(msg.isNotEmpty() && id.isNotEmpty())
+            userid = bundle.getString("userid")
+            if(msg.isNotEmpty() && id.isNotEmpty() && userid.isNotEmpty())
             {
                 tvMsg.text = msg
+                tvPostedBy.text = " Posted By : "+userid
 
             }
         }

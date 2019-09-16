@@ -77,7 +77,7 @@ class Add_Worker : AppCompatActivity() {
             dateJoiningWorker()
         }
 
-        val optionsWorkers = arrayOf("Cook","Driver","Security Guard")
+        val optionsWorkers = arrayOf("Cook","Driver","Security Guard","Electrician","Plumber")
 
         spinner_type_worker.adapter = ArrayAdapter<String>(this,R.layout.spinner_textview,optionsWorkers)
         spinner_type_worker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -86,7 +86,7 @@ class Add_Worker : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(applicationContext,"Selected Worker Type is : "+optionsWorkers.get(position), Toast.LENGTH_LONG).show()
+          //      Toast.makeText(applicationContext,"Selected Worker Type is : "+optionsWorkers.get(position), Toast.LENGTH_LONG).show()
 
                 spin_value_worker = optionsWorkers.get(position)
             }
@@ -272,12 +272,14 @@ class Add_Worker : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     Alerter.create(this@Add_Worker)
-                            .setTitle("Payment Update")
+                            .setTitle("Worker Update")
                             .setIcon(R.drawable.alert)
                             .setDuration(4000)
                             .setText("Failed to Update!! Please Try after some time!!")
                             .setBackgroundColorRes(R.color.colorAccent)
                             .show()
+
+                    Log.d("ecp",it.toString())
                 }
     }
 

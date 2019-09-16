@@ -83,12 +83,14 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.xwray:groupie:2.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.0'
-    implementation 'com.google.firebase:firebase-database:16.0.1'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.firebase:firebase-firestore:17.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.3.2'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-database:19.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-firestore:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true;
     }
@@ -124,6 +126,8 @@ dependencies {
 
     // Paging Library
     implementation 'android.arch.paging:runtime:1.0.1'
+
+    implementation 'com.codemybrainsout.rating:ratingdialog:1.0.8'
 
 }
 repositories {

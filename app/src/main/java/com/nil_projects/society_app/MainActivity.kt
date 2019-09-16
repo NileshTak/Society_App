@@ -41,6 +41,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isGone
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.crashlytics.android.Crashlytics
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.github.florent37.runtimepermission.kotlin.askPermission
@@ -196,6 +197,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
+
+
     private fun noInt() {
         val cm = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         netInfo = cm.activeNetworkInfo
@@ -247,7 +250,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+//            val ratingDialog = RatingDialog.Builder(this@MainActivity)
+//
+//                    .threshold(3f)
+//                    .ratingBarColor(R.color.colorPrimary)
+//                    .playstoreUrl("https://play.google.com/store/apps/details?id=com.nil_projects_society_user_app")
+//                    .onRatingBarFormSumbit { feedback -> Log.i("Tag", "Feedback:$feedback") }
+//                    .build()
+//
+//
+//            ratingDialog.show()
         }
     }
 

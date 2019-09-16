@@ -63,7 +63,7 @@
             android:id="@+id/record_img_xml"
             android:padding="5dp"
             android:layout_width="370dp"
-            android:layout_height="280dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

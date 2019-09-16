@@ -205,34 +205,29 @@ class UpdateReport : AppCompatActivity() {
 
     private fun UploadImgtoFirebase() {
         Log.d("SocietyLogs","Uri is Uplod"+imageUri.toString())
-        if(FinalUri == null || date_editText.text.isEmpty())
+        if(FinalUri != null  )
         {
-            progressDialog.dismiss()
-            Alerter.create(this@UpdateReport)
-                    .setTitle("Building Notice")
-                    .setIcon(R.drawable.alert)
-                    .setDuration(4000)
-                    .setText("Failed to Update!! Please Select Valid Notice & Valid Date to Update!!")
-                    .setBackgroundColorRes(R.color.colorAccent)
-                    .show()
-            return
+            val filename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/RecordImages/$filename")
+
+            ref.putFile(FinalUri!!)
+                    .addOnSuccessListener {
+                        Log.d("SocietyLogs","Image uploaded")
+                        ref.downloadUrl.addOnSuccessListener {
+                            it.toString()
+                            saveRecordDatetoFirebase(it.toString())
+                        }
+                    }
+                    .addOnFailureListener {
+
+                    }
         }
 
+        else
+        {
+            saveRecordDatetoFirebase("")
+        }
 
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/RecordImages/$filename")
-
-        ref.putFile(FinalUri!!)
-                .addOnSuccessListener {
-                     Log.d("SocietyLogs","Image uploaded")
-                    ref.downloadUrl.addOnSuccessListener {
-                        it.toString()
-                        saveRecordDatetoFirebase(it.toString())
-                    }
-                }
-                .addOnFailureListener {
-
-                }
     }
 
     private fun saveRecordDatetoFirebase(ImageUrl : String) {
@@ -243,6 +238,7 @@ class UpdateReport : AppCompatActivity() {
         items.put("date", date_editText.text.toString())
         items.put("id", recordid)
         items.put("imageUrl", ImageUrl)
+        items.put("userid", FirebaseAuth.getInstance().currentUser!!.email.toString())
         items.put("wing", spin_value)
 
         var db = FirebaseFirestore.getInstance()

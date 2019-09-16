@@ -14,8 +14,8 @@ enum class NatureItem(val title : String,open val userDrawable: Int, open val na
     NATURE0("Cooks",R.drawable.cooklogo, R.drawable.nature_000),
     NATURE1("Drivers",R.drawable.user_001, R.drawable.nature_001),
     NATURE2("Security Guards",R.drawable.user_019, R.drawable.nature_002),
-//  NATURE3("NewsPaper Services",R.drawable.user_010, R.drawable.nature_003),
-//  NATURE4("Cooks",R.drawable.user_004, R.drawable.nature_004),
+  NATURE3("Electrician",R.drawable.electrician, R.drawable.elect),
+  NATURE4("Plumber",R.drawable.plumber, R.drawable.plumb),
 //  NATURE5("Cooks",R.drawable.user_005, R.drawable.nature_005),
 //  NATURE6("Cooks",R.drawable.user_006, R.drawable.nature_006),
 //  NATURE7("Cooks",R.drawable.user_007, R.drawable.nature_007),
@@ -62,14 +62,16 @@ class months(val MonthsPaid0: String,val MonthsPaid1 : String,val MonthsPaid2 : 
             "","")
 }
 
-class reportModelClass(val counter: String,val date : String, val id : String,val imageUrl : String,val wing : String)
+class reportModelClass(val counter: String,val date : String, val id : String,val imageUrl : String,val wing : String,
+                       val userid : String)
 {
-    constructor() : this("","","","","")
+    constructor() : this("","","","","","")
 }
 
-class AddNotifiClass(val id : String,val noti : String,val imageUrl : String,val currentTime : String,val counter : String)
+class AddNotifiClass(val id : String,val noti : String,val imageUrl : String,val currentTime : String,val counter : String,
+                     val userid : String)
 {
-    constructor() : this("","","","","")
+    constructor() : this("","","","","","")
 }
 
 

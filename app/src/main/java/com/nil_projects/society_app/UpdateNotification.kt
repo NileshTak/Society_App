@@ -334,46 +334,57 @@ class UpdateNotification : AppCompatActivity() {
 
     private fun UpdateNotifcationtoFirebase() {
 
-        if ( selectedPhotoUri  == null)
-        {
-            Alerter.create(this@UpdateNotification)
-                    .setTitle("Society Notice")
-                    .setIcon(R.drawable.alert)
-                    .setDuration(4000)
-                    .setText("Failed to Update!! Please Select Notice Picture to Update!!")
-                    .setBackgroundColorRes(R.color.colorAccent)
-                    .show()
-            progressDialog.dismiss()
-            return
-        }
-        else if (noti_edittext.text.toString().isEmpty())
+//        if ( selectedPhotoUri  == null)
+//        {
+//            Alerter.create(this@UpdateNotification)
+//                    .setTitle("Society Notice")
+//                    .setIcon(R.drawable.alert)
+//                    .setDuration(4000)
+//                    .setText("Failed to Update!! Please Select Notice Picture to Update!!")
+//                    .setBackgroundColorRes(R.color.colorAccent)
+//                    .show()
+//            progressDialog.dismiss()
+//            return
+//        }
+        //else
+        if (noti_edittext.text.toString().isEmpty())
         {
             noti_edittext.error = "Please Enter Valid Notification Status"
             progressDialog.dismiss()
             return
         }
 
-        val Notificationfilename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/Notifications/$Notificationfilename")
 
-        ref.putFile(selectedPhotoUri!!)
-                .addOnSuccessListener {
-                    Toast.makeText(applicationContext,"Notification Image Uploaded", Toast.LENGTH_LONG).show()
-                    Log.d("SocietyLogs","Image uploaded")
-                    ref.downloadUrl.addOnSuccessListener {
-                        it.toString()
-                        addNotificationtoFirebase(it.toString())
+        if (selectedPhotoUri != null )
+        {
+            val Notificationfilename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/Notifications/$Notificationfilename")
+
+            ref.putFile(selectedPhotoUri!!)
+                    .addOnSuccessListener {
+                        //     Toast.makeText(applicationContext,"Notification Image Uploaded", Toast.LENGTH_LONG).show()
+                        Log.d("SocietyLogs","Image uploaded")
+                        ref.downloadUrl.addOnSuccessListener {
+                            it.toString()
+                            addNotificationtoFirebase(it.toString())
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    Alerter.create(this@UpdateNotification)
-                            .setTitle("Society Notice")
-                            .setIcon(R.drawable.alert)
-                            .setDuration(4000)
-                            .setText("Failed to Add!! Please Try after some time!!")
-                            .setBackgroundColorRes(R.color.colorAccent)
-                            .show()
-                }
+                    .addOnFailureListener {
+                        Alerter.create(this@UpdateNotification)
+                                .setTitle("Society Notice")
+                                .setIcon(R.drawable.alert)
+                                .setDuration(4000)
+                                .setText("Failed to Add!! Please Try after some time!!")
+                                .setBackgroundColorRes(R.color.colorAccent)
+                                .show()
+                    }
+        }
+        else
+        {
+            addNotificationtoFirebase("")
+
+        }
+
     }
 
     private fun addNotificationtoFirebase(imgId: String) {
@@ -386,6 +397,7 @@ class UpdateNotification : AppCompatActivity() {
         items.put("currentTime", currentTime)
         items.put("id", notifiid)
         items.put("imageUrl", imgId)
+        items.put("userid", FirebaseAuth.getInstance().currentUser!!.email.toString())
         items.put("noti", noti_edittext.text.toString())
 
         var db = FirebaseFirestore.getInstance()
