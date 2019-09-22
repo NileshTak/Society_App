@@ -47,7 +47,7 @@ class User_profiles_list : AppCompatActivity() {
         supportActionBar!!.title = "Active Users"
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
 
         edSearch = findViewById<EditText>(R.id.edSearch)
 

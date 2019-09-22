@@ -1,4 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package com.nil_projects.society_app
+
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
@@ -73,7 +76,7 @@ class Add_Payment_Update : AppCompatActivity() {
 
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
 
         arrOfChips = ArrayList<String>()
         optionsFlat = ArrayList<String>()
@@ -102,7 +105,7 @@ class Add_Payment_Update : AppCompatActivity() {
             var tags = select_month.text.toString().split(" ")
 
                 var inflator = LayoutInflater.from(this)
-                var text : String
+
                 for (text in tags)
                 {
                     var chip : Chip = inflator.inflate(R.layout.chips,null,false) as Chip
@@ -364,7 +367,7 @@ class Add_Payment_Update : AppCompatActivity() {
                                 }
                     }
                 }
-                .addOnFailureListener { exception ->
+                .addOnFailureListener {
                     Alerter.create(this@Add_Payment_Update)
                             .setTitle("Payment Update")
                             .setIcon(R.drawable.alert)
@@ -460,7 +463,7 @@ class Add_Payment_Update : AppCompatActivity() {
                     }
 
                 } else {
-                    sendNotificationID = "admin@gmail.com"
+                    //sendNotificationID = "admin@gmail.com"
                 }
             }
         }
@@ -468,7 +471,7 @@ class Add_Payment_Update : AppCompatActivity() {
 
     private fun datePicker() {
         val now = Calendar.getInstance()
-        datePickerdialog = DatePickerDialog(this@Add_Payment_Update, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        datePickerdialog = DatePickerDialog(this@Add_Payment_Update, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val selectedMonth = Calendar.getInstance()
             selectedMonth.set(Calendar.YEAR, year)
             selectedMonth.set(Calendar.MONTH, month)

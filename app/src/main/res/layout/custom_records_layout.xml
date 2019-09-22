@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp">
 
     <LinearLayout
@@ -64,6 +66,20 @@
             android:padding="5dp"
             android:layout_width="370dp"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/report_text_view"
+            android:textSize="22dp"
+            android:textColor="@color/md_black_1000"
+
+            android:layout_marginBottom="5sp"
+            android:layout_marginTop="2sp"
+            app:fontPath="Exo-Bold.ttf"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingPrefix" />
+
 
     </LinearLayout>
 

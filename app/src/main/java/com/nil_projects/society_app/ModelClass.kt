@@ -62,7 +62,7 @@ class months(val MonthsPaid0: String,val MonthsPaid1 : String,val MonthsPaid2 : 
             "","")
 }
 
-class reportModelClass(val counter: String,val date : String, val id : String,val imageUrl : String,val wing : String,
+class reportModelClass(val currentTime: String,val buildingnotice : String, val id : String,val imageUrl : String,val wing : String,
                        val userid : String)
 {
     constructor() : this("","","","","","")

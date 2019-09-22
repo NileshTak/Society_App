@@ -8,47 +8,80 @@
     android:background="@color/md_white_1000"
     tools:context=".UpdateReport">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/imgGifCamera"
-          android:layout_marginTop="160dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="80dp"
-         android:layout_width="match_parent"
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/imgGifCamera"-->
+<!--          android:layout_marginTop="160dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:layout_marginBottom="80dp"-->
+<!--         android:layout_width="match_parent"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_height="match_parent" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearL"-->
+<!--        android:padding="15dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/date_editText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:maxLines="5"-->
+<!--            android:minLines="2"-->
+<!--            android:hint="Enter Status"-->
+<!--            android:textSize="22dp"-->
+<!--            android:lines="10" />-->
+
+
+    <EditText
+        android:id="@+id/text_report"
+        android:layout_width="match_parent"
+        android:textSize="22dp"
+        android:maxLines="10"
+        android:hint="Enter Notice"
+        android:textColor="@color/md_black_1000"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spinner_wing"
+        android:layout_below="@id/text_report"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </Spinner>
+
+    <ImageView
+        android:id="@+id/pic_report"
+        android:src="@drawable/vlog"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_width="180dp"
+        android:layout_height="180dp" />
+
+    <ImageView
+        android:layout_below="@id/spinner_wing"
+        android:id="@+id/circular_report_pic"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="10dp"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:id="@+id/linearL"
-        android:padding="15dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/date_editText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="date"
-            android:hint="Enter Date of Report"
-            android:textSize="22dp"
-            android:lines="10" />
 
-        <Spinner
-            android:id="@+id/spinner_wing"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
 
-        </Spinner>
 
-        <ImageView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
-            android:id="@+id/img_select_camera"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+<!--        <ImageView-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            android:id="@+id/img_select_camera"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
     <Button

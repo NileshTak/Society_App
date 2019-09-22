@@ -271,9 +271,10 @@ class HomeFrag : Fragment() {
             viewHolder.itemView.setOnClickListener {
                 var int = Intent(activity,FUllScreenImage :: class.java)
                 int.data = Finalrecord.imageUrl.toUri()
-                int.putExtra("msg",Finalrecord.date)
+                int.putExtra("msg",Finalrecord.buildingnotice)
                 int.putExtra("id",Finalrecord.id)
                 int.putExtra("collectionName","Records")
+                int.putExtra("userid",Finalrecord.userid)
                 startActivity(int)
             }
         }
@@ -354,6 +355,7 @@ class HomeFrag : Fragment() {
                 int.putExtra("msg",Finalnotifi.noti)
                 int.putExtra("id",Finalnotifi.id)
                 int.putExtra("collectionName","Notifications")
+                int.putExtra("userid",Finalnotifi.userid)
                 startActivity(int)
             }
         }

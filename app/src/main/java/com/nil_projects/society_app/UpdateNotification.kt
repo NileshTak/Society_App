@@ -70,7 +70,7 @@ class UpdateNotification : AppCompatActivity() {
 
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
 
 
         updatenoti = findViewById<Button>(R.id.btn_update_notifi)
@@ -115,10 +115,10 @@ class UpdateNotification : AppCompatActivity() {
 
                 AlertDialog.Builder(this@UpdateNotification)
                         .setMessage("Please accept our permissions.. Otherwise you will not be able to use some of our Important Features.")
-                        .setPositiveButton("yes") { dialog, which ->
+                        .setPositiveButton("yes") { _, _ ->
                             e.askAgain()
                         } //ask again
-                        .setNegativeButton("no") { dialog, which ->
+                        .setNegativeButton("no") { dialog, _ ->
                             dialog.dismiss()
                         }
                         .show()
@@ -158,7 +158,7 @@ class UpdateNotification : AppCompatActivity() {
 
             val uri = data.data
 
-            compressImage(getRealPathFromURI(uri))
+            compressImage(getRealPathFromURI(uri!!))
 
             Log.d("FilePath",getRealPathFromURI(uri))
 
@@ -238,7 +238,7 @@ class UpdateNotification : AppCompatActivity() {
         val scaleMatrix = Matrix()
         scaleMatrix.setScale(ratioX, ratioY, middleX, middleY)
 
-        val canvas = Canvas(scaledBitmap)
+        val canvas = Canvas(scaledBitmap!!)
         canvas.matrix = scaleMatrix
         canvas.drawBitmap(bmp, middleX - bmp.width / 2,
                 middleY - bmp.height / 2, Paint(
@@ -266,7 +266,7 @@ class UpdateNotification : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        var out: FileOutputStream? = null
+        var out: FileOutputStream?
         val filename = getFilename()
         try {
             out = FileOutputStream(filename)
@@ -305,7 +305,7 @@ class UpdateNotification : AppCompatActivity() {
     fun getFilename(): String {
 
         val root = Environment.getExternalStorageDirectory().toString()
-        val myDir = File(root + "/SocietyApp/Society_App_Notifications")
+        val myDir = File(root + "/SiddhivinayakManasSociety")
         if (!myDir.exists()) {
             myDir.mkdirs()
         }
@@ -635,7 +635,7 @@ class UpdateNotification : AppCompatActivity() {
                     }
 
                 } else {
-                    sendNotificationID = "admin@gmail.com"
+                 //   sendNotificationID = "admin@gmail.com"
                 }
             }
         }

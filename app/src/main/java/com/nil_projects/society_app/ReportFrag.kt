@@ -186,13 +186,16 @@ class ReportFrag : Fragment() {
 class FetchRecordItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private var date_custom_record: TextView = itemView.findViewById<TextView>(R.id.date_custom_record)
+    private var reportTextView: TextView = itemView.findViewById<TextView>(R.id.report_text_view)
+
     private var wing_spinner_value_status: TextView = itemView.findViewById<TextView>(R.id.wing_spinner_value_status)
     private var record_img_xml: ImageView = itemView.findViewById<ImageView>(R.id.record_img_xml)
 
 
     fun bind(Finalrecord: reportModelClass) {
 
-        date_custom_record.text = Finalrecord.date
+        date_custom_record.text = Finalrecord.currentTime
+        reportTextView.text = Finalrecord.buildingnotice
          wing_spinner_value_status.text = Finalrecord.wing
            // Picasso.get().load(Finalrecord.imageUrl).into(viewHolder.itemView.record_img_xml)
             Glide.with(record_img_xml.context).load(Finalrecord.imageUrl).into( record_img_xml)
@@ -200,7 +203,7 @@ class FetchRecordItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.setOnClickListener {
                 var int = Intent(record_img_xml.context,FUllScreenImage :: class.java)
                 int.data = Finalrecord.imageUrl.toUri()
-                int.putExtra("msg",Finalrecord.date)
+                int.putExtra("msg",Finalrecord.buildingnotice)
                 int.putExtra("id",Finalrecord.id)
             int.putExtra("userid",Finalrecord.userid)
                 int.putExtra("collectionName","Records")

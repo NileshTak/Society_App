@@ -40,6 +40,7 @@ import org.w3c.dom.Text
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class Workers_List : AppCompatActivity() {
 
     lateinit var workerslist_recyclerview: RecyclerView
@@ -60,7 +61,7 @@ class Workers_List : AppCompatActivity() {
         supportActionBar!!.title = "Workers"
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
 
         val bundle : Bundle? = intent.extras
         typeWorker = bundle!!.getString("workerType")
@@ -91,7 +92,7 @@ class Workers_List : AppCompatActivity() {
                     val worker = it.getValue(FetchWorkerClass :: class.java)
 
                     Log.d("SocietyLogs",worker!!.name)
-                    if(worker != null && worker.type == typeWorker)
+                    if(  worker.type == typeWorker)
                     {
                         adapter.add(WorkerItem(worker))
                     }
@@ -164,10 +165,10 @@ class Workers_List : AppCompatActivity() {
 
                         AlertDialog.Builder(this@Workers_List)
                                 .setMessage("Please accept our permissions.. Otherwise you will not be able to use some of our Important Features.")
-                                .setPositiveButton("yes") { dialog, which ->
+                                .setPositiveButton("yes") { _, _ ->
                                     e.askAgain()
                                 } //ask again
-                                .setNegativeButton("no") { dialog, which ->
+                                .setNegativeButton("no") { dialog, _ ->
                                     dialog.dismiss()
                                 }
                                 .show()
