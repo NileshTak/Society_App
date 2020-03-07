@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:background="@drawable/usereqstyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_wingname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wing Name"
+                android:textAllCaps="false"
+                android:padding="10dp"
+                android:background="@color/md_blue_900"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_2"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_flatno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Flat No"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@color/md_blue_custom"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_relation"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/cutom_userreq_flatno"
+                android:layout_height="wrap_content"
+                android:text="Relation"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:background="@color/md_blue_custom"
+ android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cutom_userreq_name"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/md_white_1000"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_number"
+                android:layout_below="@+id/cutom_userreq_name"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="8446613467"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/md_white_1000"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/cutom_userreq_email"
+                android:layout_below="@+id/cutom_userreq_number"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/md_white_1000"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/black"
+                android:textSize="22dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/cross"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

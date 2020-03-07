@@ -90,7 +90,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="6039dfc03d2463bf00644057b83e86e8cb0b3f53" />
+            android:value="Your Fabric Key" />
 
     </application>
 
