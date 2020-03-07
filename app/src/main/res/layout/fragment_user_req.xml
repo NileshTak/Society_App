@@ -11,10 +11,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:minHeight="?actionBarSize"
         app:tabGravity="fill"
-
         app:tabSelectedTextColor="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorHeight="4dp"

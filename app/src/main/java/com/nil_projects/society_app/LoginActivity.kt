@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         else{
 
             progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Wellcome to Siddhivinayak Manas Management App")
+            progressDialog.setMessage("Wellcome to Smart Society App")
             progressDialog.setCancelable(false)
             progressDialog.show()
 

@@ -326,7 +326,7 @@ class UpdateReport : AppCompatActivity() {
     fun getFilename(): String {
 
         val root = Environment.getExternalStorageDirectory().toString()
-        val myDir = File(root + "/SiddhivinayakManasSociety")
+        val myDir = File(root + "/SmartSociety")
         if (!myDir.exists()) {
             myDir.mkdirs()
         }

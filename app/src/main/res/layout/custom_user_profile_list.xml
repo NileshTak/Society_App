@@ -18,7 +18,7 @@
             android:id="@+id/profile_list_image"
             android:layout_margin="5dp"
             android:layout_width="60dp"
-
+            android:src="@drawable/user_016"
             android:transitionName="transitionPicture"
             android:layout_height="60dp" />
 

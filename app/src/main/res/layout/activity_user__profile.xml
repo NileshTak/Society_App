@@ -36,6 +36,7 @@
         app:civ_border_width="2dp"
         app:civ_border_color="@color/md_blue_800"
         android:id="@+id/prof_pic_user_profile"
+        android:src="@drawable/user_016"
         android:layout_centerHorizontal="true"
         android:transitionName="transitionPicture"
         android:layout_marginTop="8dp"
